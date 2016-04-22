@@ -1,0 +1,59 @@
+# hikimode
+hikiの編集を助けるhelper.
+
+## 【特徴】
+hiki-mode.elがうまく動かせなかったので，cliで自作してみた．
+
+
+## 【操作法】
+コマンド名が違うので注意．
+
+```tcsh
+bob% hiki
+hiki says 'Hello world'.
+Usage: hiki [options]
+    -v, --version                    show program Version.
+    -s, --show                       show sources
+    -a, --add                        add sources info
+    -t, --target [VAL]               set target number
+    -o, --open [FILE]                open file
+    -l, --list [FILE]                list files
+    -u, --update [FILE]              update file
+    -r, --rsync                      rsync files
+```
+
+## Installation
+
+```
+ $ gem install hikimode
+```
+でinstallされます．最初に起動した時に
+```
+bob% cat ~/.hikirc
+---
+:target: 0
+:editor_command: emacs
+:srcs:
+- :nick_name: hoge
+  :local_dir: hogehoge
+  :local_uri: http://localhost/~hoge
+  :global_dir: hoge@global_host:/hoge
+  :global_uri: http://hoge
+```
+というファイルがhome dirに作成されます．hikimodeはこのように，localでの編集・閲覧と，globalへの同期を前提に動作します．sourcesを追加するには-aで追加できますが，適当にいれてファイルを直接編集する方が
+間違いが少ないです．
+
+Enjoy hiki world!!
+
+## Development
+
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/daddygongon/shunkuntype. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
