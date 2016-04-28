@@ -1,12 +1,12 @@
-!hikimode
-hikiの編集を助けるhelper.
+!hikiutils
+Utilities for helping hiki editing.
 
-!!【特徴】
-hiki-mode.elがうまく動かせなかったので，cliで自作してみた．
+!Features
+Direct file handling utility for hiki text, cache and rsync of local ang global hiki sites.
 
 
-!!【操作法】
-コマンド名が違うので注意．
+!Operation
+"hiki" is the command name.
 
 <<< tcsh
 bob% hiki
@@ -23,11 +23,11 @@ Usage: hiki [options]
 >>>
 
 !! Installation
-
+Installed by
 <<<
  $ gem install hikimode
 >>>
-でinstallされます．最初に起動した時に
+At the first time of hiki operation, hikirc file is created at home dir.
 <<<
 bob% cat ~/.hikirc
 ---
@@ -39,9 +39,9 @@ bob% cat ~/.hikirc
   :local_uri: http://localhost/~hoge
   :global_dir: hoge@global_host:/hoge
   :global_uri: http://hoge
->>>
-というファイルがhome dirに作成されます．hikimodeはこのように，localでの編集・閲覧と，globalへの同期を前提に動作します．sourcesを追加するには-aで追加できますが，適当にいれてファイルを直接編集する方が
-間違いが少ないです．
+>>>D
+The directly editing of hikirc file is much easier than using -a option.
+Each hiki utility option runs, assuming the editing files lacating locally.
 
 Enjoy hiki world!!
 

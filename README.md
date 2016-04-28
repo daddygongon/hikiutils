@@ -1,41 +1,59 @@
-# Hikiutils
+# hikiutils
+Utilities for helping hiki editing.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/hikiutils`. To experiment with that code, run `bin/console` for an interactive prompt.
+# Discriptions
+Direct file handling utility for hiki text, cache and rsync of local ang global hiki sites.
 
-TODO: Delete this and the text above, and describe your gem
 
-## Installation
+# Operation
+"hiki" is the command name.
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'hikiutils'
+```tcsh
+bob% hiki
+hiki says 'Hello world'.
+Usage: hiki [options]
+    -v, --version                    show program Version.
+    -s, --show                       show sources
+    -a, --add                        add sources info
+    -t, --target [VAL]               set target number
+    -o, --open [FILE]                open file
+    -l, --list [FILE]                list files
+    -u, --update [FILE]              update file
+    -r, --rsync                      rsync files
 ```
 
-And then execute:
+## Installation
+Installed by
+```
+ $ gem install hikimode
+```
+At the first time of hiki operation, hikirc file is created at home dir.
+```
+bob% cat ~/.hikirc
+---
+:target: 0
+:editor_command: emacs
+:srcs:
+- :nick_name: hoge
+  :local_dir: hogehoge
+  :local_uri: http://localhost/~hoge
+  :global_dir: hoge@global_host:/hoge
+  :global_uri: http://hoge
+```
+The directly editing of hikirc file is much easier than using -a option.
+Each hiki utility option runs, assuming the editing files lacating locally.
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install hikiutils
-
-## Usage
-
-TODO: Write usage instructions here
+Enjoy hiki world!!
 
 ## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment. Run `bundle exec hikiutils` to use the gem in this directory, ignoring other installed copies of this gem.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/hikiutils. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/daddygongon/shunkuntype. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-

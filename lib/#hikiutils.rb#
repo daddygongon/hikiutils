@@ -224,7 +224,7 @@ module HikiUtils
     end
 
     def full_width_count(string)
-      string.each_char.select{|char| !(/[ -~ï½¡-ï¾Ÿ]/.match(char))}.count
+      string.each_char.select{|char| !(/[ -~‰¡-‰ß]/.match(char))}.count
     end
 
     def add_sources
