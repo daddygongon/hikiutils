@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{helper of hiki editing.}
   spec.description   = %q{.}
-  spec.homepage      = "http://github.org/daddygongon/hikiutils."
+  spec.homepage      = "http://github.org/daddygongon/hikiutils"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
