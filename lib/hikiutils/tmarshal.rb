@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Original Copyright (C) Rubikichi
 # Modified by TAKEUCHI Hitoshi
 # You can redistribute it and/or modify it under the terms of
@@ -14,6 +15,7 @@ module TMarshal
   end
 
   def load(port)
+#    p port
     case port
     when String
       eval port.untaint

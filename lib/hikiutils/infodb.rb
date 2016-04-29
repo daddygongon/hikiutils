@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+require 'nkf'
 require 'kconv'
 
 class InfoDB
@@ -7,8 +8,9 @@ class InfoDB
     @file_path=File.join(file_path,"info.db")
     @db = Hash.new
     file = File.read(@file_path)
-    if Kconv.iseuc(file) then
-      print "WARNING : info.db is euc, not supported.\n"
+#    if Kconv.iseuc(file) then # fail to guess
+    if NKF.guess(file)==NKF::EUC then
+      print "WARNING : this info.db is written in euc, thus not supported.\n"
       print "#{@file_path}.\n"
       exit
     end
