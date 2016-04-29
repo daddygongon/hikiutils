@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-require 'nkf'
+require 'kconv'
 require "hikiutils/version"
 require "hikiutils/tmarshal"
 require "hikiutils/infodb"
@@ -73,11 +73,11 @@ module HikiUtils
 
       db = info.db
 
-#      pp file0=db[files[0]]
-#      db.delete(files[0])
-#      db[files[1]]=file0
-#      db[files[1]][:title]=files[1] if db[files[1]][:title]==files[0]
-#      pp db[files[1]]
+      pp file0=db[files[0]]
+      db.delete(files[0])
+      db[files[1]]=file0
+      db[files[1]][:title]=files[1] if db[files[1]][:title]==files[0]
+      pp db[files[1]]
 
       db.each{|ele|
         ref = ele[1][:references]
@@ -85,27 +85,26 @@ module HikiUtils
           p link_file=ele[0]
           link_path = File.join(@l_dir,'text',link_file)
 
-          target=File.open(link_path,'r')
-          cont = target.read
-          target.close
-          if NKF.guess(cont)==NKF::EUC then
-            print "Don\'t support EUC-JP, change link manually.\n"
+          cont = File.read(link_path)
+          if Kconv.iseuc(cont) then
+            print "euc\n"
+            utf8_cont=cont.toutf8
+            utf8_cont.gsub!(/#{files[0]}/,"#{files[1]}")
+            cont = utf8_cont.toeuc
           else
+            cont.gsub!(/#{files[0]}/,"#{files[1]}")
+          end
 
-            cont.gsub!(/\[\[#{files[0]}\]\]/,"\[\[#{files[1]}\]\]")
-            target=File.open(link_path,'w')
-            target.print cont
-            target.close
+          File.write(link_path,cont)
 
-            ref.delete(files[0])
-            ref << files[1]
+          ref.delete(files[0])
+          ref << files[1]
 
-            p cache_path = File.join(@l_dir,'cache/parser',link_file)
-            begin
-              File.delete(cache_path)
-            rescue => evar
-              puts evar.to_s
-            end
+          p cache_path = File.join(@l_dir,'cache/parser',link_file)
+          begin
+            File.delete(cache_path)
+          rescue => evar
+            puts evar.to_s
           end
         end
       }

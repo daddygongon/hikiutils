@@ -1,4 +1,5 @@
-require 'nkf'
+# -*- coding: utf-8 -*-
+require 'kconv'
 
 class InfoDB
   attr_accessor :file_path, :db, :text_dir
@@ -6,8 +7,9 @@ class InfoDB
     @file_path=File.join(file_path,"info.db")
     @db = Hash.new
     file = File.read(@file_path)
-    if NKF.guess(file)==NKF::EUC then
-      print "Don\'t support EUC-JP for info.db.\n"
+    if Kconv.iseuc(file) then
+      print "WARNING : info.db is euc, not supported.\n"
+      print "#{@file_path}.\n"
       exit
     end
     @db = TMarshal::load(file)
