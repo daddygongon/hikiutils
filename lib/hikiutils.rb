@@ -46,7 +46,11 @@ module HikiUtils
         opt.on('--remove FILE','remove file') {|file| remove_file(file)}
         opt.on('--move FILES','move file1,file2',Array) {|files| move_file(files)}
       end
-      command_parser.parse!(@argv)
+      begin
+        command_parser.parse!(@argv)
+      rescue=> eval
+        p eval
+      end
       dump_sources
       exit
     end
@@ -200,7 +204,7 @@ module HikiUtils
     def show_sources()
       printf("target_no:%i\n",@src[:target])
       printf("editor_command:%s\n",@src[:editor_command])
-      header = display_format('id','nick name','local directory','global uri')
+      header = display_format('id','name','local directory','global uri')
 
       puts header
       puts '-' * header.size
@@ -217,8 +221,8 @@ module HikiUtils
     end
 
     def display_format(id, name, local, global)
-      name_length  = 10-full_width_count(name)
-      local_length = 40-full_width_count(local)
+      name_length  = 5-full_width_count(name)
+      local_length = 45-full_width_count(local)
       [id.to_s.rjust(3), name.ljust(name_length),local.ljust(local_length), global.center(10)].join(' | ')
     end
 
