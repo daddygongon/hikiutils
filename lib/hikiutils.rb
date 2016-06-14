@@ -45,6 +45,7 @@ module HikiUtils
         opt.on('-c', '--checkdb','check database file') {check_db}
         opt.on('--remove FILE','remove file') {|file| remove_file(file)}
         opt.on('--move FILES','move file1,file2',Array) {|files| move_file(files)}
+        opt.on('--euc FILE','translate file to euc') {|file| euc_file(file) }
       end
       begin
         command_parser.parse!(@argv)
@@ -53,6 +54,13 @@ module HikiUtils
       end
       dump_sources
       exit
+    end
+
+    def euc_file(file)
+      p file_path = File.join(@l_dir,'text',file)
+      cont = File.readlines(file_path)
+
+      cont.each{|line| puts line.toeuc }
     end
 
     def move_file(files)
@@ -67,7 +75,7 @@ module HikiUtils
       return if file1_path==file2_path
       if File.exist?(file2_path) then
         print ("moving target #{files[1]} exists.\n")
-        print ("first remove #{files[1]}.\n")
+        print ("first remove#{files[1]}.\n")
         return
       else
         File.rename(file1_path,file2_path)
@@ -133,7 +141,7 @@ module HikiUtils
       info=InfoDB.new(@l_dir)
       p "delete "
       del_file=info.delete(file_name)
-
+      info.show_link(file_name)
       info.dump
     end
 
@@ -150,7 +158,11 @@ module HikiUtils
     def rsync_files
       p local = @l_dir
       p global = @src[:srcs][@target][:global_dir]
-      p command="rsync -auvz --delete -e ssh #{local}/ #{global}"
+#"/Users/bob/Sites/nishitani0/Internal/data"
+#"bob@dmz0:/Users/bob/nishitani0/Internal/data"
+#      p command="rsync -auvz -e ssh #{local}/ #{global}"
+      p command="rsync -auvz -e ssh #{local}/ #{global}"
+#  system 'rsync -auvz -e ssh ~/Sites/nishitani0 bob@nishitani0.kwansei.ac.jp:Sites/'
       system command
     end
 
@@ -166,9 +178,9 @@ module HikiUtils
       info.update(file0)
 
       #open file on browser
-      l_path = @src[:srcs][@target][:local_uri]
-      l_file=l_path+"/?"+file
-      p command="open \'#{l_file}\'"
+#      l_path = @src[:srcs][@target][:local_uri]
+#      l_file=l_path+"/?"+file
+      p command="open -a Firefox \'http://localhost:9292/?c=edit;p=#{file}\'"
       system command
     end
 

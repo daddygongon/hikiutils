@@ -17,6 +17,15 @@ class InfoDB
     @db = TMarshal::load(file)
   end
 
+  def show_link(file_name)
+    @db.each{|ele|
+      ref = ele[1][:references]
+      if ref.include?(file_name) then
+        p ele[0]
+      end
+    }
+  end
+
   def show(name)
     @db[name]
   end

@@ -10,7 +10,8 @@ end
 
 desc "make documents by yard"
 task :yard do
-  system "hiki2md docs/README.hiki > README.md"
+  p command="hiki2md docs/README.hiki > README.md"
+  system command
   YARD::Rake::YardocTask.new
 end
 

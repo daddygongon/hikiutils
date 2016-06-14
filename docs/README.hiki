@@ -2,7 +2,8 @@
 Utilities for helping hiki editing.
 
 !Discriptions
-Direct file handling utility for hiki text, cache and rsync of local ang global hiki sites.
+Direct file handling utility for hiki text and cache,
+and rsync between local and global hiki sites.
 
 
 !Operation
@@ -23,11 +24,13 @@ Usage: hiki [options]
 >>>
 
 !! Installation
+
 Installed by
-<<<
+
  $ gem install hikimode
->>>
+
 At the first time of hiki operation, hikirc file is created at home dir.
+
 <<<
 bob% cat ~/.hikirc
 ---
@@ -39,7 +42,8 @@ bob% cat ~/.hikirc
   :local_uri: http://localhost/~hoge
   :global_dir: hoge@global_host:/hoge
   :global_uri: http://hoge
->>>D
+>>>
+
 The directly editing of hikirc file is much easier than using -a option.
 Each hiki utility option runs, assuming the editing files lacating locally.
 
