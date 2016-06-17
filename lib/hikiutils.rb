@@ -201,7 +201,7 @@ module HikiUtils
         file.close
         File.chmod(0777,t_file)
       end
-      p command="open -a mi #{t_file}"
+      p command="#{@editor_command} #{t_file}"
       system command
     end
 
@@ -264,7 +264,7 @@ module HikiUtils
       @l_dir=@src[:srcs][@target][:local_dir]
       browser = @src[:browser]
       @browser = (browser==nil) ? 'firefox' : browser
-      editor_command = @src[:editor_command]
+      p editor_command = @src[:editor_command]
       @editor_command = (editor_command==nil) ? 'open -a mi' : editor_command
     end
   end
@@ -287,7 +287,7 @@ module DataFiles
 
   # initialize source file by dummy data
   def self.init_data_file(data_path)
-    @src = {:target => 0, :editor@b_command => 'open -a mi',
+    @src = {:target => 0, :editor_command => 'open -a mi',
       :srcs=>[{:nick_name => 'hoge', :local_dir => 'hogehoge', :local_uri => 'http://localhost/~hoge',
                 :global_dir => 'hoge@global_host:/hoge', :global_uri => 'http://hoge'}]}
     file = File.open(data_path,'w')
