@@ -170,8 +170,7 @@ module HikiUtils
       file = (file0==nil) ? 'FrontPage' : file0
       #rm cache file
       t_file=File.join(@l_dir,'cache/parser',file)
-      p command="rm #{t_file}"
-      system command
+      FileUtils.rm(t_file,:verbose=>true)
 
       #update info file
       info=InfoDB.new(@l_dir)
@@ -179,9 +178,8 @@ module HikiUtils
 
       #open file on browser
       l_path = @src[:srcs][@target][:local_uri]
-#      l_file=l_path+"/?"+file
-#      p command="open -a #{@browser} \'http://localhost:9292/?c=edit;p=#{file}\'"
-      p command="open -a #{@browser} \'#{l_path}/?c=edit;p=#{file}\'"
+#      p command="open -a #{@browser} \'#{l_path}/?c=edit;p=#{file}\'"
+      p command="open -a #{@browser} \'#{l_path}/?#{file}\'"
       system command
       p "If you get open error, try rackup from the src_dir."
       p "If you get 整形式になっていません, try login as a valid user."
