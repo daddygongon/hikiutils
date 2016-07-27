@@ -41,7 +41,8 @@ module HikiUtils
         opt.on('-l', '--list [FILE]','list files') {|file| list_files(file) }
         opt.on('-u', '--update FILE','update file') {|file| update_file(file) }
         opt.on('-r', '--rsync','rsync files') {rsync_files}
-        opt.on('-d', '--database FILE','read database file') {|file| db_file(file)}
+        opt.on('--database FILE','read database file') {|file| db_file(file)}
+        opt.on('--display FILE','display converted hikifile') {|file| display(file)}
         opt.on('-c', '--checkdb','check database file') {check_db}
         opt.on('--remove FILE','remove file') {|file| remove_file(file)}
         opt.on('--move FILES','move file1,file2',Array) {|files| move_file(files)}
@@ -54,6 +55,12 @@ module HikiUtils
       end
       dump_sources
       exit
+    end
+
+    def display(file)
+      t = File.open(file+".html",'w')
+      system "hikidoc #{file} > #{t.path}"
+      system "open #{t.path}"
     end
 
     def euc_file(file)

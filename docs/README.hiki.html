@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<title>docs/README.hiki</title>
+</head>
+<body>
+<h1>hikiutils</h1>
+<p>Utilities for helping hiki editing.</p>
+<h1>Discriptions</h1>
+<p>Direct file handling utility for hiki text and cache,
+and rsync between local and global hiki sites.</p>
+<h1>Operation</h1>
+<p>"hiki" is the command name.</p>
+<pre class="prettyprint">bob% hiki
+hiki says 'Hello world'.
+Usage: hiki [options]
+    -v, --version                    show program Version.
+    -s, --show                       show sources
+    -a, --add                        add sources info
+    -t, --target [VAL]               set target number
+    -o, --open [FILE]                open file
+    -l, --list [FILE]                list files
+    -u, --update [FILE]              update file
+    -r, --rsync                      rsync files</pre>
+<h2>Installation</h2>
+<p>Installed by</p>
+<pre>$ gem install hikimode</pre>
+<p>At the first time of hiki operation, hikirc file is created at home dir.</p>
+<pre>bob% cat ~/.hikirc
+---
+:target: 0
+:editor_command: emacs
+:srcs:
+- :nick_name: hoge
+  :local_dir: hogehoge
+  :local_uri: http://localhost/~hoge
+  :global_dir: hoge@global_host:/hoge
+  :global_uri: http://hoge</pre>
+<p>The directly editing of hikirc file is much easier than using -a option.
+Each hiki utility option runs, assuming the editing files lacating locally.</p>
+<p>Enjoy hiki world!!</p>
+<h2>Development</h2>
+<p>To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](<a href="https://rubygems.org).">https://rubygems.org).</a></p>
+<h2>Contributing</h2>
+<p>Bug reports and pull requests are welcome on <a href="GitHub">GitHub</a> at <a href="https://github.com/daddygongon/shunkuntype.">https://github.com/daddygongon/shunkuntype.</a> This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.</p>
+<h2>License</h2>
+<p>The gem is available as open source under the terms of the [MIT License](<a href="http://opensource.org/licenses/MIT).">http://opensource.org/licenses/MIT).</a></p>
+
+</body>
+</html>
