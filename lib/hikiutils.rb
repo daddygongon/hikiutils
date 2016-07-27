@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'kconv'
+require 'hikidoc'
+require 'erb'
 require "hikiutils/version"
 require "hikiutils/tmarshal"
 require "hikiutils/infodb"
@@ -14,6 +16,25 @@ module HikiUtils
   attr_accessor :src, :target, :editor_command, :browser, :data_name, :l_dir
 
   class Command
+
+
+HTML_TEMPLATE = <<EOS
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja">
+<html>
+<head>
+  <meta http-equiv="Content-Language" content="ja">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title><%= title %></title>
+</head>
+<body>
+  <%= body %>
+</body>
+</html>
+EOS
+
     def self.run(argv=[])
       print "hiki says 'Hello world'.\n"
       new(argv).execute
@@ -58,15 +79,18 @@ module HikiUtils
     end
 
     def display(file)
+      body = HikiDoc.to_html(File.read(file))
+      source = HTML_TEMPLATE
+      title = ''
+      erb = ERB.new(source)
       t = File.open(file+".html",'w')
-      system "hikidoc #{file} > #{t.path}"
+      t.puts(erb.result(binding))
       system "open #{t.path}"
     end
 
     def euc_file(file)
       p file_path = File.join(@l_dir,'text',file)
       cont = File.readlines(file_path)
-
       cont.each{|line| puts line.toeuc }
     end
 
