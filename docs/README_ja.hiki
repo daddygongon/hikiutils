@@ -1,26 +1,29 @@
 !hikiutils
-Utilities for helping hiki editing.
+CMSソフトhikiのtextを直接編集するのを助けるutilitiesデス．
 
 !Features
-Direct file handling utility for hiki text, cache and rsync of local ang global hiki sites.
-
+hikiでlocalとglobalのサイトを管理している場合の，text, cache, rsyncなどでfilesを直接編集，操作するためのutilityデス．
 
 !Operation
 
-"hiki" is the command name.
+"hiki" をコマンド名としています．
 
 <<< tcsh
-bob% hiki
-hiki says 'Hello world'.
 Usage: hiki [options]
     -v, --version                    show program Version.
     -s, --show                       show sources
     -a, --add                        add sources info
-    -t, --target [VAL]               set target number
+    -t, --target VAL                 set target id
     -e, --edit FILE                  open file
     -l, --list [FILE]                list files
-    -u, --update [FILE]              update file
+    -u, --update FILE                update file
     -r, --rsync                      rsync files
+        --database FILE              read database file
+        --display FILE               display converted hikifile
+    -c, --checkdb                    check database file
+        --remove FILE                remove file
+        --move FILES                 move file1,file2
+        --euc FILE                   translate file to euc
 >>>
 
 !! Installation

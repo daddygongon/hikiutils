@@ -1,26 +1,35 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja">
 <html>
 <head>
-<title>docs/README_ja.hiki</title>
+  <meta http-equiv="Content-Language" content="ja">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>README_ja.hiki</title>
 </head>
 <body>
-<h1>hikiutils</h1>
-<p>Utilities for helping hiki editing.</p>
+  <h1>hikiutils</h1>
+<p>CMSソフトhikiのtextを直接編集するのを助けるutilitiesデス．</p>
 <h1>Features</h1>
-<p>Direct file handling utility for hiki text, cache and rsync of local ang global hiki sites.</p>
+<p>hikiでlocalとglobalのサイトを管理している場合の，text, cache, rsyncなどでfilesを直接編集，操作するためのutilityデス．</p>
 <h1>Operation</h1>
-<p>"hiki" is the command name.</p>
-<pre class="prettyprint">bob% hiki
-hiki says 'Hello world'.
-Usage: hiki [options]
+<p>"hiki" をコマンド名としています．</p>
+<pre class="prettyprint">Usage: hiki [options]
     -v, --version                    show program Version.
     -s, --show                       show sources
     -a, --add                        add sources info
-    -t, --target [VAL]               set target number
+    -t, --target VAL                 set target id
     -e, --edit FILE                  open file
     -l, --list [FILE]                list files
-    -u, --update [FILE]              update file
-    -r, --rsync                      rsync files</pre>
+    -u, --update FILE                update file
+    -r, --rsync                      rsync files
+        --database FILE              read database file
+        --display FILE               display converted hikifile
+    -c, --checkdb                    check database file
+        --remove FILE                remove file
+        --move FILES                 move file1,file2
+        --euc FILE                   translate file to euc</pre>
 <h2>Installation</h2>
 <p>Installed by</p>
 <pre>$ gem install hikimode</pre>

@@ -81,10 +81,11 @@ EOS
     def display(file)
       body = HikiDoc.to_html(File.read(file))
       source = HTML_TEMPLATE
-      title = ''
+      title = File.basename(file)
       erb = ERB.new(source)
       t = File.open(file+".html",'w')
       t.puts(erb.result(binding))
+      t.close
       system "open #{t.path}"
     end
 
