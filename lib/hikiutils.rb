@@ -249,6 +249,7 @@ EOS
     def show_sources()
       printf("target_no:%i\n",@src[:target])
       printf("editor_command:%s\n",@src[:editor_command])
+      check_display_size()
       header = display_format('id','name','local directory','global uri')
 
       puts header
@@ -265,10 +266,23 @@ EOS
 
     end
 
+    def check_display_size
+      @i_size,@n_size,@l_size,@g_size=3,5,30,15 #i,g_size are fixed
+      n_l,l_l=0,0
+      @src[:srcs].each_with_index{|src,i|
+        n_l =(n_l= src[:nick_name].length)>@n_size? n_l:@n_size
+        l_l =(l_l= src[:local_dir].length)>@l_size? l_l:@l_size
+      }
+      @n_size,@l_size=n_l,l_l
+    end
+
     def display_format(id, name, local, global)
-      name_length  = 5-full_width_count(name)
-      local_length = 45-full_width_count(local)
-      [id.to_s.rjust(3), name.ljust(name_length),local.ljust(local_length), global.center(10)].join(' | ')
+      name_length  = @n_size-full_width_count(name)
+      local_length = @l_size-full_width_count(local)
+      global_string= global.size < @g_size ? global : global[0..@g_size]
+      [id.to_s.rjust(@i_size), name.ljust(name_length),
+       local.ljust(local_length), 
+       global_string.ljust(@g_size)].join(' | ')
     end
 
     def full_width_count(string)
