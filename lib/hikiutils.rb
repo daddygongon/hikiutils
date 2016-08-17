@@ -281,8 +281,8 @@ EOS
       local_length = @l_size-full_width_count(local)
       global_string= global.size < @g_size ? global : global[0..@g_size]
       [id.to_s.rjust(@i_size), name.ljust(name_length),
-       local.ljust(local_length), 
-       global_string.ljust(@g_size)].join(' | ')
+               local.ljust(local_length),
+                          global_string.ljust(@g_size)].join(' | ')
     end
 
     def full_width_count(string)
