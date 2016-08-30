@@ -1,0 +1,55 @@
+\documentclass[a4j,twocolumn]{jsarticle}
+\usepackage{subfigure}
+
+\def\Vec#1{\mbox{\boldmath $#1$}}
+\usepackage[dvipdfmx]{graphicx}
+
+\setlength{\textheight}{275mm}
+\headheight 5mm
+\topmargin -30mm
+\textwidth 185mm
+\oddsidemargin -15mm
+\evensidemargin -15mm
+\pagestyle{empty}
+\begin{document}
+\title{hikiのコマンドをshell風に書き換える}
+\author{情報科学科 西谷研究室 3554 山根 亮太}
+\date{}
+\maketitle
+\subsection{1 目的}
+本研究を行う目的は，hikiのコマンド名をshell風にすることで瞬時にコマンドの機能を判断し使用することができるようにすることである．現在hikiでコマンドを入力する際，ユーザーは瞬間的にそのコマンドの機能や意味を判断することが難しく迷いが生じてしまうことがある．その解決策として，hikiのコマンド名をshell風に書き換えることでこの問題を解決したい．
+
+\subsection{2 手法}
+\subsubsection{2.1 hikiについて}
+hikiとはwikiエンジンの１つとされており，Rubyを用いられることで作られたwikiクローンである．
+主なhikiの特徴として
+
+\paragraph{・オリジナルwikiに似たシンプルな書式}
+\paragraph{・プラグインによる機能拡張}
+\paragraph{・出力するHTMLを柔軟に変更可能}
+\paragraph{・ページにカテゴリ付けできる}
+\paragraph{・CSSを使ったテーマ機能}
+\paragraph{・携帯端末可能}
+\paragraph{・InterWikiのサポート}
+\paragraph{・HikiFarmに対応}
+\paragraph{・ページの追加，編集がしやすい}
+　等がある．[1]
+
+\subsubsection{2.2 gemについて}
+gemとはRubyで記述されたライブラリを扱うパッケージ管理システムのことであり，正式にはRubygemsという．主な利用方法は
+
+\paragraph{・最新のライブラリを読み込む}
+\paragraph{・バージョンを指定して読み込む}
+\paragraph{・非Gems環境に対応する}
+\paragraph{・ローカルリポジトリの公開}
+　等がある．
+
+\subsection{3 開発要件}
+Todoアプリケーションの構造はlib/todo/command/options.rbにサブコマンド用の定義があり，入力されたコマンドはilb/todo/command.rbで判断されることでlib/todo/command/options.rb内で実行される．hikiutilsの構造はTodoアプリケーションの構造と同じでhikiの編集を容易にするためのツール群のため，この部分の変更を行うことでコマンド名を書き換える．
+
+\subsection{4 考察}
+現在はTodoアプリケーションの作成を行うことでプログラムの構造の理解をしている．しかし，まだhikiutilsのコマンド名の変更までには達していない．今後の課題としては，誰が見てもコマンドの機能が判断できるコマンド名を考え，実際にhikiutils内でそのコマンドを実装する必要がある．
+
+\subsection{参考文献}
+[1]澄田紳弥：関西学院大学理工学部，卒業論文，(2015)
+\end{document}
