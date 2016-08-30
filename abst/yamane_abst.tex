@@ -1,0 +1,59 @@
+\documentclass[a4j,twocolumn]{jsarticle}
+\usepackage{subfigure}
+
+\def\Vec#1{\mbox{\boldmath $#1$}}
+\usepackage[dvipdfmx]{graphicx}
+
+\setlength{\textheight}{275mm}
+\headheight 5mm
+\topmargin -30mm
+\textwidth 185mm
+\oddsidemargin -15mm
+\evensidemargin -15mm
+\pagestyle{empty}
+\begin{document}
+\title{hiki編集作業を容易にするツールの開発}
+\author{情報科学科 西谷研究室 3554 山根 亮太}
+\date{}
+\maketitle
+\section{目的}
+
+もう少し広い範囲の開発目標の中で，具体的な作業として，コマンドの命名規則を見直す．
+
+本研究の目的は，hikiのコマンド名をshell風にすることで瞬時にコマンドの機能を判断し使用することができるようにすることである．現在hikiでコマンドを入力する際，ユーザーは瞬間的にそのコマンドの機能や意味を判断することが難しく迷いが生じてしまうことがある．その解決策として，hikiのコマンド名をshell風に書き換えることでこの問題を解決したい．
+
+\section{手法}
+\subsection{hikiについて}
+hikiとはwikiエンジンの１つとされており，Rubyを用いられることで作られたwikiクローンである．主なhikiの特徴として
+\begin{itemize}
+\item オリジナルwikiに似たシンプルな書式
+\item プラグインによる機能拡張
+\item 出力するHTMLを柔軟に変更可能
+\item ページにカテゴリ付けできる
+\item CSSを使ったテーマ機能
+\item 携帯端末可能
+\item InterWikiのサポート
+\item HikiFarmに対応
+\item ページの追加，編集がしやすい
+\end{itemize}
+等がある\cite{hiki}．
+
+gemについて何を書く?　
+
+hikiutilsの動作内容を解説．
+hikiutilsはgemで提供されている．CLI(character line interface)で提供されているので，そのコマンドを標準化するライブラリoptparseを利用する．
+
+CLIのoptionのparseを簡単に扱うためにRubyにはいくつかのlibraryが用意されている．
+
+評価．観点．optparse
+
+\section{開発要件}
+Todoアプリケーションの構造はlib/todo/command/options.rbにサブコマンド用の定義があり，入力されたコマンドはlib/todo/command.rbで判断されることでlib/todo/command/options.rb内で実行される．hikiutilsの構造はTodoアプリケーションの構造と同じでhikiの編集を容易にするためのツール群のため，この部分の変更を行うことでコマンド名を書き換える．
+
+\section{考察}
+現在はTodoアプリケーションの作成を行うことでプログラムの構造の理解をしている．しかし，まだhikiutilsのコマンド名の変更までには達していない．今後の課題としては，誰が見てもコマンドの機能が判断できるコマンド名を考え，実際にhikiutils内でそのコマンドを実装する必要がある．
+
+\begin{thebibliography}{9}
+\bibitem{hiki}hikiサイト．
+\end{thebibliography}
+\end{document}
