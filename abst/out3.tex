@@ -1,0 +1,56 @@
+\documentclass[a4j,twocolumn]{jsarticle}
+\usepackage{subfigure}
+
+\def\Vec#1{\mbox{\boldmath $#1$}}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{url}
+
+
+\setlength{\textheight}{275mm}
+\headheight 5mm
+\topmargin -30mm
+\textwidth 185mm
+\oddsidemargin -15mm
+\evensidemargin -15mm
+\pagestyle{empty}
+\begin{document}
+\title{hiki編集作業を容易にするツールの開発}
+\author{情報科学科 西谷研究室 3554 山根 亮太}
+\date{}
+\maketitle
+\section{目的}
+本研究を行う目的は，hikiの編集作業をより容易にするためのツールを開発することである．それを実現するために今回開発が必要と思われるところはhikiのコマンドである．具体的な作業は，hikiのコマンド名をshell風にすることで瞬時にコマンドの機能を判断し使用することができるようにすることである．現在hikiでコマンドを入力する際，ユーザーは瞬間的にそのコマンドの機能や意味を判断することが難しく迷いが生じてしまうことがある．しかし，この開発をすることでユーザーはコマンド入力の際にそのコマンドの機能が分からなくなって入力に迷ったり，コマンド自体を忘れたりすることがなくなりより簡単に入力ができ，時間短縮にも繋がる．そのため，hikiのコマンド名をshell風に書き換えることでこの問題を解決したい.
+
+\section{システムについて}
+\subsection{hikiについて}
+hikiとはwikiエンジンの１つとされており，プログラミング言語Rubyを用いられることで作られたwikiクローンである．
+主なhikiの特徴として
+\begin{itemize}
+\item オリジナルwikiに似たシンプルな書式
+\item プラグインによる機能拡張
+\item 出力するHTMLを柔軟に変更可能
+\item ページにカテゴリ付けできる
+\item CSSを使ったテーマ機能
+\item 携帯端末可能
+\item InterWikiのサポート
+\item HikiFarmに対応
+\item ページの追加，編集がしやすい
+\end{itemize}
+等がある．\cite{hiki}
+
+
+\subsection{hikiutilsについて}
+hikiutilsとはhikiの編集作業を容易に行うことができるようにするツール群のことである．よって，今回の研究はhikiutilsのプログラムを編集することで瞬時にコマンドの機能や意味を理解できるコマンド名を考え編集を行う．hikiutilsはプログラミング言語Rubyのライブラリであるgemによって提供されている．\cite{gem}hikiutilsはCLI(Command Line Interface)で提供されているため，プログラミング言語Ruby版のコマンドラインのオプション解析を行いコマンドを標準化にするoptparseが利用されている．\cite{opt}そのため，CLIのoptparseを簡単に扱うためにRubyにはいくつかのlibraryが用意されている．
+
+\section{手法}
+Todoアプリケーションのプログラムの構造はlib/todo/command/options.rbにサブコマンド用の定義があり，入力されたコマンドはilb/todo/command.rbで判断されることによりlib/todo/command/options.rb内で実行される．hikiutilsのプログラムの構造はTodoアプリケーションのプログラムの構造と似たものでありhikiの編集を容易にするためのツール群のため，この部分の編集を行うことでコマンド名を書き換える．
+
+\section{考察}
+現在Todoアプリケーションの作成を行うことでプログラムの構造を理解している．しかし，hikiのコマンド名の変更や直感的なコマンド名を考えることは現在できていない．今後の課題としては，まず初めにTodoアプリケーションの構造を理解することでhikiutilsの構造を理解する．また，誰が見ても機能が判断できるコマンド名を考え，実際にhikiutils内でそのコマンドの編集を行って実装し，そのコマンドが分かりやすいものであるかどうかを試してもらう必要がある．
+
+\begin{thebibliography}{9}
+\bibitem{hiki}「hiki」,hikiwiki.org/ja/about.html,2016/9/2 アクセス.
+\bibitem{gem}「Rubygems-Wikipedia」,\url{ja.wikipedia.org/wiki/RubyGems},2016/9/2 アクセス.
+\bibitem{opt}「optparseの使い方」,\url{dharry.hatenablog.com/entry/20081008/1223490673},2016/9/2 アクセス.
+\end{thebibliography}
+\end{document}
