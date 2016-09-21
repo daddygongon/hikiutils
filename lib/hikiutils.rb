@@ -202,11 +202,15 @@ EOS
       file = (file0==nil) ? 'FrontPage' : file0
       #rm cache file
       t_file=File.join(@l_dir,'cache/parser',file)
-      FileUtils.rm(t_file,:verbose=>true)
-
+      begin
+        FileUtils.rm(t_file,:verbose=>true)
       #update info file
       info=InfoDB.new(@l_dir)
       info.update(file0)
+
+      rescue 
+        print "some errors on touch, but dont mind...\n"
+      end
 
       #open file on browser
       l_path = @src[:srcs][@target][:local_uri]
