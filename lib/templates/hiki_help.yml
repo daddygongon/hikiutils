@@ -1,0 +1,29 @@
+---
+:head:
+- hikiutil関連のヘルプ
+:initialize:
+  :opts:
+    :short: "-i"
+    :long: "--initialize"
+    :desc: localでの同期directoryの初期化
+  :title: localでの同期directoryの初期化
+  :cont:
+  - hiki --initializeで必要なファイル(Rakefile, ./.hikirc)がcopyされる
+  - rake syncによってhikiディレクトリーと同期が取られる
+  - rake convert 20 TARGET.pngによって，figs/TAERGET.pngに20%縮小して保存される
+  - hiki -u TARGETによってブラウザー表示される
+  - テキストの拡張子は'.hiki'
+  - hikiでのurlはテキスト前とディレクトリーから自動生成される
+  - 例えば，hiki2latex_saki/introduciton.hikiとするとhiki2latex_saki_introducitonと変換される
+  - |
+    attach_anchorでは
+    '{{attach_anchor(test.png, hiki2latex_saki)}}'
+    と，directory指定しなければならない.
+:syncpwd:
+  :opts:
+    :short: "-s"
+    :long: "--syncpwd"
+    :desc: syncpwd
+  :title: syncpwd
+  :cont:
+  - syncpwd
