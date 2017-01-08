@@ -68,6 +68,7 @@ EOS
         opt.on('--remove FILE','remove file') {|file| remove_file(file)}
         opt.on('--move FILES','move file1,file2',Array) {|files| move_file(files)}
         opt.on('--euc FILE','translate file to euc') {|file| euc_file(file) }
+        opt.on('--initialize','initialize source directory') {dir_init() }
       end
       begin
         command_parser.parse!(@argv)
@@ -76,6 +77,18 @@ EOS
       end
       dump_sources
       exit
+    end
+
+    def dir_init()
+      begin
+        p target_dir = File.readlines('./.hikirc')[0]
+      rescue
+        p target_dir=@src[:srcs][@target][:local_dir]
+        File.open('./.hikirc','w'){|file| file.print "#{target_dir}\n"}
+      end
+      p source = File.join(File.expand_path('..', __FILE__),'templates','Rakefile_hiki_sync') 
+      target = File.join(Dir.pwd,'Rakefile')
+      FileUtils.cp(source,target,:verbose=>true)
     end
 
     def display(file)

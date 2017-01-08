@@ -1,0 +1,54 @@
+require 'yaml'
+begin
+  target_dir = File.readlines('./.hikirc')[0]
+rescue
+  begin
+    p data_path = File.join(ENV['HOME'], '.hikirc')
+    src = YAML.load(File.read(data_path))
+    target = src[:target]
+    p target_dir=src[:srcs][target][:local_dir]
+    File.open('./.hikirc','w'){|file| file.print "#{target_dir}\n"}
+  rescue
+    target_dir = '/Users/bob/Sites/nishitani0/Internal/data/'
+  end
+end
+p target_dir
+
+desc "convert fig size"
+task :convert do
+  source = ARGV[2]
+  scale = ARGV[1]
+  target = File.join('figs',source)
+  p command = "convert #{source} -resize #{scale}\% #{target}"
+  system command
+  exit
+end
+
+desc "sync hikis and figs to hiki directory"
+task :sync do
+  p dirnames=Dir.pwd.split('/')
+  p basename = (dirnames[-1]=='hikis')? dirnames[-2] : dirnames[-1]
+  p entries=Dir.entries('.')
+  entries[2..-1].each{|source|
+    next unless source.include?('.hiki')
+    p base = source.split('.')[0]
+    name = (base==basename)? base : basename+'_'+base
+    p target = File.join(target_dir,'text',name)
+    FileUtils.cp(source,target,:verbose=>true)
+  }
+  p entries=Dir.entries('./figs')
+  entries[2..-1].each{|file|
+    p source = File.join('./figs',file)
+    p target = File.join(target_dir,'cache','attach',basename)
+    FileUtils.cp(source,target,:verbose=>true)
+#    FileUtils.cp(source,target,:noop=>true,:verbose=>true)
+  }
+  exit
+end
+
+desc "self copy to hikiutils template directory"
+task :self_copy do
+  p source = './Rakefile'
+  p target = '/Users/bob/Github/hikiutils/lib/templates/Rakefile_hiki_sync'
+  FileUtils.cp(source,target,:verbose=>true)
+end
