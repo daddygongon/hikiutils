@@ -89,24 +89,24 @@ EOS
       cp_files=[['Rakefile_hiki_sync','Rakefile'],
                 ['hiki_help.yml','hiki_help.yml']]
       cp_files.each{|files|
-        p source = File.join(File.expand_path('..', __FILE__),'templates',files[0]) 
+        p source = File.join(File.expand_path('..', __FILE__),'templates',files[0])
         p target = File.join(Dir.pwd,files[1])
         FileUtils.cp(source,target,:verbose=>true)
       }
       ['figs','data'].each{|dir|
-        begin 
-          Dir.mkdir(dir) 
+        begin
+          Dir.mkdir(dir)
         rescue => e
           print e
         end
       }
       begin
         p cont=File.read('./.gitignore')
-        unless cont.include?(target_dir)
-          File.open('./.gitignore','w'){|file| file.print(target_dir+"\n")}
+        unless cont.include?('.hikirc')
+          File.open('./.gitignore','w'){|file| file.print(".hikirc\n")}
         end
       rescue
-        File.open('./.gitignore','w'){|file| file.print(target_dir+"\n")}
+        File.open('./.gitignore','w'){|file| file.print(".hikirc\n")}
       end
     end
 
