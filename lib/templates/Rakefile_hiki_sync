@@ -6,6 +6,10 @@ rescue => e
 end
 p target_dir
 
+task :default do
+  system 'rake -T'
+end
+
 desc "convert fig size"
 task :convert do
   source = ARGV[2]
@@ -21,7 +25,7 @@ task :sync do
   p dirnames=Dir.pwd.split('/')
   p basename = (dirnames[-1]=='hikis')? dirnames[-2] : dirnames[-1]
   p entries=Dir.entries('.')
-  entries[2..-1].each{|source|
+  entries[2..-1].each{|source| #cp *.hiki
     next unless source.include?('.hiki')
     next if source.include?('.hikirc')
     p base = source.split('.')[0]
@@ -29,14 +33,20 @@ task :sync do
     p target = File.join(target_dir,'text',name)
     FileUtils.cp(source,target,:verbose=>true)
   }
-  p entries=Dir.entries('./figs')
+  p entries=Dir.entries('./figs') #cp files in figs
   entries[2..-1].each{|file|
     p source = File.join('./figs',file)
     p target = File.join(target_dir,'cache','attach',basename)
     FileUtils.cp(source,target,:verbose=>true)
-#    FileUtils.cp(source,target,:noop=>true,:verbose=>true)
   }
   exit
+end
+
+desc "For hiki Errno::ENOENT, Errno::EACCES"
+task :chenv do
+  p user = ENV['USER']
+  system("sudo chmod -R a+w #{target_dir}")
+  system("sudo chown -R #{user} #{target_dir}")
 end
 
 desc "self copy to hikiutils template directory"
