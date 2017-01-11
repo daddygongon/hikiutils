@@ -94,7 +94,9 @@ EOS
         FileUtils.cp(source,target,:verbose=>true)
       }
       ['figs','data'].each{|dir|
-        begin Dir.mkdir(dir) rescue => e
+        begin 
+          Dir.mkdir(dir) 
+        rescue => e
           print e
         end
       }
