@@ -100,6 +100,13 @@ EOS
           print e
         end
       }
+      begin
+        p cont=File.read('./.gitignore')
+        unless cont.include?(target_dir)
+        File.open('./.gitignore','w'){|file| file.print(target_dir+"\n")}
+      rescue
+        File.open('./.gitignore','w'){|file| file.print(target_dir+"\n")}
+      end
     end
 
     def display(file)
