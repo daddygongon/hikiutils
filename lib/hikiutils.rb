@@ -103,7 +103,8 @@ EOS
       begin
         p cont=File.read('./.gitignore')
         unless cont.include?(target_dir)
-        File.open('./.gitignore','w'){|file| file.print(target_dir+"\n")}
+          File.open('./.gitignore','w'){|file| file.print(target_dir+"\n")}
+        end
       rescue
         File.open('./.gitignore','w'){|file| file.print(target_dir+"\n")}
       end
