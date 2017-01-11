@@ -93,6 +93,11 @@ EOS
         p target = File.join(Dir.pwd,files[1])
         FileUtils.cp(source,target,:verbose=>true)
       }
+      ['figs','data'].each{|dir|
+        begin Dir.mkdir(dir) rescue => e
+          print e
+        end
+      }
     end
 
     def display(file)
