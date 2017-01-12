@@ -10,13 +10,17 @@ task :default do
   system 'rake -T'
 end
 
-desc "convert fig size"
+desc "convert fig size SCALE TARGET_DIR"
 task :convert do
-  source = ARGV[2]
   scale = ARGV[1]
-  target = File.join('figs',source)
-  p command = "convert #{source} -resize #{scale}\% #{target}"
-  system command
+  target_dir=ARGV[2]
+  Dir.entries(target_dir)[2..-1].each{|file|
+    p file
+    source = File.join(target_dir,file)
+    target = File.join('figs',file)
+    p command = "convert #{source} -resize #{scale}\% #{target}"
+    system command
+  }
   exit
 end
 
@@ -34,9 +38,10 @@ task :sync do
     FileUtils.cp(source,target,:verbose=>true)
   }
   p entries=Dir.entries('./figs') #cp files in figs
+  p target = File.join(target_dir,'cache','attach',basename)
+  FileUtils.mkdir(target,:verbose=>true) unless File.exists?(target)
   entries[2..-1].each{|file|
     p source = File.join('./figs',file)
-    p target = File.join(target_dir,'cache','attach',basename)
     FileUtils.cp(source,target,:verbose=>true)
   }
   exit
@@ -46,13 +51,13 @@ desc "For hiki Errno::ENOENT, Errno::EACCES"
 task :chenv do
   p user = ENV['USER']
   system("sudo chmod -R a+w #{target_dir}")
-  system("sudo chown -R #{user} #{target_dir}")
+#  system("sudo chown -R #{user} #{target_dir}")
 end
 
 desc "self copy to hikiutils template directory"
 task :self_copy do
   p cp_files=[['Rakefile','Rakefile_hiki_sync'],
-            [File.join(ENV['HOME'],'.my_help','hiki_help.yml'),'hik_help.yml']]
+            [File.join(ENV['HOME'],'.my_help','hiki_help.yml'),'hiki_help.yml']]
   cp_files.each{|files|
     p source = File.join(Dir.pwd,'Rakefile')
     p target = File.join('/Users/bob/Github/hikiutils/lib/templates/',files[1])
