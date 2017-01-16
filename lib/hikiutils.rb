@@ -68,6 +68,7 @@ EOS
         opt.on('--remove FILE','remove file') {|file| remove_file(file)}
         opt.on('--move FILES','move file1,file2',Array) {|files| move_file(files)}
         opt.on('--euc FILE','translate file to euc') {|file| euc_file(file) }
+        opt.on('--initialize','initialize source directory') {dir_init() }
       end
       begin
         command_parser.parse!(@argv)
@@ -76,6 +77,37 @@ EOS
       end
       dump_sources
       exit
+    end
+
+    def dir_init()
+      begin
+        p target_dir = File.readlines('./.hikirc')[0]
+      rescue
+        p target_dir=@src[:srcs][@target][:local_dir]
+        File.open('./.hikirc','w'){|file| file.print "#{target_dir}\n"}
+      end
+      cp_files=[['Rakefile_hiki_sync','Rakefile'],
+                ['hiki_help.yml','hiki_help.yml']]
+      cp_files.each{|files|
+        p source = File.join(File.expand_path('..', __FILE__),'templates',files[0])
+        p target = File.join(Dir.pwd,files[1])
+        FileUtils.cp(source,target,:verbose=>true)
+      }
+      ['figs','data'].each{|dir|
+        begin
+          Dir.mkdir(dir)
+        rescue => e
+          print e
+        end
+      }
+      begin
+        p cont=File.read('./.gitignore')
+        unless cont.include?('.hikirc')
+          File.open('./.gitignore','w'){|file| file.print(".hikirc\n")}
+        end
+      rescue
+        File.open('./.gitignore','w'){|file| file.print(".hikirc\n")}
+      end
     end
 
     def display(file)
@@ -202,11 +234,15 @@ EOS
       file = (file0==nil) ? 'FrontPage' : file0
       #rm cache file
       t_file=File.join(@l_dir,'cache/parser',file)
-      FileUtils.rm(t_file,:verbose=>true)
-
+      begin
+        FileUtils.rm(t_file,:verbose=>true)
       #update info file
       info=InfoDB.new(@l_dir)
       info.update(file0)
+
+      rescue 
+        print "some errors on touch, but dont mind...\n"
+      end
 
       #open file on browser
       l_path = @src[:srcs][@target][:local_uri]
