@@ -38,4 +38,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "hiki2yard"
   spec.add_runtime_dependency "systemu"
   spec.add_runtime_dependency "hikidoc", "~> 0.1.0"
+  spec.add_runtime_dependency 'thor'
 end
