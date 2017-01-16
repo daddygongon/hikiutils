@@ -1,10 +1,10 @@
 \documentclass[a4j,twocolumn]{jsarticle}
 \usepackage{subfigure}
-\usepackage{url}
 
 \def\Vec#1{\mbox{\boldmath $#1$}}
 \usepackage[dvipdfmx]{graphicx}
 \usepackage{url}
+
 
 \setlength{\textheight}{275mm}
 \headheight 5mm
@@ -19,7 +19,7 @@
 \date{}
 \maketitle
 \section{目的}
-本研究の目的は，hikiの編集作業をより容易にするためのツールを開発することである．hikiは通常web上で編集を行っているが，GUIとCUIが混在しており，操作に不便な点がある．そこで，編集操作がCUIで完結するために開発をされたのがhikiutilsである．しかし，そのユーザインタフェースには問題がある．現在hikiでコマンドを入力する際，ユーザーは瞬間的にそのコマンドの機能や意味を判断することが難しく迷いが生じてしまうことがある．なので．この部分を開発することによりこの問題を解決したい．
+本研究の目的は,hiki の編集作業をより容易にするための ツールを開発することである.hiki は通常 web 上で編集を 行っているが,GUI と CUI が混在しており,操作に不便な点 がある.そこで,編集操作が CUI で完結するために開発をさ れたのが hikiutils である.しかし,そのユーザインタフェー スには問題がある.現在 hiki でコマンドを入力する際,ユー ザーは瞬間的にそのコマンドの機能や意味を判断することが 難しく迷いが生じてしまうことがある.なので.この部分を 開発することによりこの問題を解決したい.
 
 \section{システムについて}
 \subsection{hikiについて}
@@ -39,43 +39,37 @@ hikiの主な特徴として
 等がある\cite{hiki}．
 
 \subsection{hikiutilsについて}
-hikiutilsはhikiの編集作業を容易に行うことができるようにするツール群であり，
-プログラミング言語Rubyのライブラリであるgemフォーマットに従って提供されている\cite{gem}．
-hikiutilsはCLI(Command Line Interface)で操作するため，オプション解析をおこなう必要がある．
-gemには，この用途に利用できるライブラリがいくつも提供されている\cite{opt_ranking}．
-この中で，あまり利用頻度は高くないが古くから開発され，
-使用例が広く紹介されているoptparseを利用している．
+hikiutils は hiki の編集作業を容易に行うことができるよう にするツール群であり,プログラミング言語 Ruby のライブ ラリである gem フォーマットに従って提供されている [2]. hikiutils は CLI(Command Line Interface) で操作するため, オプション解析をおこなう必要がある.gem には,この用途 に適合したライブラリがいくつも提供されている [3].この中 で,あまり利用頻度は高くないが古くから開発され,使用例 が広く紹介されている optparse を利用している.
 
 \section{手法}
 このようなCLIの階層的なコマンド実装を示したcodeとしてTodoというgemアプリケーションがある\cite{PerfectRuby}．
-このプログラムではlib/todo/command/options.rbにサブコマンド用の定義があり，入力されたコマンドはilb/todo/command.rbで判断されることによりlib/todo/command/options.rb内で実行される．hikiutilsのプログラムの構造はTodoアプリケーションのプログラムの構造と似たアプリケーションでありhikiの編集を容易にするためのツール群のため，この部分の編集を行うことでコマンド名を書き換える．
+このプログラムではlib/todo/command/options.rbにサブコマンド用の定義があり，入力されたコマンドはilb/todo/command.rbで判断されることによりlib/todo/command/options.rb内で実行される．hikiutilsのプログラムの構造はTodoアプリケーションのプログラムの構造と似たものでありhikiの編集を容易にするためのツール群のため，この部分の編集を行うことでコマンド名を書き換える．
 
-\section{現状}
-現在Todoアプリケーションのコードを追いかけて，プログラムの構造を理解している．
-また，直感的なコマンドとして以下のようなものを考えた．
+\section{考察}
+現在 Todo アプリケーションのコードを追いかけて,プロ グラムの構造を理解している.また,直感的なコマンドとし て以下のようなものを考えた.
 \begin{verbatim}
-   version            show program Version.
-   show               show sources
-   add                add sources info
-   set VAL            set target id
-   open FILE          open file
-   list FILE          list files
-   update FILE        update file
-   rsync              rsync files
-   read db FILE       read database file
-   display FILE       display converted hikifile
-   check db FILE      check database file
-   remove FILE        remove file
-   move file1 file2   move file1,file2
-   euc FILE           translate file to euc
+version              show program Version.
+show                 show sources
+add                  add sources info
+set VAL              set target id
+open FILE            open file
+list FILE            list files
+update FILE          update file
+rsync                rsync files
+read db FILE         read database file
+display FILE         display converted hikifile
+check db FILE        check database file
+remove FILE          remove file
+move file1 file2     move file1,file2
+euc FILE             translate file to euc
 \end{verbatim}
-上記のコマンドはgit風のコマンド名に変更してみた．
-今後の課題としては,実際にhikiutils内でそのコマンドの編集を行って実装し，そのコマンドが分かりやすいものであるかどうかを検討する必要がある．
+上記のコマンドは git 風のコマンド名に変更してみた.今後 の課題としては, 実際に hikiutils 内でそのコマンドの編集を 行って実装し,そのコマンドが分かりやすいものであるかど うかを検討する必要がある.
 
 \begin{thebibliography}{9}
-\bibitem{hiki}「hiki」,\url{hikiwiki.org/ja/about.html},2016/9/2 アクセス.
-\bibitem{gem} hikiutils, \url{https://rubygems.org/gems/hikiutils},2016/9/2 アクセス.
-\bibitem{opt_ranking} The Ruby Toolbox, CLI Option Parsers, \url{https://www.ruby-toolbox.com/categories/CLI_Option_Parsers},2016/9/2 アクセス.
+\bibitem{hiki}「hiki」,hikiwiki.org/ja/about.html,2016/9/2 アクセス.
+\bibitem{gem}hikiutils,\url{https://rubygems.org/gems/ hikiutils},2016/9/2 アクセス.
+\bibitem{opt}The Ruby Toolbox, CLI Option Parsers,\url{https://www.ruby-toolbox.com/categories/
+CLI_Option_Parsers},2016/9/2 アクセス.
 \bibitem{PerfectRuby}「パーフェクトRuby」,Rubyサポーターズ(技術評論社 2013).
 \end{thebibliography}
 \end{document}

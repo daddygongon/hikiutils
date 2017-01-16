@@ -1,29 +1,25 @@
-This is e-pTeX, Version 3.14159265-p3.6-141210-2.6 (utf8.euc) (TeX Live 2015) (preloaded format=platex 2015.7.31)  3 SEP 2016 16:28
-entering extended mode
- restricted \write18 enabled.
+This is pTeXk, Version 3.141592-p3.1.11 (utf8.euc) (Web2C 7.5.4) (format=platex 2011.7.24)  11 SEP 2016 19:50
  file:line:error style messages enabled.
- %&-line parsing enabled.
 **out3
 (./out3.tex
-pLaTeX2e <2006/11/10> (based on LaTeX2e <2015/01/01> patch level 0)
-Babel <3.9l> and hyphenation patterns for 79 languages loaded.
-(/usr/local/texlive/2015/texmf-dist/tex/platex/jsclasses/jsarticle.cls
-Document Class: jsarticle 2014/02/07 okumura
-LaTeX Info: Redefining \rmfamily on input line 352.
-LaTeX Info: Redefining \sffamily on input line 355.
-LaTeX Info: Redefining \ttfamily on input line 358.
+pLaTeX2e <2006/11/10>+0 (based on LaTeX2e <2003/12/01> patch level 0)
+(/Applications/UpTeX.app/teTeX/share/texmf/ptex/platex/jsclasses/jsarticle.cls
+Document Class: jsarticle 2009/02/22 okumura
+LaTeX Info: Redefining \rmfamily on input line 332.
+LaTeX Info: Redefining \sffamily on input line 335.
+LaTeX Info: Redefining \ttfamily on input line 338.
 \symmincho=\mathgroup4
 LaTeX Font Info:    Overwriting symbol font `mincho' in version `bold'
-(Font)                  JY1/mc/m/n --> JY1/gt/m/n on input line 423.
+(Font)                  JY1/mc/m/n --> JY1/gt/m/n on input line 403.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 613.
+(Font)              scaled to size 9.60999pt on input line 601.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 613.
+(Font)              scaled to size 9.60999pt on input line 601.
 \fullwidth=\dimen118
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 7.68799pt on input line 760.
+(Font)              scaled to size 7.68799pt on input line 748.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 7.68799pt on input line 760.
+(Font)              scaled to size 7.68799pt on input line 748.
 \c@part=\count81
 \c@section=\count82
 \c@subsection=\count83
@@ -35,20 +31,21 @@ LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
 \c@table=\count88
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
-\js@tocl@width=\dimen119
-\@lnumwidth=\dimen120
-\bibindent=\dimen121
-LaTeX Info: Redefining \TeX on input line 1731.
-LaTeX Info: Redefining \LaTeX on input line 1757.
-LaTeX Info: Redefining \LaTeXe on input line 1782.
+\@lnumwidth=\dimen119
+\bibindent=\dimen120
+LaTeX Info: Redefining \TeX on input line 1702.
+LaTeX Info: Redefining \LaTeX on input line 1728.
+LaTeX Info: Redefining \LaTeXe on input line 1753.
 \heisei=\count89
-) (/usr/local/texlive/2015/texmf-dist/tex/latex/subfigure/subfigure.sty
-Package: subfigure 2002/03/15 v2.1.5 subfigure package
+)
+(/Applications/UpTeX.app/teTeX/share/texmf-dist/tex/latex/subfigure/subfigure.s
+ty
+Package: subfigure 2002/07/30 v2.1.4 subfigure package
 \subfigtopskip=\skip43
 \subfigcapskip=\skip44
-\subfigcaptopadj=\dimen122
+\subfigcaptopadj=\dimen121
 \subfigbottomskip=\skip45
-\subfigcapmargin=\dimen123
+\subfigcapmargin=\dimen122
 \subfiglabelskip=\skip46
 \c@subfigure=\count90
 \c@lofdepth=\count91
@@ -58,40 +55,41 @@ Package: subfigure 2002/03/15 v2.1.5 subfigure package
 ****************************************
 * Local config file subfigure.cfg used *
 ****************************************
-(/usr/local/texlive/2015/texmf-dist/tex/latex/subfigure/subfigure.cfg)
+
+(/Applications/UpTeX.app/teTeX/share/texmf-dist/tex/latex/subfigure/subfigure.c
+fg)
 \subfig@top=\skip47
 \subfig@bottom=\skip48
 )
-(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
-
-(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+(/Applications/UpTeX.app/teTeX/share/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+(/Applications/UpTeX.app/teTeX/share/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks15
 )
-(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2014/10/28 v1.0p Standard LaTeX Graphics (DPC,SPQR)
+(/Applications/UpTeX.app/teTeX/share/texmf/tex/latex/graphics/dvipdfmx-contrib-
+latex/graphics.sty
+Package: graphics 2001/07/07 v1.0n Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/trig.sty
+(/Applications/UpTeX.app/teTeX/share/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/graphics.cfg
-File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+(/Applications/UpTeX.app/teTeX/share/texmf-dist/tex/latex/graphics/graphics.cfg
+File: graphics.cfg 2005/02/03 v1.3 graphics configuration of teTeX/TeXLive
 )
-Package graphics Info: Driver file: dvipdfmx.def on input line 94.
+Package graphics Info: Driver file: dvipdfmx.def on input line 81.
 
-(/usr/local/texlive/2015/texmf-dist/tex/latex/dvipdfmx-def/dvipdfmx.def
-File: dvipdfmx.def 2015/03/26 v4.04 LaTeX color/graphics driver for dvipdfmx (T
-eX Live/ChoF)
+(/Applications/UpTeX.app/teTeX/share/texmf/tex/latex/graphics/dvipdfmx-contrib-
+latex/dvipdfmx.def
+File: dvipdfmx.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
 ))
-\Gin@req@height=\dimen124
-\Gin@req@width=\dimen125
+\Gin@req@height=\dimen123
+\Gin@req@width=\dimen124
 )
-(/usr/local/texlive/2015/texmf-dist/tex/latex/url/url.sty
+(/Applications/UpTeX.app/teTeX/share/texmf/ptex/latex/url/url.sty
 \Urlmuskip=\muskip10
-Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
-)
-No file out3.aux.
+Package: url 2004/03/15  ver 3.1  Verb mode for urls, etc.
+) (./out3.aux)
 \openout1 = `out3.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
@@ -135,35 +133,13 @@ LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
 (Font)              scaled to size 9.60999pt on input line 37.
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 41.
-(/usr/local/texlive/2015/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+(/Applications/UpTeX.app/teTeX/share/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 41.
-LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 51.
-LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 51.
-LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 51.
-LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 51.
-
-
-LaTeX Warning: Citation `hiki' on page 1 undefined on input line 51.
-
-
-LaTeX Warning: Citation `gem' on page 1 undefined on input line 56.
-
-
-LaTeX Warning: Citation `opt' on page 1 undefined on input line 58.
-
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-LaTeX Warning: Citation `PerfectRuby' on page 1 undefined on input line 62.
 
 
 Underfull \hbox (badness 1629) in paragraph at lines 62--64
@@ -204,21 +180,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 102--103
 
 [2
 
-] (./out3.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+] (./out3.aux) ) 
 Here is how much of TeX's memory you used:
- 1004 strings out of 493777
- 12114 string characters out of 6151334
- 76479 words of memory out of 5000000
- 4532 multiletter control sequences out of 15000+600000
- 13604 words of font info for 60 fonts, out of 8000000 for 9000
- 934 hyphenation exceptions out of 8191
- 25i,7n,24p,439b,293s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 957 strings out of 94681
+ 11867 string characters out of 1174371
+ 65464 words of memory out of 1500000
+ 4281 multiletter control sequences out of 10000+50000
+ 13288 words of font info for 59 fonts, out of 1200000 for 2000
+ 571 hyphenation exceptions out of 8191
+ 25i,7n,24p,439b,355s stack positions out of 5000i,500n,6000p,200000b,5000s
 
-Output written on out3.dvi (2 pages, 8300 bytes).
+Output written on out3.dvi (2 pages, 8252 bytes).
