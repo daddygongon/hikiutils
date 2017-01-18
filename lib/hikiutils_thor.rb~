@@ -81,19 +81,19 @@ EOS
     def version
       puts Hikithor::VERSION
     end
-
+#=begin
     desc 'add', 'add sources info'
     def add
       cont = {}
       @data_name.each{|name|
         printf("%s ? ", name)
-        tmp = STDIN.gets.chomp
+        tmp = gets.chomp
         cont[name.to_sym] = tmp
       }
       @src[:srcs] << cont
       show
     end
-
+#=end
     desc 'target VAL', 'set target id'
     def target(val)
       @src[:target] = val.to_i
@@ -188,7 +188,7 @@ EOS
       info.show_link(file_name)
       info.dump
     end
-
+#=begin
     desc 'move [FILE]', 'move file'
     def move(files)
       begin
@@ -250,7 +250,7 @@ EOS
 
       info.dump
     end
-
+#=end
     desc 'euc FILE', 'translate file to euc'
     def euc(file)
       p file_path = File.join(@l_dir,'text',file)
