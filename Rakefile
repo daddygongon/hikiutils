@@ -25,7 +25,7 @@ task :hiki2md do
       system command
     when 'gif','png','pdf'
       p command="cp hikis/#{file} #{basename}.wiki/#{file}"
-#      system command
+      #      system command
       FileUtils.cp("hikis/#{file}","#{basename}.wiki/#{file}",:verbose=>true)
       FileUtils.cp("hikis/#{file}","doc/#{file}",:verbose=>true)
     end
@@ -33,7 +33,7 @@ task :hiki2md do
   readme_en="#{basename}.wiki/README_en.md"
   readme_ja="#{basename}.wiki/README_ja.md"
   if File.exists?(readme_en)
-    FileUtils.cp(readme_en,"./README.md",:verbose=>true)  
+    FileUtils.cp(readme_en,"./README.md",:verbose=>true)
   elsif File.exists?(readme_ja)
     FileUtils.cp(readme_ja,"./README.md",:verbose=>true)
     FileUtils.cp(readme_ja,"#{basename}.wiki/Home.md",:verbose=>true)
