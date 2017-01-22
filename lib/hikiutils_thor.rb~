@@ -181,7 +181,7 @@ EOS
       print (result=='') ? "db agrees with text dir.\n" : result
     end
 
-    desc 'remove [FILE],--remove [FILE]', 'remove files'
+    desc 'remove [FILE]', 'remove files'
     map "--remove" => "remove"
     def remove(file_name)
       p text_path = File.join(@l_dir,'text',file_name)
