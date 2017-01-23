@@ -58,13 +58,14 @@ keynoteで図を作成して，hikiutils_bob.hikiに文章を記述していく�
 rakeの用意しているコマンドは次のとおり．
 
 <<< bash
-rake sync            # normal sync hikis and figs to hiki directory
+rake check_previous  # check previou and current sync
+rake chenv           # For hiki Errno::ENOENT, Errno::EACCES
 rake convert         # convert fig size SCALE TARGET_DIR
 rake force_sync      # force_sync hikis and figs to hiki directory
 rake increment       # increment fig NUBERS in FILE
+rake number          # numbering figs from the NUBER in FILE
 rake self_copy       # self copy to hikiutils template directory
-rake check_previous  # check previou and current sync
-rake chenv           # For hiki Errno::ENOENT, Errno::EACCES
+rake sync            # normal sync hikis and figs to hiki directory
 rake sync0           # sync0 hikis and figs to hiki directory
 >>>
 
@@ -85,7 +86,7 @@ keynoteが吐き出したイメージを変換するためのコマンド．Imag
 によって，hikiutils_bobにkeynoteから吐いたpngファイルを80%に縮小してfigsにためる．
 
 !!rake force_sync
-hikiシステム側で直接変更を加えると，hikiutilsがsyncした時と差ができる．これを検知して，ユーザに注意を喚起する仕組みがある（rake check_previous)．これで修正した後に強制的に同期をとるためのコマンドとして，force_syncが用意されている．
+hikiシステム側で直接変更を加えると，hikiutilsがsyncした時と差ができる．これを検知して，ユーザに注意を喚起する仕組みがある（rake check_previous)．これはsyncした時に自動的に呼び出される．違いの出たfilesを修正した後に強制的に同期をとるためのコマンドとして，force_syncが用意されている．
 
 !!rake chenv
 hikiシステム上でerrorが出た場合に試してほしい．errorの状況は個人の設定によってちがうため，対処法の実装は網羅されていない．うまくいかない場合は西谷にIssuesとして投げるように．
@@ -94,9 +95,28 @@ hikiシステム上でerrorが出た場合に試してほしい．errorの状況
 keynoteでページを追加するとhikiでの参照(attach_view)にずれが生じる．いまのところこれを解消する方法はなく手で修正を加える必要がある．ずれが単純な場合には，
 <<< bash
 cp hikiutils_bob.hiki tmp.hiki
-rake increment 2 tmp.hiki
+rake increment 2 tmp.hiki > tmp2.hiki
 >>>
 としてattach_viewのページ番号を単純に増加させることができる．
+
+!!rake number
+前節同じくfigs内の通し番号が変わった時にattach_viewの通し番号を調整するコマンド．
+<<< bash
+cp hikiutils_bob.hiki tmp.hiki
+rake number 3 tmp.hiki > tmp2.hiki
+>>>
+とすると
+<<<
+8c8
+< {{attach_view(hikiutils_bob.002.jpeg,hikiutils_bob)}}
+---
+> {{attach_view(hikiutils_bob.003.jpeg,hikiutils_bob)}}
+21c21
+< {{attach_view(hikiutils_bob.003.jpeg,hikiutils_bob)}}
+---
+> {{attach_view(hikiutils_bob.004.jpeg,hikiutils_bob)}}
+>>>
+などと番号を3から順に振り替えてくれる．
 
 !githubによる同期
 # git initが済んでいると仮定
