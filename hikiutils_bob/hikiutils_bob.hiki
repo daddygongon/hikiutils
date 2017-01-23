@@ -102,8 +102,8 @@ rake increment 2 tmp.hiki > tmp2.hiki
 !!rake number
 前節同じくfigs内の通し番号が変わった時にattach_viewの通し番号を調整するコマンド．
 <<< bash
-cp hikiutils_bob.hiki tmp.hiki
-rake number 3 tmp.hiki > tmp2.hiki
+rake number 3 hikiutils_bob.hiki > tmp.hiki
+cp tmp.hiki hikiutils_bob.hiki
 >>>
 とすると
 <<<
