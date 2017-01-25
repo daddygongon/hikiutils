@@ -16,6 +16,14 @@ task :default do
   system 'rake -T'
 end
 
+desc "latex conversion whole hiki files in the current dir."
+task :latex_all do
+  p entries=Dir.entries('.')
+  p sub_files=[]
+  p main_file=[]
+  exit
+end
+
 desc "latex conversion FILE1"
 task :latex => [:latex_base] do
   exit
@@ -59,6 +67,7 @@ task :latex_base do
   latex_dir= 'latex_dir'
   Dir.mkdir(latex_dir) unless Dir.exist?(latex_dir)
   p file_name = ARGV[1]
+  p file_name = file_name.include?('.hiki')? file_name : file_name+'.hiki'
   p tex_name = File.basename(file_name,'.hiki')+'.tex'
   p $save_name = ARGV[2] || File.join(latex_dir,tex_name)
   pre_name = File.join(latex_dir,'pre.tex')
@@ -81,7 +90,7 @@ task :latex_base do
   lines.each{|line|
     if m=line.match(/\\includegraphics\[width=6cm\]\{(.+)\}/)
       p m
-      p line="\\includegraphics\[width=6cm,bb=0 0 442 332\]\{#{m[1]}\}\n"
+      p line="\\includegraphics\[width=6cm,bb=0 0 442 500\]\{#{m[1]}\}\n" #keynoteからの出力ではebbが狂っているかも．
       cont << line
 =begin
     elsif line.include?('\begin{figure}[htbp]\begin{center}')
