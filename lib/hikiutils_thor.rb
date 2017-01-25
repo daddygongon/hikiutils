@@ -16,7 +16,6 @@ module Hikithor
   DATA_FILE=File.join(ENV['HOME'],'.hikirc')
   attr_accessor :src, :target, :editor_command, :browser, :data_name, :l_dir
 
-
   class CLI < Thor
    def initialize(*args)
       super
