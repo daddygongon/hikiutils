@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 require 'systemu'
-require 'tempfile'
 # -*- coding: utf-8 -*-
 begin
   target_dir = File.readlines('./.hikirc')[0].chomp
@@ -14,103 +13,6 @@ basename = (dirnames[-1]=='hikis')? dirnames[-2] : dirnames[-1]
 
 task :default do
   system 'rake -T'
-end
-
-desc "latex conversion whole hiki files in the current dir."
-task :latex_all do
-  p entries=Dir.entries('.')
-  p sub_files=[]
-  p main_file=[]
-  exit
-end
-
-desc "latex conversion FILE1"
-task :latex => [:latex_base] do
-  exit
-end
-
-desc "latex conversion FILE1 with wrap format"
-task :latex_wrap => [:latex_base, :change_wrap] do
-  exit
-end
-
-desc "change latex figures to wrap format"
-task :change_wrap do
-  p 'change_wrap'
-  lines = File.readlines($save_name)
-
-  cont = ""
-  lines.each{|line|
-    if line.include?('\begin{figure}[htbp]\begin{center}')
-      p line
-      cont << '\begin{wrapfigure}{r}{8cm}'+"\n"
-      cont << '\vspace{-2\baselineskip}'+"\n"
-      cont << '\begin{center}'+"\n"
-    elsif line.include?('\label{default}\end{center}\end{figure}')
-      p line
-      cont << '\end{center}'+"\n"
-      cont << '\vspace{2\baselineskip}'+"\n"
-      cont << '\end{wrapfigure}'+"\n"
-    else
-      cont << line
-    end
-  }
-  File.open($save_name,'w'){|file| file.print cont }
-
-  system("open #{$save_name}")
-  exit
-end
-
-
-desc "latex conversion FILE1(hiki) to FILE2(latex)"
-task :latex_base do
-  latex_dir= 'latex_dir'
-  Dir.mkdir(latex_dir) unless Dir.exist?(latex_dir)
-  p file_name = ARGV[1]
-  p file_name = file_name.include?('.hiki')? file_name : file_name+'.hiki'
-  p tex_name = File.basename(file_name,'.hiki')+'.tex'
-  p $save_name = ARGV[2] || File.join(latex_dir,tex_name)
-  pre_name = File.join(latex_dir,'pre.tex')
-  p pre_command = File.exist?(pre_name) ? '--pre '+pre_name : nil
-  lines = File.readlines(file_name)
-  cont = ""
-  lines.each{|line|
-    if m=line.match(/\{\{attach_view\((.*),(.*)\)\}\}/)
-      p line="\{\{attach_view\(#{m[1]}\)\}\}\n"
-    end
-    cont << line
-  }
-  tf1,tf2='tmp1.txt','tmp2.txt'
-  File.open(tf1,'w'){|file| file.print cont}
-  system "hiki2latex #{pre_command} #{tf1} > #{tf2}"
-  lines = File.readlines(tf2)
-  system "rm #{tf1} #{tf2}"
-
-  cont = ""
-  lines.each{|line|
-    if m=line.match(/\\includegraphics\[width=6cm\]\{(.+)\}/)
-      p m
-      p line="\\includegraphics\[width=6cm,bb=0 0 442 500\]\{#{m[1]}\}\n" #keynoteからの出力ではebbが狂っているかも．
-      cont << line
-=begin
-    elsif line.include?('\begin{figure}[htbp]\begin{center}')
-      p line
-      cont << '\begin{wrapfigure}{r}{8cm}'+"\n"
-      cont << '\vspace{-2\baselineskip}'+"\n"
-      cont << '\begin{center}'+"\n"
-    elsif line.include?('\label{default}\end{center}\end{figure}')
-      p line
-      cont << '\end{center}'+"\n"
-      cont << '\vspace{2\baselineskip}'+"\n"
-      cont << '\end{wrapfigure}'+"\n"
-=end
-    else
-      cont << line
-    end
-  }
-  File.open($save_name,'w'){|file| file.print cont }
-
-  system("open #{$save_name}")
 end
 
 desc "increment fig NUBERS in FILE"
