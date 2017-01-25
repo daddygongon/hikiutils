@@ -49,7 +49,7 @@
 本資料では，卒論の編集作業を効率化する図に示すようなシステムの使い方を紹介する．
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=6cm,bb=0 0 442 500]{./hikiutils_bob.002.jpeg}
+\includegraphics[width=6cm]{./hikiutils_bob.002.jpeg,hikiutils_bob}
 \caption{卒論編集システムの概要．}
 \label{default}\end{center}\end{figure}
 例えば，卒業生をyamaneとしよう．yamaneの個人のMacの自分のdirectory(hikiutils\_yamane)に幾つかのファイルを作成して卒論を書いているとする．これを指導教官(bob)が編集する必要がある．この同期には，Githubにより提供される共同作業環境をつかう．これだけでは編集中の文書の体裁がわかりにくい．そこで，hikiシステムにより容易にwebブラウザ上に完成形を表示しつつ執筆することが求められる．このような操作環境を提供するのが，hikiutils -iである．
@@ -69,7 +69,7 @@ hiki -v
 図にhikiutils\_bobのディレクトリー構成を示す．
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=6cm,bb=0 0 442 500]{./hikiutils_bob.003.jpeg}
+\includegraphics[width=6cm]{./hikiutils_bob.003.jpeg,hikiutils_bob}
 \caption{hikiutils\_bobのディレクトリー構成．}
 \label{default}\end{center}\end{figure}
 コマンド
@@ -141,7 +141,9 @@ introduction.hiki   &hikiutils\_bob\_introduction  \\
 %for inserting separate lines, use \hline, \cline{2-3} etc.
 
 figsディレクトリー内のファイルはhiki/cache/attache/hikiutils\_bobにcpされる．従って，hiki文書中で参照するには，
-\verb|{{attach_view(hogehoge.png)}}|
+\begin{quote}\begin{verbatim}
+{{attach_view(hogehoge.png)}}
+\end{verbatim}\end{quote}
 という記述が必要となる．
 
 \subsection{rake convert}

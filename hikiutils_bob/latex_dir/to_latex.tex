@@ -1,7 +1,4 @@
-\documentclass[12pt,a4paper]{jsarticle}
-\usepackage[dvipdfmx]{graphicx}
-\begin{document}
-\section{実際の最終形態(卒論=pdf)への変換}
+\subsection{実際の最終形態(卒論=pdf)への変換}
 hiki+keynoteで卒論の内容が出来てきたら，それを実際の最終形態つまり
 卒論のpdfへ変換する必要が出てきます．
 
@@ -35,14 +32,13 @@ DRY(Don't Repeat Yourself)原則さへ守ればいいのですから，ある段
 ただ，その前にhikiでできることをとことん突き詰めておきます．
 これは，単純な文書，たとえばabstractとか中間発表のhandout程度では十分に役に立つコマンド群です．
 
-\subsection{install}\begin{quote}\begin{verbatim}
+\subsubsection{install}\begin{quote}\begin{verbatim}
 hiki -i
 \end{verbatim}\end{quote}
 でinstallされています．新たに使うコマンド群は次の通りです．
-\begin{quote}\begin{verbatim}
+\begin{lstlisting}[style=]
 rake change_wrap     # change latex figures to wrap format
 rake latex           # latex conversion FILE1
 rake latex_base      # latex conversion FILE1(hiki) to FILE2(latex)
 rake latex_wrap      # latex conversion FILE1 with wrap format
-\end{verbatim}\end{quote}
-\end{document}
+\end{lstlisting}
