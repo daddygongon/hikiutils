@@ -1,10 +1,22 @@
-\contentsline {section}{\numberline {1}卒論の最終形態への変換手順}{1}
-\contentsline {section}{\numberline {2}hikiutils -iによる卒論作成システム}{1}
-\contentsline {section}{\numberline {3}hikiutilsのinstall}{2}
-\contentsline {section}{\numberline {4}個別ディレクトリーの構成}{3}
-\contentsline {section}{\numberline {5}一般的な執筆手順}{4}
-\contentsline {section}{\numberline {6}rakeが用意しているタスク}{4}
-\contentsline {subsection}{\numberline {6.1}rake sync}{5}
-\contentsline {subsection}{\numberline {6.2}rake convert}{5}
-\contentsline {subsection}{\numberline {6.3}rake force\_sync}{6}
-\contentsline {subsection}{\numberline {6.4}rake chenv}{6}
+\contentsline {subsection}{\numberline {0.1}hikiutilsのinstall}{4}
+\contentsline {subsection}{\numberline {0.2}個別ディレクトリーの構成}{4}
+\contentsline {subsection}{\numberline {0.3}一般的な執筆手順}{5}
+\contentsline {subsection}{\numberline {0.4}rakeが用意しているタスク}{6}
+\contentsline {subsubsection}{\numberline {0.4.1}rake sync}{6}
+\contentsline {subsubsection}{\numberline {0.4.2}rake convert}{7}
+\contentsline {subsubsection}{\numberline {0.4.3}rake force\_sync}{7}
+\contentsline {subsubsection}{\numberline {0.4.4}rake chenv}{7}
+\contentsline {subsubsection}{\numberline {0.4.5}rake increment}{7}
+\contentsline {subsubsection}{\numberline {0.4.6}rake number}{7}
+\contentsline {subsection}{\numberline {0.5}githubによる同期}{8}
+\contentsline {subsection}{\numberline {0.6}hiki\_helpで表示されるヘルプ内容}{8}
+\contentsline {subsubsection}{\numberline {0.6.1}hikiで卒論を書くときの初期化と掟}{9}
+\contentsline {subsubsection}{\numberline {0.6.2}図表：すべての図表をkeynoteにまとめる，タイトルを分かりやすく書く}{9}
+\contentsline {subsection}{\numberline {0.7}実際の最終形態(卒論=pdf)への変換}{11}
+\contentsline {subsubsection}{\numberline {0.7.1}install}{11}
+\contentsline {subsubsection}{\numberline {0.7.2}rake latex手順（個別ファイルの変換）}{12}
+\contentsline {paragraph}{注意}{12}
+\contentsline {subsubsection}{\numberline {0.7.3}rake latex\_all手順（ディレクトリーないの一括変換）}{13}
+\contentsline {paragraph}{下準備}{13}
+\contentsline {paragraph}{head.tex}{13}
+\contentsline {paragraph}{pre.tex}{14}

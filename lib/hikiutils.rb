@@ -86,20 +86,25 @@ EOS
         p target_dir=@src[:srcs][@target][:local_dir]
         File.open('./.hikirc','w'){|file| file.print "#{target_dir}\n"}
       end
-      cp_files=[['Rakefile_hiki_sync','Rakefile'],
-                ['hiki_help.yml','hiki_help.yml']]
-      cp_files.each{|files|
-        p source = File.join(File.expand_path('..', __FILE__),'templates',files[0])
-        p target = File.join(Dir.pwd,files[1])
-        FileUtils.cp(source,target,:verbose=>true)
-      }
-      ['figs','data'].each{|dir|
+      # make dirs
+      ['figs','data','latex_dir'].each{|dir|
         begin
           Dir.mkdir(dir)
         rescue => e
           print e
         end
       }
+      # cp default files
+      cp_files=[['Rakefile_hiki_sync','Rakefile'],
+                ['hiki_help.yml','hiki_help.yml'],
+                ['head.tex','latex_dir/head.tex'],
+                ['pre.tex','latex_dir/pre.tex']]
+      cp_files.each{|files|
+        p source = File.join(File.expand_path('..', __FILE__),'templates',files[0])
+        p target = File.join(Dir.pwd,files[1])
+        FileUtils.cp(source,target,:verbose=>true)
+      }
+      # arrange gitignore
       begin
         p cont=File.read('./.gitignore')
         unless cont.include?('.hikirc')
