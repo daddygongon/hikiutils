@@ -1,3 +1,4 @@
+{{toc}}
 !実際の最終形態(卒論=pdf)への変換
 hiki+keynoteで卒論の内容ができたら，それを卒論の最終形態つまりpdfへ変換する必要が出てきます．
 
@@ -39,15 +40,13 @@ rake latex_base      # latex conversion FILE1(hiki) to FILE2(latex)
 rake latex_wrap      # latex conversion FILE1 with wrap format
 >>>
 
- rake latex hikiutils_bob.hiki
-
-と打ち込むと
-
 !!rake latex手順（個別ファイルの変換）
  rake latex sync.hiki
 とすると，
  latex_dir/sync.tex
 にlatex変換後のファイルが生成します．これを，TeXShopでcommand_t変換します．
+
+*{{attach_anchor(sync.pdf,hikiutils_bob)}}
 
 うまくいかないときは，terminalで
  platex sync.tex
@@ -73,7 +72,11 @@ hikiの初めの部分は，
 
 必要な図は，figsから自動で取るようになっていますが，サイズは解像度が問題のときは手動で調整してください．
 
-!!rake latex_all手順（ディレクトリーないの一括変換）
+!!rake latex_all手順（ディレクトリー内の一括変換）
+pwdのdirectoryの同名のbasenameに.hikiの拡張子がついたファイルが用意されていて，
+ rake latex_all
+をおこなうと自動で全部を一体にまとめた文書へのlatex変換が出来上がります．
+たとえば，hikiutils_bob.hikiの記述を
 <<<
 bob% cat hikiutils_bob.hiki 
 !hikiutilsを用いた卒業論文作成
@@ -82,14 +85,12 @@ bob% cat hikiutils_bob.hiki
 ! [[hikiutils_bob_latex_all]]
 
 >>>
-とpwdのdirectoryの同名のbasenameに.hikiの拡張子がついたファイルが用意されていて，
- rake latex_all
-をおこなうと自動で全部を一体にまとめた文書へのlatex変換が出来上がります．
-開いているhikiutils_bob.texをTeXShopで変換してみてください．
+とすると，sync.tex, latex_all.texがlatex_dir内に変換されます．
+さらに，開いているhikiutils_bob.texをTeXShopで変換してみてください．
 
 うまくできないときは[[ここ|http://qiita.com/hideaki_polisci/items/3afd204449c6cdd995c9#51-texshopの設定]]を参照して自力で入れてみてください．だめならdonkey.
 
-{{attach_view(hikiutils_bob.pdf,hikiutils_bob)}}
+*{{attach_anchor(hikiutils_bob.pdf,hikiutils_bob)}}
 
 というようになります．
 

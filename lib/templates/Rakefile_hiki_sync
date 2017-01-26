@@ -38,7 +38,7 @@ task :latex_all do
       option="--listings --head latex_dir/head.tex -p "
       main_file=f_name
     else
-      option="-l 2 --listings -b "
+      option="-l 1 --listings -b "
     end
     convert_to_latex(file, option)
   }
