@@ -35,13 +35,28 @@ task :latex_all do
     next if file.include?('.hikirc')
     f_name =File.basename(file,'.hiki')
     if f_name==basename
-      option="--listings -p "
+      option="--listings --head latex_dir/head.tex -p "
       main_file=f_name
     else
       option="-l 2 --listings -b "
     end
     convert_to_latex(file, option)
   }
+  cont=""
+  File.readlines(File.join($latex_dir,"#{main_file}.tex")).each{|line|
+    if line.match(/\\section{(.+)}/) 
+      if m=line.match(/\\section{\\verb\|(.+)\|}/) 
+        p m
+        p reg_exp = Regexp.new("#{basename}_(.+)")
+        p m_t=m[1].match(reg_exp)[1]
+        line = "\\include{#{m_t}}\n"
+      else
+        line = ""
+      end
+    end
+    cont << line
+  }
+  File.open(File.join($latex_dir,"#{main_file}.tex"),'w'){|file| file.print cont}
   system "open latex_dir/#{main_file}.tex"
   exit
 end
@@ -103,7 +118,7 @@ def convert_to_latex(file_name, option=nil)
   cont = ""
   lines.each{|line|
     if m=line.match(/\\includegraphics\[width=6cm\]\{(.+)\}/)
-      p line="\\includegraphics\[width=6cm,bb=0 0 442 500\]\{#{m[1]}\}\n"
+      p line="\\includegraphics\[width=6cm,bb=0 0 442 500\]\{../figs/#{m[1]}\}\n"
       cont << line
     else
       cont << line
