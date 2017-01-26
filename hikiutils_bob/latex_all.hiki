@@ -70,10 +70,11 @@ hikiの初めの部分は，
 >>>
 と変換してくれます．
 
-必要な図は，figsから自動で取るようになっていますが，サイズは解像度が問題のときは手動で調整してください．
+必要な図は，figsから自動で取るようになっていますが，
+サイズや解像度が問題のときは手動で調整してください．
 
 !!rake latex_all手順（ディレクトリー内の一括変換）
-pwdのdirectoryの同名のbasenameに.hikiの拡張子がついたファイルが用意されていて，
+pwdのdirectoryと同名のbasenameに.hikiの拡張子がついたファイルが用意されていて，
  rake latex_all
 をおこなうと自動で全部を一体にまとめた文書へのlatex変換が出来上がります．
 たとえば，hikiutils_bob.hikiの記述を
@@ -88,7 +89,7 @@ bob% cat hikiutils_bob.hiki
 とすると，sync.tex, latex_all.texがlatex_dir内に変換されます．
 さらに，開いているhikiutils_bob.texをTeXShopで変換してみてください．
 
-うまくできないときは[[ここ|http://qiita.com/hideaki_polisci/items/3afd204449c6cdd995c9#51-texshopの設定]]を参照して自力で入れてみてください．だめならdonkey.
+うまくできないときは[[ここ|http://qiita.com/hideaki_polisci/items/3afd204449c6cdd995c9]]を参照して自力で入れてみてください．だめならdonkey.
 
 *{{attach_anchor(hikiutils_bob.pdf,hikiutils_bob)}}
 

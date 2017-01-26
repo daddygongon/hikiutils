@@ -102,7 +102,7 @@ def convert_to_latex(file_name, option=nil)
   pre_name = File.join($latex_dir,'pre.tex')
   p pre_command = File.exist?(pre_name) ? '--pre '+pre_name : nil
   lines = File.readlines(file_name)
-  cont = ""
+  cont = ""   #remove figs folder...
   lines.each{|line|
     if m=line.match(/\{\{attach_view\((.*),(.*)\)\}\}/)
       p line="\{\{attach_view\(#{m[1]}\)\}\}\n"
