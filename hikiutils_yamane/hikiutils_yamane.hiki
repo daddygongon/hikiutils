@@ -3,7 +3,7 @@
 !!関西学院大学理工学部情報科学科 27013554 山根亮太
 !!概要
 [[hikiutils_yamane_introduction]]
-!!既存システム
+!!既存システムの背景
 [[system]]
 !!hikiutils optparseバージョン
 !!!optparseとは
@@ -114,7 +114,7 @@ files)}
       exit
     end
 >>>
-{{attach_view(hogehoge.png, optparse_run)}}{{br}}
+{{attach_view(hogehoge.png, hikiutils_yamane)}}{{br}}
 ①HikiのHikiUtils::Command.run(ARGV)でhikiutils.rbのrunメソッドを呼ぶ{{br}}
 ②new(argv).executeでexecuteメソッドが実行される{{br}}
 !!!!!seld.runメソッド
@@ -457,7 +457,7 @@ HTML_TEMPLATE = <<EOS
 </html>                                                                         
 EOS                                                                          
 >>>
-{{attach_view(hogehoge.png, thor_initialize)}}{{br}}
+{{attach_view(hogehoge.png, hikiutils_yamane)}}{{br}}
 ①Hikithor::CLI.start(ARGV)が呼ばれる{{br}}
 ②initializeメソッドが呼ばれる{{br}}
 ③これではThorのinitializeメソッドが呼ばれない{{br}}
@@ -693,7 +693,7 @@ aration."
   end
 >>>
 showメソッドからeucメソッドまではコマンドの表示と実行を行う．{{br}}
-{{attach_view(hogehoge.png, thor_show)}}{{br}}
+{{attach_view(hogehoge.png, hikiutils_yamane)}}{{br}}
 ①コマンド名，コマンドの説明を一覧に表示させる{{br}}
 ②パブリックメソッドのコマンドを別のコマンド名でも実行できるようにする{{br}}
 ③コマンドの命令の実行コード{{br}}
