@@ -46,7 +46,7 @@ optparseでは，より宣言的なスタイルのコマンドライン解析手
 #opt.parse(ARGV)でコマンドラインを実際にparseする{{br}}
 !!!コードの解説
 !!!!hikiutilsの実行
-*Thorのコード
+*Thorの実行コード
 <<< ruby
 # -*- coding: utf-8 -*-                                                         
 require 'thor'
@@ -105,7 +105,7 @@ EOS
 #initializeメソッドが呼ばれる{{br}}
 #これではThorのinitializeメソッドが呼ばれない{{br}}
 #superを書くことでThorのinitializeメソッドが呼ばれる{{br}}
-*optparseのコード
+*optparseの実行コード
 <<< ruby
 # -*- coding: utf-8 -*-                                                         
 require 'kconv'
