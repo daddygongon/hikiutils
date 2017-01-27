@@ -2,29 +2,110 @@
 !卒業論文:コマンドラインツール作成ライブラリThorによるhikiutilsの書き換え
 !!関西学院大学理工学部情報科学科 27013554 山根亮太
 !!概要
-[[hikiutils_yamane_introduction]]
-!!既存システムの背景
-[[system]]
-!!hikiutils optparseバージョン
+本研究ではhikiの編集作業をより容易にするためのツールの開発を行った． 
+hikiは通常web上で編集を行っているが,GUIとCUIが混在しており,操作に不便な点がある. 
+そこで,編集操作が CUI で完結するために開発をされたのが hikiutils である. 
+しかし,そのユーザインタフェースにはコマンドが直感的でないという問題点がある. 
+そこで，Thorというコマンドラインツール作成ライブラリを用いる．
+optparseというコマンドライン解析ライブラリを使用しているhikiutilsを新たなコマンドライン解析ライブラリを使用することコマンドを書き換え，より直感的なコマンドにすることが可能である．
+!!序論
+!!!目的
+!!!既存システムの背景
+!!!!hiki
+hikiとはプログラミング言語Rubyを用いられることで作られたwikiクローンの１つである．
+hikiの主な特徴として
+*オリジナルwikiに似たシンプルな書式
+*プラグインによる機能拡張
+*出力するHTMLを柔軟に変更可能
+*ページにカテゴリ付けできる
+*CSSを使ったテーマ機能
+*携帯端末可能
+*InterWikiのサポート
+*HikiFarmに対応
+*ページの追加，編集がしやすい
+等がある
+!!!!hikiutils
+hikiutils は hiki の編集作業を容易に行うことができるよう にするツール群であり,プログラミング言語 Ruby のライブ ラリである gem フォーマットに従って提供されている. 
+hikiutils は CLI(Command Line Interface) で操作するため, オプション解析をおこなう必要がある. 
+gem には,この用途 に適合したライブラリがいくつも提供されている. 
+この中 で,あまり利用頻度は高くないが古くから開発され,使用例 が広く紹介されている optparse を利用している.
+!!研究の成果
+!!thorとoptparseのコードの比較
+!!!Thorとは
+Thorとは，コマンドラインツールの作成を支援するライブラリのことである． gitやbundlerのようにサブコマンドを含むコマンドラインツールを簡単に作成することができる．
+!!!!Thorの基本的な流れ
+#Thorを継承したクラスのパブリックメソッドがコマンドになる{{br}}
+#クラス.start(ARGV)でコマンドラインの処理をスタートする{{br}}
 !!!optparseとは
 optparseモジュールとは，getoptよりも簡便で，柔軟性に富み，かつ強力なコマンドライン解析ライブラリである．
 optparseでは，より宣言的なスタイルのコマンドライン解析手法，すなわちOptionParserのインスタンスでコマンドラインを解析するという手法をとっている．
 これを使うと，GNU/POSIX構文でオプションを指定できるだけでなく，使用法やヘルプメッセージの生成も行える．
 !!!!optparseの基本的な流れ
-①OptionParserオブジェクトoptを生成する{{br}}
-②オプションを取り扱うブロックをoptに登録する{{br}}
-③opt.parse(ARGV)でコマンドラインを実際にparseする{{br}}
-hikiutilsのoptparseバージョンを5つのファイル(hikiutils.rb,version.rb,tmarshal.rb,infodb.rb,hiki)で構成される．
+#OptionParserオブジェクトoptを生成する{{br}}
+#オプションを取り扱うブロックをoptに登録する{{br}}
+#opt.parse(ARGV)でコマンドラインを実際にparseする{{br}}
 !!!コードの解説
-!!!!hiki
+!!!!hikiutilsの実行
+*Thorのコード
 <<< ruby
-#!/usr/bin/env ruby                                                             
+# -*- coding: utf-8 -*-                                                         
+require 'thor'
+require 'kconv'
+require 'hikidoc'
+require 'erb'
+require "hikiutils/version"
+require "hikiutils/tmarshal"
+require "hikiutils/infodb"
+require 'systemu'
+require 'fileutils'
+require 'yaml'
+require 'pp'
 
-require "hikiutils"                                                      
+module Hikithor
 
-HikiUtils::Command.run(ARGV)  
+  DATA_FILE=File.join(ENV['HOME'],'.hikirc')
+  attr_accessor :src, :target, :editor_command, :browser, :data_name, :l_dir
+
+  class CLI < Thor
+   def initialize(*args)
+      super
+      @data_name=['nick_name','local_dir','local_uri','global_dir','global_uri']
+      data_path = File.join(ENV['HOME'], '.hikirc')
+      DataFiles.prepare(data_path)
+
+      file = File.open(DATA_FILE,'r')
+      @src = YAML.load(file.read)
+      file.close
+      @target = @src[:target]
+      @l_dir=@src[:srcs][@target][:local_dir]
+      browser = @src[:browser]
+      @browser = (browser==nil) ? 'firefox' : browser
+      p editor_command = @src[:editor_command]
+      @editor_command = (editor_command==nil) ? 'open -a mi' : editor_command
+   end
+HTML_TEMPLATE = <<EOS
+<!DOCTYPE html                                                                  
+    PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"                             
+    "http://www.w3.org/TR/html4/loose.dtd">                                     
+<html lang="ja">                                                                
+<html>                                                                          
+<head>                                                                          
+  <meta http-equiv="Content-Language" content="ja">                             
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">           
+  <title><%= title %></title>                                                   
+</head>                                                                         
+<body>
+  <%= body %>                                                                   
+</body>                                                                         
+</html>                                                                         
+EOS                                                                          
 >>>
-!!!!hikiutils.rb
+{{attach_view(hikiutils_yamane.003.jpg)}}{{br}}
+#Hikithor::CLI.start(ARGV)が呼ばれる{{br}}
+#initializeメソッドが呼ばれる{{br}}
+#これではThorのinitializeメソッドが呼ばれない{{br}}
+#superを書くことでThorのinitializeメソッドが呼ばれる{{br}}
+*optparseのコード
 <<< ruby
 # -*- coding: utf-8 -*-                                                         
 require 'kconv'
@@ -76,6 +157,249 @@ EOS
       read_sources
     end
 
+>>>
+{{attach_view(hikiutils_yamane.001.jpg)}}{{br}}
+#HikiのHikiUtils::Command.run(ARGV)でhikiutils.rbのrunメソッドを呼ぶ{{br}}
+#new(argv).executeでexecuteメソッドが実行される{{br}}
+
+!!!!コマンドの表示と実行
+*Thorのコード
+<<< ruby
+    desc 'show,--show', 'show sources'
+    map "--show" => "show"
+    def show
+      printf("target_no:%i\n",@src[:target])
+      printf("editor_command:%s\n",@src[:editor_command])
+      @i_size,@n_size,@l_size,@g_size=3,5,30,15 #i,g_size are fixed             
+      n_l,l_l=0,0
+      @src[:srcs].each_with_index{|src,i|
+        n_l =(n_l= src[:nick_name].length)>@n_size? n_l:@n_size
+        l_l =(l_l= src[:local_dir].length)>@l_size? l_l:@l_size
+      }
+      @n_size,@l_size=n_l,l_l
+      command = Command.new
+      header = command.display_format('id','name','local directory','global uri\
+',@i_size,@n_size,@l_size,@g_size)
+
+      puts header
+      puts '-' * header.size
+
+      @src[:srcs].each_with_index{|src,i|
+        target = i==@src[:target] ? '*':' '
+        id = target+i.to_s
+        name=src[:nick_name]
+        local=src[:local_dir]
+        global=src[:global_uri]
+        puts command.display_format(id,name,local,global,@i_size,@n_size,@l_siz\
+e,@g_size)
+      }
+    end
+
+    desc 'version,--version,-v', 'show program version'
+    map "--version" => "version"
+    map "-v" => "version"
+    def version
+      puts HikiUtils::VERSION
+    end
+
+    desc 'add,--add', 'add sources info'
+    map "--add" => "add"
+    option :add
+    def add
+      cont = {}
+      @data_name.each{|name|
+        printf("%s ? ", name)
+        tmp = STDIN.gets.chomp
+        cont[name.to_sym] = tmp
+      }
+      @src[:srcs] << cont
+      show
+    end
+
+    desc 'target VAL,--target VAL', 'set target id'
+    map "--target" => "target"
+    def target(val)
+      @src[:target] = val.to_i
+      show
+    end
+
+    desc 'edit FILE,--edit FILE', 'open file'
+    map "--edit" => "edit"
+    def edit(file)
+      t_file=File.join(@l_dir,'text',file)
+      if !File.exist?(t_file) then
+        file=File.open(t_file,'w')
+        file.close
+        File.chmod(0777,t_file)
+      end
+      p command="#{@editor_command} #{t_file}"
+      system command
+    end
+
+    desc 'list [FILE],--list [FILE]', 'list files'
+    map "--list" => "list"
+    def list(file)
+      file ='' if file==nil
+      t_file=File.join(@l_dir,'text')
+      print "target_dir : "+t_file+"\n"
+      print `cd #{t_file} ; ls -lt #{file}*`
+    end
+
+    desc 'update FILE,--update FILE', 'update file'
+    map "--update" => "update"
+    def update(file0)
+      file = (file0==nil) ? 'FrontPage' : file0
+      t_file=File.join(@l_dir,'cache/parser',file)
+      FileUtils.rm(t_file,:verbose=>true)
+      info=InfoDB.new(@l_dir)
+      info.update(file0)
+      l_path = @src[:srcs][@target][:local_uri]
+      p command="open -a #{@browser} \'#{l_path}/?#{file}\'"
+      system command
+      p "If you get open error, try rackup from the src_dir."
+      p "If you get 整形式になっていません, try login as a valid user."
+    end
+
+    desc 'rsync,--rsync', 'rsync files'
+    map "--rsync" => "rsync"
+    option :rsync
+    def rsync
+      p local = @l_dir
+      p global = @src[:srcs][@target][:global_dir]
+      p command="rsync -auvz -e ssh #{local}/ #{global}"
+      system command
+    end
+
+    desc 'datebase FILE,--database FILE', 'read datebase file'
+    map "--database" => "database"
+    def database(file_name)
+      info=InfoDB.new(@l_dir)
+      p info.show(file_name)
+    end
+
+    desc 'display FILE,--display FILE', 'display converted hikifile'
+    map "--display" => "display"
+    def display(file)
+      body = HikiDoc.to_html(File.read(file))
+      source = HTML_TEMPLATE
+      title = File.basename(file)
+      erb = ERB.new(source)
+      t = File.open(file+".html",'w')
+      t.puts(erb.result(binding))
+      t.close
+      system "open #{t.path}"
+    end
+
+    desc 'checkdb,--checkdb', 'check database file'
+    map "--checkdb" => "checkdb"
+    def checkdb
+      result= InfoDB.new(@l_dir).show_inconsist
+      print (result=='') ? "db agrees with text dir.\n" : result
+    end
+
+    desc 'remove [FILE],--remove [FILE]', 'remove files'
+    map "--remove" => "remove"
+    def remove(file_name)
+      p text_path = File.join(@l_dir,'text',file_name)
+      p attach_path = File.join(@l_dir,'cache/attach',file_name)
+      begin
+        File.delete(text_path)
+      rescue => evar
+        puts evar.to_s
+      end
+      begin
+        Dir.rmdir(attach_path)
+      rescue => evar
+        puts evar.to_s
+      end
+
+      info=InfoDB.new(@l_dir)
+      p "delete "
+      del_file=info.delete(file_name)
+      info.show_link(file_name)
+      info.dump
+    end
+
+    desc 'move [FILE],--move [FILE]', 'move file'
+    map "--move" => "move"
+    def move(files)
+      begin
+        p file1_path = File.join(@l_dir,'text',files[0])
+        p file2_path = File.join(@l_dir,'text',files[1])
+      rescue => evar
+        puts evar.to_s
+        puts "error on move_files, check the input format, especially comma sep\
+aration."
+        exit
+      end
+      return if file1_path==file2_path
+      if File.exist?(file2_path) then
+        print ("moving target #{files[1]} exists.\n")
+        print ("first remove#{files[1]}.\n")
+        return
+      else
+        File.rename(file1_path,file2_path)
+      end
+
+      info=InfoDB.new(@l_dir)
+
+      db = info.db
+
+      pp file0=db[files[0]]
+      db.delete(files[0])
+      db[files[1]]=file0
+      db[files[1]][:title]=files[1] if db[files[1]][:title]==files[0]
+      pp db[files[1]]
+
+      db.each{|ele|
+        ref = ele[1][:references]
+        if ref.include?(files[0]) then
+          p link_file=ele[0]
+          link_path = File.join(@l_dir,'text',link_file)
+
+          cont = File.read(link_path)
+          if Kconv.iseuc(cont) then
+            print "euc\n"
+            utf8_cont=cont.toutf8
+            utf8_cont.gsub!(/#{files[0]}/,"#{files[1]}")
+            cont = utf8_cont.toeuc
+          else
+            cont.gsub!(/#{files[0]}/,"#{files[1]}")
+          end
+
+          File.write(link_path,cont)
+
+          ref.delete(files[0])
+          ref << files[1]
+
+          p cache_path = File.join(@l_dir,'cache/parser',link_file)
+          begin
+            File.delete(cache_path)
+          rescue => evar
+            puts evar.to_s
+          end
+        end
+      }
+
+      info.dump
+    end
+
+    desc 'euc FILE,--euc FILE', 'translate file to euc'
+    map "--euc" => "euc"
+    def euc(file)
+      p file_path = File.join(@l_dir,'text',file)
+      cont = File.readlines(file_path)
+      cont.each{|line| puts line.toeuc }
+    end
+  end
+>>>
+showメソッドからeucメソッドまではコマンドの表示と実行を行う．{{br}}
+{{attach_view(hikiutils_yamane.002.jpg)}}{{br}}
+#コマンド名，コマンドの説明を一覧に表示させる{{br}}
+#パブリックメソッドのコマンドを別のコマンド名でも実行できるようにする{{br}}
+#コマンドの命令の実行コード{{br}}
+*optparseのコード
+<<< ruby
     def execute
       @argv << '--help' if @argv.size==0
       command_parser = OptionParser.new do |opt|
@@ -85,24 +409,17 @@ EOS
         }
         opt.on('-s', '--show','show sources') {show_sources}
         opt.on('-a', '--add','add sources info') {add_sources }
-        opt.on('-t', '--target VAL','set target id') {|val| set_target(val)\
- }
+        opt.on('-t', '--target VAL','set target id') {|val| set_target(val)}
         opt.on('-e', '--edit FILE','open file') {|file| edit_file(file) }
-        opt.on('-l', '--list [FILE]','list files') {|file| list_files(file)\
- }
-        opt.on('-u', '--update FILE','update file') {|file| update_file(fil\
-e) }
+        opt.on('-l', '--list [FILE]','list files') {|file| list_files(file)}
+        opt.on('-u', '--update FILE','update file') {|file| update_file(file) }
         opt.on('-r', '--rsync','rsync files') {rsync_files}
-        opt.on('--database FILE','read database file') {|file| db_file(file\
-)}
-        opt.on('--display FILE','display converted hikifile') {|file| displ\
-ay(file)}
+        opt.on('--database FILE','read database file') {|file| db_file(file)}
+        opt.on('--display FILE','display converted hikifile') {|file| display(file)}
         opt.on('-c', '--checkdb','check database file') {check_db}
         opt.on('--remove FILE','remove file') {|file| remove_file(file)}
-        opt.on('--move FILES','move file1,file2',Array) {|files| move_file(\
-files)}
-        opt.on('--euc FILE','translate file to euc') {|file| euc_file(file)\
- }
+        opt.on('--move FILES','move file1,file2',Array) {|files| move_file(files)}
+        opt.on('--euc FILE','translate file to euc') {|file| euc_file(file)}
         opt.on('--initialize','initialize source directory') {dir_init() }
       end
       begin
@@ -112,18 +429,8 @@ files)}
       end
       dump_sources
       exit
-    end
->>>
-{{attach_view(hogehoge.png, hikiutils_yamane)}}{{br}}
-①HikiのHikiUtils::Command.run(ARGV)でhikiutils.rbのrunメソッドを呼ぶ{{br}}
-②new(argv).executeでexecuteメソッドが実行される{{br}}
-!!!!!seld.runメソッド
-"hikiutils: provide utilities for helping hiki editing.\n"を表示し，executeメソッドを実行する
-!!!!!initializeメソッド
-!!!!!executeメソッド
-OptionParserオブジェクトoptを生成し．optにコマンドを登録する．
-!!!!!displayメソッド〜add_sourcesメソッド
-<<< ruby
+    end    
+    
     def dir_init()
       begin
         p target_dir = File.readlines('./.hikirc')[0]
@@ -396,308 +703,6 @@ OptionParserオブジェクトoptを生成し．optにコマンドを登録す�
 end
 >>>
 displayメソッドからadd_sourcesメソッドまではoptで登録されたコマンドの実行コードが書かれている．
-!!hikiutils thorバージョン
-!!!Thorとは
-Thorとは，コマンドラインツールの作成を支援するライブラリのことである． gitやbundlerのようにサブコマンドを含むコマンドラインツールを簡単に作成することができる．
-!!!!Thorの基本的な流れ
-①Thorを継承したクラスのパブリックメソッドがコマンドになる{{br}}
-②クラス.start(ARGV)でコマンドラインの処理をスタートする{{br}}
-!!!コードの解説
-!!!!hikiutils_thor.rb
-<<< ruby
-# -*- coding: utf-8 -*-                                                         
-require 'thor'
-require 'kconv'
-require 'hikidoc'
-require 'erb'
-require "hikiutils/version"
-require "hikiutils/tmarshal"
-require "hikiutils/infodb"
-require 'systemu'
-require 'fileutils'
-require 'yaml'
-require 'pp'
-
-module Hikithor
-
-  DATA_FILE=File.join(ENV['HOME'],'.hikirc')
-  attr_accessor :src, :target, :editor_command, :browser, :data_name, :l_dir
-
-  class CLI < Thor
-   def initialize(*args)
-      super
-      @data_name=['nick_name','local_dir','local_uri','global_dir','global_uri']
-      data_path = File.join(ENV['HOME'], '.hikirc')
-      DataFiles.prepare(data_path)
-
-      file = File.open(DATA_FILE,'r')
-      @src = YAML.load(file.read)
-      file.close
-      @target = @src[:target]
-      @l_dir=@src[:srcs][@target][:local_dir]
-      browser = @src[:browser]
-      @browser = (browser==nil) ? 'firefox' : browser
-      p editor_command = @src[:editor_command]
-      @editor_command = (editor_command==nil) ? 'open -a mi' : editor_command
-   end
-HTML_TEMPLATE = <<EOS
-<!DOCTYPE html                                                                  
-    PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"                             
-    "http://www.w3.org/TR/html4/loose.dtd">                                     
-<html lang="ja">                                                                
-<html>                                                                          
-<head>                                                                          
-  <meta http-equiv="Content-Language" content="ja">                             
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">           
-  <title><%= title %></title>                                                   
-</head>                                                                         
-<body>
-  <%= body %>                                                                   
-</body>                                                                         
-</html>                                                                         
-EOS                                                                          
->>>
-{{attach_view(hogehoge.png, hikiutils_yamane)}}{{br}}
-①Hikithor::CLI.start(ARGV)が呼ばれる{{br}}
-②initializeメソッドが呼ばれる{{br}}
-③これではThorのinitializeメソッドが呼ばれない{{br}}
-④superを書くことでThorのinitializeメソッドが呼ばれる{{br}}
-!!!!!showメソッド〜eucメソッド
-<<< ruby
-    desc 'show,--show', 'show sources'
-    map "--show" => "show"
-    def show
-      printf("target_no:%i\n",@src[:target])
-      printf("editor_command:%s\n",@src[:editor_command])
-      @i_size,@n_size,@l_size,@g_size=3,5,30,15 #i,g_size are fixed             
-      n_l,l_l=0,0
-      @src[:srcs].each_with_index{|src,i|
-        n_l =(n_l= src[:nick_name].length)>@n_size? n_l:@n_size
-        l_l =(l_l= src[:local_dir].length)>@l_size? l_l:@l_size
-      }
-      @n_size,@l_size=n_l,l_l
-      command = Command.new
-      header = command.display_format('id','name','local directory','global uri\
-',@i_size,@n_size,@l_size,@g_size)
-
-      puts header
-      puts '-' * header.size
-
-      @src[:srcs].each_with_index{|src,i|
-        target = i==@src[:target] ? '*':' '
-        id = target+i.to_s
-        name=src[:nick_name]
-        local=src[:local_dir]
-        global=src[:global_uri]
-        puts command.display_format(id,name,local,global,@i_size,@n_size,@l_siz\
-e,@g_size)
-      }
-    end
-
-    desc 'version,--version,-v', 'show program version'
-    map "--version" => "version"
-    map "-v" => "version"
-    def version
-      puts HikiUtils::VERSION
-    end
-
-    desc 'add,--add', 'add sources info'
-    map "--add" => "add"
-    option :add
-    def add
-      cont = {}
-      @data_name.each{|name|
-        printf("%s ? ", name)
-        tmp = STDIN.gets.chomp
-        cont[name.to_sym] = tmp
-      }
-      @src[:srcs] << cont
-      show
-    end
-
-    desc 'target VAL,--target VAL', 'set target id'
-    map "--target" => "target"
-    def target(val)
-      @src[:target] = val.to_i
-      show
-    end
-
-    desc 'edit FILE,--edit FILE', 'open file'
-    map "--edit" => "edit"
-    def edit(file)
-      t_file=File.join(@l_dir,'text',file)
-      if !File.exist?(t_file) then
-        file=File.open(t_file,'w')
-        file.close
-        File.chmod(0777,t_file)
-      end
-      p command="#{@editor_command} #{t_file}"
-      system command
-    end
-
-    desc 'list [FILE],--list [FILE]', 'list files'
-    map "--list" => "list"
-    def list(file)
-      file ='' if file==nil
-      t_file=File.join(@l_dir,'text')
-      print "target_dir : "+t_file+"\n"
-      print `cd #{t_file} ; ls -lt #{file}*`
-    end
-
-    desc 'update FILE,--update FILE', 'update file'
-    map "--update" => "update"
-    def update(file0)
-      file = (file0==nil) ? 'FrontPage' : file0
-      t_file=File.join(@l_dir,'cache/parser',file)
-      FileUtils.rm(t_file,:verbose=>true)
-      info=InfoDB.new(@l_dir)
-      info.update(file0)
-      l_path = @src[:srcs][@target][:local_uri]
-      p command="open -a #{@browser} \'#{l_path}/?#{file}\'"
-      system command
-      p "If you get open error, try rackup from the src_dir."
-      p "If you get 整形式になっていません, try login as a valid user."
-    end
-
-    desc 'rsync,--rsync', 'rsync files'
-    map "--rsync" => "rsync"
-    option :rsync
-    def rsync
-      p local = @l_dir
-      p global = @src[:srcs][@target][:global_dir]
-      p command="rsync -auvz -e ssh #{local}/ #{global}"
-      system command
-    end
-
-    desc 'datebase FILE,--database FILE', 'read datebase file'
-    map "--database" => "database"
-    def database(file_name)
-      info=InfoDB.new(@l_dir)
-      p info.show(file_name)
-    end
-
-    desc 'display FILE,--display FILE', 'display converted hikifile'
-    map "--display" => "display"
-    def display(file)
-      body = HikiDoc.to_html(File.read(file))
-      source = HTML_TEMPLATE
-      title = File.basename(file)
-      erb = ERB.new(source)
-      t = File.open(file+".html",'w')
-      t.puts(erb.result(binding))
-      t.close
-      system "open #{t.path}"
-    end
-
-    desc 'checkdb,--checkdb', 'check database file'
-    map "--checkdb" => "checkdb"
-    def checkdb
-      result= InfoDB.new(@l_dir).show_inconsist
-      print (result=='') ? "db agrees with text dir.\n" : result
-    end
-
-    desc 'remove [FILE],--remove [FILE]', 'remove files'
-    map "--remove" => "remove"
-    def remove(file_name)
-      p text_path = File.join(@l_dir,'text',file_name)
-      p attach_path = File.join(@l_dir,'cache/attach',file_name)
-      begin
-        File.delete(text_path)
-      rescue => evar
-        puts evar.to_s
-      end
-      begin
-        Dir.rmdir(attach_path)
-      rescue => evar
-        puts evar.to_s
-      end
-
-      info=InfoDB.new(@l_dir)
-      p "delete "
-      del_file=info.delete(file_name)
-      info.show_link(file_name)
-      info.dump
-    end
-
-    desc 'move [FILE],--move [FILE]', 'move file'
-    map "--move" => "move"
-    def move(files)
-      begin
-        p file1_path = File.join(@l_dir,'text',files[0])
-        p file2_path = File.join(@l_dir,'text',files[1])
-      rescue => evar
-        puts evar.to_s
-        puts "error on move_files, check the input format, especially comma sep\
-aration."
-        exit
-      end
-      return if file1_path==file2_path
-      if File.exist?(file2_path) then
-        print ("moving target #{files[1]} exists.\n")
-        print ("first remove#{files[1]}.\n")
-        return
-      else
-        File.rename(file1_path,file2_path)
-      end
-
-      info=InfoDB.new(@l_dir)
-
-      db = info.db
-
-      pp file0=db[files[0]]
-      db.delete(files[0])
-      db[files[1]]=file0
-      db[files[1]][:title]=files[1] if db[files[1]][:title]==files[0]
-      pp db[files[1]]
-
-      db.each{|ele|
-        ref = ele[1][:references]
-        if ref.include?(files[0]) then
-          p link_file=ele[0]
-          link_path = File.join(@l_dir,'text',link_file)
-
-          cont = File.read(link_path)
-          if Kconv.iseuc(cont) then
-            print "euc\n"
-            utf8_cont=cont.toutf8
-            utf8_cont.gsub!(/#{files[0]}/,"#{files[1]}")
-            cont = utf8_cont.toeuc
-          else
-            cont.gsub!(/#{files[0]}/,"#{files[1]}")
-          end
-
-          File.write(link_path,cont)
-
-          ref.delete(files[0])
-          ref << files[1]
-
-          p cache_path = File.join(@l_dir,'cache/parser',link_file)
-          begin
-            File.delete(cache_path)
-          rescue => evar
-            puts evar.to_s
-          end
-        end
-      }
-
-      info.dump
-    end
-
-    desc 'euc FILE,--euc FILE', 'translate file to euc'
-    map "--euc" => "euc"
-    def euc(file)
-      p file_path = File.join(@l_dir,'text',file)
-      cont = File.readlines(file_path)
-      cont.each{|line| puts line.toeuc }
-    end
-  end
->>>
-showメソッドからeucメソッドまではコマンドの表示と実行を行う．{{br}}
-{{attach_view(hogehoge.png, hikiutils_yamane)}}{{br}}
-①コマンド名，コマンドの説明を一覧に表示させる{{br}}
-②パブリックメソッドのコマンドを別のコマンド名でも実行できるようにする{{br}}
-③コマンドの命令の実行コード{{br}}
-!!まとめ
 !!参考文献
 
 
