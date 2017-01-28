@@ -99,10 +99,14 @@ EOS
                 ['hiki_help.yml','hiki_help.yml'],
                 ['head.tex','latex_dir/head.tex'],
                 ['pre.tex','latex_dir/pre.tex']]
-      cp_files.each{|files|
+      cp_files.each_with_index{|files,i|
         p source = File.join(File.expand_path('..', __FILE__),'templates',files[0])
         p target = File.join(Dir.pwd,files[1])
-        FileUtils.cp(source,target,:verbose=>true)
+        if i==0 #force cp of new Rakefile
+          FileUtils.cp(source,target,:verbose=>true)
+        else #avoid latex files overwritten
+          FileUtils.cp(source,target,:verbose=>true) unless File.exist?(target)
+        end
       }
       # arrange gitignore
       begin
