@@ -2,14 +2,14 @@
 !卒業論文:コマンドラインツール作成ライブラリThorによるhikiutilsの書き換え
 !!関西学院大学理工学部情報科学科 27013554 山根亮太
 !!概要
+!!序論
+!!!目的
 本研究ではhikiの編集作業をより容易にするためのツールの開発を行った． 
 hikiは通常web上で編集を行っているが,GUIとCUIが混在しており,操作に不便な点がある. 
 そこで,編集操作が CUI で完結するために開発をされたのが hikiutils である. 
 しかし,そのユーザインタフェースにはコマンドが直感的でないという問題点がある. 
 そこで，Thorというコマンドラインツール作成ライブラリを用いる．
-optparseというコマンドライン解析ライブラリを使用しているhikiutilsを新たなコマンドライン解析ライブラリを使用することコマンドを書き換え，より直感的なコマンドにすることが可能である．
-!!序論
-!!!目的
+optparseというコマンドライン解析ライブラリを使用しているhikiutilsを新たなコマンドライン解析ライブラリを使用することでコマンドを書き換え，より直感的なコマンドにすることが可能である．
 !!!既存システムの背景
 !!!!hiki
 hikiとはプログラミング言語Rubyを用いられることで作られたwikiクローンの１つである．
@@ -30,6 +30,25 @@ hikiutils は CLI(Command Line Interface) で操作するため, オプション
 gem には,この用途 に適合したライブラリがいくつも提供されている. 
 この中 で,あまり利用頻度は高くないが古くから開発され,使用例 が広く紹介されている optparse を利用している.
 !!研究の成果
+研究の結果コマンドを以下のように書き換えることができた
+||変更前||変更後||コマンド一覧
+||add             || ||  add sources info
+||checkdb         || ||  check database file
+||datebase FILE   || ||  read datebase file
+||display FILE    ||　||  display converted hikifile
+||edit FILE       ||open||  open file
+||euc FILE        || ||  translate file to euc
+||help [COMMAND]  || ||  Describe available commands or one specific command
+||list [FILE]     ||ls||  list files
+||move [FILE]     ||mv|  move file
+||remove [FILE]   ||rm||  remove files
+||rsync           || ||  rsync files
+||show            || ||lsとかぶる．
+||target VAL      ||cd||  set target id
+||update FILE     ||touch||  update file
+||version         || ||  show program version
+hikiutilsのコマンドライン解析ツールをoptparseからthorに換えることでコマンドの書き換えをすることができた．
+また，プログラムのコードもoptparseよりthorのほうがコードを短く書け，簡単にコマンドを作成することができた．
 !!thorとoptparseのコードの比較
 !!!Thorとは
 Thorとは，コマンドラインツールの作成を支援するライブラリのことである． gitやbundlerのようにサブコマンドを含むコマンドラインツールを簡単に作成することができる．
@@ -46,7 +65,16 @@ optparseでは，より宣言的なスタイルのコマンドライン解析手
 #opt.parse(ARGV)でコマンドラインを実際にparseする{{br}}
 !!!コードの解説
 !!!!hikiutilsの実行
-*Thorの実行コード
+!!!!!Thorの実行コード
+hiki_thor
+<<< ruby
+#!/usr/bin/env ruby                                                             
+
+require "hikiutils_thor"
+
+Hikithor::CLI.start(ARGV)
+>>>
+hikiutils.rb 
 <<< ruby
 # -*- coding: utf-8 -*-                                                         
 require 'thor'
@@ -100,12 +128,27 @@ HTML_TEMPLATE = <<EOS
 </html>                                                                         
 EOS                                                                          
 >>>
+*initializeメソッドのsuper
 {{attach_view(hikiutils_yamane.003.jpg)}}{{br}}
 #Hikithor::CLI.start(ARGV)が呼ばれる{{br}}
 #initializeメソッドが呼ばれる{{br}}
 #これではThorのinitializeメソッドが呼ばれない{{br}}
 #superを書くことでThorのinitializeメソッドが呼ばれる{{br}}
-*optparseの実行コード
+このようにCLIクラスのinitializeメソッドにsuperを書くことでThorのinitializeが呼ばれる．
+*実行方法
+{{attach_view(hikiutils_yamane)}}{{br}}
+#hiki_thorのHikithor::CLI.start(ARGV)でhikiutils_thor.rbのCLIクラスを呼ぶ{{br}}
+#hikiutils_thor.rbのCLIクラスのメソッドを順に実行していく{{br}}
+!!!!!optparseの実行コード
+hiki
+<<< ruby
+#!/usr/bin/env ruby                                                             
+
+require "hikiutils"
+
+HikiUtils::Command.run(ARGV)
+>>>
+hikiutils_thor.rb
 <<< ruby
 # -*- coding: utf-8 -*-                                                         
 require 'kconv'
@@ -161,9 +204,10 @@ EOS
 {{attach_view(hikiutils_yamane.001.jpg)}}{{br}}
 #HikiのHikiUtils::Command.run(ARGV)でhikiutils.rbのrunメソッドを呼ぶ{{br}}
 #new(argv).executeでexecuteメソッドが実行される{{br}}
-
+このようにoptparseでは実行を行うためのメソッドが必要であるが，Thorではクラスをのメソッドを順に実行していくため
+実行を行うためのメソッドが必要ない．
 !!!!コマンドの表示と実行
-*Thorのコード
+!!!!!Thorのコード
 <<< ruby
     desc 'show,--show', 'show sources'
     map "--show" => "show"
@@ -398,7 +442,7 @@ showメソッドからeucメソッドまではコマンドの表示と実行を�
 #コマンド名，コマンドの説明を一覧に表示させる{{br}}
 #パブリックメソッドのコマンドを別のコマンド名でも実行できるようにする{{br}}
 #コマンドの命令の実行コード{{br}}
-*optparseのコード
+!!!!!optparseのコード
 <<< ruby
     def execute
       @argv << '--help' if @argv.size==0
@@ -703,6 +747,8 @@ showメソッドからeucメソッドまではコマンドの表示と実行を�
 end
 >>>
 displayメソッドからadd_sourcesメソッドまではoptで登録されたコマンドの実行コードが書かれている．
+よって，optparseではOptionParserオブジェクトoptを生成を行い，コマンドをoptに登録して一覧に表示するメソッドとそれぞれコマンドの実行処理が書かれたメソッドがあるが，
+thorではそれぞれのdescで一覧を表示しmapとパブリックメソッドでコマンドの実行処理を行うためコードが短くなる．
 !!参考文献
 
 
