@@ -101,6 +101,7 @@ latex_dir内に幾つかのtex雛形を入れておく必要があります．
 とhikiutils環境を再度初期化すると，自動でインストールする設定です．
 なかったら手動で作ってください．
 !!!!head.tex
+題目，学生番号，氏名を変更する．年月をチェック．
 <<< latex
 bob% cat head.tex
 \title{卒業論文\\
@@ -113,6 +114,8 @@ bob% cat head.tex
 >>>
 
 !!!!pre.tex
+あまり変更しないほうがいいが，いずれいじる．例えば，フォントポイント数を10から12ptに変える，
+\pagestyle{empty}を外すなど．
 <<< latex
 bob% cat pre.tex
 \documentclass[10pt,a4j]{article}

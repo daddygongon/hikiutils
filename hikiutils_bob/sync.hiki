@@ -123,7 +123,7 @@ cp tmp.hiki hikiutils_bob.hiki
 などと番号を3から順に振り替えてくれる．
 
 !!githubによる同期
-# git initが済んでいると仮定
+# git init, forkが済んでいると仮定
 # upstream, originの確認
 ## bob% git remote -v
 # git push作業
@@ -131,16 +131,15 @@ cp tmp.hiki hikiutils_bob.hiki
 ## git commit -m 'first commit'
 ## git push origin master
 # githubでbobへpull requestをかける
-# 編集後
+# bobの編集後，通知がくる．まつことなく作業してもok．
 # git pull作業
-## git pull upstream origin
+## git pull upstream master
 これがうまくいかん時は聞いてください．
 
+!!!caption:卒論編集時のgithubによる同期のシーケンス図．
+{{attach_view(hikiutils_bob.004.jpeg,hikiutils_bob)}}
 
-hikiutil関連のヘルプ
-*hikiutil関連のヘルプ
-
-!!hiki_helpの出力
+!!hikiutil関連のヘルプ
 !!!hikiで卒論を書くときの初期化と掟
 *開発メモ:figs,dataも作成
 *目的：西谷が後で迷わないように決まったファイル構造を堅持すべし

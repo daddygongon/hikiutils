@@ -7,6 +7,7 @@ hiki+keynoteで卒論の内容ができたら，それを卒論の最終形態�
 文書として完成度を高めるには，latexで細かい設定を調整する必要がどうしても出てきます．
 
 具体的には，
+
 \begin{enumerate}
 \item 図の配置を調整するwrapの数値調整
 \item 参照文献の記述
@@ -52,6 +53,7 @@ rake latex sync.hiki
 latex_dir/sync.tex
 \end{verbatim}\end{quote}
 にlatex変換後のファイルが生成します．これを，TeXShopでcommand\_t変換します．
+
 \begin{itemize}
 \item \verb|{{attach_anchor(sync.pdf,hikiutils_bob)}}|
 \end{itemize}
@@ -101,6 +103,7 @@ bob% cat hikiutils_bob.hiki
 さらに，開いているhikiutils\_bob.texをTeXShopで変換してみてください．
 
 うまくできないときは\verb|ここ(http://qiita.com/hideaki_polisci/items/3afd204449c6cdd995c9)|を参照して自力で入れてみてください．だめならdonkey.
+
 \begin{itemize}
 \item \verb|{{attach_anchor(hikiutils_bob.pdf,hikiutils_bob)}}|
 \end{itemize}
@@ -114,7 +117,9 @@ hiki -i
 とhikiutils環境を再度初期化すると，自動でインストールする設定です．
 なかったら手動で作ってください．
 
-\paragraph{head.tex}\begin{lstlisting}[style=]
+\paragraph{head.tex}
+題目，学生番号，氏名を変更する．年月をチェック．
+\begin{lstlisting}[style=]
 bob% cat head.tex
 \title{卒業論文\\
 \vspace{4cm} hikiutilsを用いた\\卒業論文作成}
@@ -124,7 +129,10 @@ bob% cat head.tex
 \maketitle
 
 \end{lstlisting}
-\paragraph{pre.tex}\begin{lstlisting}[style=]
+\paragraph{pre.tex}
+あまり変更しないほうがいいが，いずれいじる．例えば，フォントポイント数を10から12ptに変える，
+\pagestyle{empty}を外すなど．
+\begin{lstlisting}[style=]
 bob% cat pre.tex
 \documentclass[10pt,a4j]{article}
 

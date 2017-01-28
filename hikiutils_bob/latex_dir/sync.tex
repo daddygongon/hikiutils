@@ -52,21 +52,27 @@ drwxr-xr-x  26 bob  501     884  1 20 11:00 ../
 
 keynoteで図を作成して，hikiutils\_bob.hikiに文章を記述していく．
 
-\subsection{一般的な執筆手順}\begin{enumerate}
-\item 書類の作成\begin{enumerate}
+\subsection{一般的な執筆手順}
+\begin{enumerate}
+\item 書類の作成
+\begin{enumerate}
 \item open -a mi hikiutils\_bob.hiki
 \end{enumerate}
-\item keynoteを開ける\begin{enumerate}
+\item keynoteを開ける
+\begin{enumerate}
 \item open hikiutils\_bob.key
 \end{enumerate}
-\item keynoteのイメージをfigsに\begin{enumerate}
+\item keynoteのイメージをfigsに
+\begin{enumerate}
 \item keynoteでイメージへ書き出し(hikiutils\_bobを仮定)
 \item rake convert 80 hikiutils\_bob
 \end{enumerate}
-\item hikiシステムとの同期\begin{enumerate}
+\item hikiシステムとの同期
+\begin{enumerate}
 \item rake sync
 \end{enumerate}
-\item hikiシステムで表示\begin{enumerate}
+\item hikiシステムで表示
+\begin{enumerate}
 \item hiki -u hikiutils\_bob
 \end{enumerate}
 \end{enumerate}
@@ -143,30 +149,35 @@ cp tmp.hiki hikiutils_bob.hiki
 \end{verbatim}\end{quote}
 などと番号を3から順に振り替えてくれる．
 
-\subsection{githubによる同期}\begin{enumerate}
-\item git initが済んでいると仮定
-\item upstream, originの確認\begin{enumerate}
+\subsection{githubによる同期}
+\begin{enumerate}
+\item git init, forkが済んでいると仮定
+\item upstream, originの確認
+\begin{enumerate}
 \item bob% git remote -v
 \end{enumerate}
-\item git push作業\begin{enumerate}
+\item git push作業
+\begin{enumerate}
 \item git add -A
 \item git commit -m 'first commit'
 \item git push origin master
 \end{enumerate}
 \item githubでbobへpull requestをかける
-\item 編集後
-\item git pull作業\begin{enumerate}
-\item git pull upstream origin
+\item bobの編集後，通知がくる．まつことなく作業してもok．
+\item git pull作業
+\begin{enumerate}
+\item git pull upstream master
 \end{enumerate}
 \end{enumerate}
 これがうまくいかん時は聞いてください．
 
-hikiutil関連のヘルプ
+\begin{figure}[htbp]\begin{center}
+\includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_bob.004.jpeg}
+\caption{卒論編集時のgithubによる同期のシーケンス図．}
+\label{default}\end{center}\end{figure}
+\subsection{hikiutil関連のヘルプ}
+\subsubsection{hikiで卒論を書くときの初期化と掟}
 \begin{itemize}
-\item hikiutil関連のヘルプ
-\end{itemize}
-\subsection{hiki\_helpの出力}
-\subsubsection{hikiで卒論を書くときの初期化と掟}\begin{itemize}
 \item 開発メモ:figs,dataも作成
 \item 目的：西谷が後で迷わないように決まったファイル構造を堅持すべし
 \item 文書：hikiで書く.のちには，latexに変換するプログラムを提供します
@@ -181,10 +192,12 @@ hikiutil関連のヘルプ
 \item hikiでのurlはテキスト前とディレクトリーから自動生成される
 \item 例えば，hiki2latex\_saki/introduciton.hikiとするとhiki2latex\_saki\_introducitonと変換される
 \end{itemize}
-\subsubsection{error対応}\begin{itemize}
+\subsubsection{error対応}
+\begin{itemize}
 \item Permission denied - ./data/text/boundary\_narita (Errno::EACCES)->テキストにhikiが書き込めない，chmod a+w FILE
 \end{itemize}
-\subsubsection{図表：すべての図表をkeynoteにまとめる，タイトルを分かりやすく書く}\begin{itemize}
+\subsubsection{図表：すべての図表をkeynoteにまとめる，タイトルを分かりやすく書く}
+\begin{itemize}
 \item keynoteに書いたスライドはイメージに書き出して，rake convert 80 TARGET\_DIRでfigsに変換
 \item rake syncでfigsにあるfilesはhiki/target\_dirにcpされる
 \item \verb|convert #{source} -resize 20% #{target}によって，target=figs/TAERGET.pngに20%に縮小して保存される|
@@ -193,6 +206,7 @@ hikiutil関連のヘルプ
 \end{itemize}
 '\verb|{{attach_anchor(test.png, hiki2latex_saki)}}|'
 と，directory指定しなければならない.
+
 \begin{itemize}
 \item keynoteであとで図を挿入して番号が変わった時の原稿の一括変換
 \item rake increment 2 boundary\_bob.hiki boundary\_bob > tmp.hiki
