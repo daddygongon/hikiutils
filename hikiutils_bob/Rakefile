@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 require 'systemu'
-require 'tempfile'
 # -*- coding: utf-8 -*-
 begin
   target_dir = File.readlines('./.hikirc')[0].chomp
@@ -147,27 +146,6 @@ task :increment do
   exit
 end
 
-desc "numbering figs from the NUBER in FILE"
-task :number do
-  number=ARGV[1].to_i
-  file = ARGV[2]
-  dir = ARGV[3] || nil
-  lines = File.readlines(file)
-  cont = ""
-  lines.each{|line|
-    if m=line.match(/\{\{attach_view\((\w+|_).(\d+).jpeg,(\w+)\)\}\}/)
-      new_num=sprintf("%03d",number)
-      line="\{\{attach_view\(#{m[1]}.#{new_num}.jpeg,#{m[3]}\)\}\}\n"
-      cont << line
-      number += 1
-    else
-      cont << line
-    end
-  }
-  print cont
-  exit
-end
-
 desc "convert fig size SCALE TARGET_DIR"
 task :convert do
   scale = ARGV[1]
@@ -253,15 +231,20 @@ task :check_previous do
     file=   line.split(/\s+/)[-1]
     previous[file]=line.chomp
   }
-  changed = []
+  added,changed = [],[]
   current.each_pair{|key,val|
-    if !previous.include?(key) or previous[key]!=val
+    if !previous.include?(key)
+      added[key]=val
+    elsif previous[key]!=val
       changed << val+"\n"
+    else
+
     end
   }
-  if changed.size != 0
+  if changed.size != 0 or added.size !=0
     print("hiki dirで変更が発生しています．\n")
-    changed.each{|line| print line+"\n"} 
+    changed.each{|line| print line+"\n"}
+    added.each{|line| print line+"\n"}
     exit
   end
 end
