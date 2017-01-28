@@ -1167,7 +1167,7 @@
 		<key>FitInWindow</key>
 		<true/>
 		<key>Frame</key>
-		<string>{{205, 39}, {890, 792}}</string>
+		<string>{{308, 85}, {890, 792}}</string>
 		<key>ListView</key>
 		<false/>
 		<key>OutlineWidth</key>
