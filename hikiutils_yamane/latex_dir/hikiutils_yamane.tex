@@ -1,0 +1,56 @@
+\documentclass[12pt,a4paper]{jsarticle}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage[dvipdfmx]{color}
+\usepackage{listings}
+% to use japanese correctly, install jlistings.
+\lstset{
+  basicstyle={\small\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\small\itshape\color{red}},
+  keywordstyle={\small\bfseries\color{cyan}},
+  ndkeywordstyle={\small},
+  stringstyle={\small\color{blue}},
+  frame={tb},
+  breaklines=true,
+  numbers=left,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  lineskip=-0.5ex
+}
+\lstdefinestyle{customCsh}{
+  language={csh},
+  numbers=none,
+}
+\lstdefinestyle{customRuby}{
+  language={ruby},
+  numbers=left,
+}
+\lstdefinestyle{customTex}{
+  language={tex},
+  numbers=none,
+}
+\lstdefinestyle{customJava}{
+  language={java},
+  numbers=left,
+}
+\begin{document}
+\title{卒業論文\\
+\vspace{4cm} コマンドラインツール作成ライブラリThorによる\\hikiutilsの書き換え}
+\author{ 関西学院大学　理工学部　情報科学科\\\\27013554 山根亮太}
+\date{\vspace{3cm} 2017年  3月\\
+\vspace{3cm} 指導教員　　西谷　滋人　教授}
+\maketitle
+\tableofcontents
+
+\title{コマンドラインツール作成ライブラリThorによるhikiutilsの書き換え}
+\author{関西学院大学理工学部情報科学科 27013554 山根亮太}
+\date{}
+\maketitle
+\tableofcontents
+\include{abstract}
+\include{introduction}
+\include{results}
+\end{document}

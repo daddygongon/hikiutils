@@ -217,14 +217,18 @@ end
 desc "check previou and current sync"
 task :check_previous do
   current={}
+  print "current hiki dir\n"
   status, stdout, stderr = systemu("hiki -l #{basename}*")
   stdout.split("\n")[3..-1].each{|line|
-    p file=   line.split(/\s+/)[-1]
+    p line
+    file=   line.split(/\s+/)[-1]
     current[file]=line
   }
   previous={}
+  print "previous sync\n"
   File.readlines('.hikirc')[1..-1].each{|line|
-    p file=   line.split(/\s+/)[-1]
+    p line.chomp
+    file=   line.split(/\s+/)[-1]
     previous[file]=line.chomp
   }
   added,changed = [],[]
