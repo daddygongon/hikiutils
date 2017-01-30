@@ -64,7 +64,7 @@ EOS
         opt.on('-r', '--rsync','rsync files') {rsync_files}
         opt.on('--database FILE','read database file') {|file| db_file(file)}
         opt.on('--display FILE','display converted hikifile') {|file| display(file)}
-        opt.on('-c', '--checkdb','check database file') {check_db}       
+        opt.on('-c', '--checkdb','check database file') {check_db}
         opt.on('--remove FILE','remove file') {|file| remove_file(file)}
         opt.on('--move FILES','move file1,file2',Array) {|files| move_file(files)}
         opt.on('--euc FILE','translate file to euc') {|file| euc_file(file) }

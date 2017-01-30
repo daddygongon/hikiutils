@@ -4,12 +4,17 @@
 \contentsline {subsection}{\numberline {2.2}既存システムの背景}{4}
 \contentsline {subsubsection}{\numberline {2.2.1}hiki}{4}
 \contentsline {subsubsection}{\numberline {2.2.2}hikiutils}{4}
-\contentsline {section}{\numberline {3}結果}{5}
-\contentsline {subsection}{\numberline {3.1}thorとoptparseのコードの比較}{5}
-\contentsline {subsubsection}{\numberline {3.1.1}Thorとは}{5}
-\contentsline {paragraph}{Thorの基本的な流れ}{5}
-\contentsline {subsubsection}{\numberline {3.1.2}optparseとは}{5}
-\contentsline {paragraph}{optparseの基本的な流れ}{5}
-\contentsline {subsubsection}{\numberline {3.1.3}コードの解説}{5}
-\contentsline {paragraph}{hikiutilsの実行}{5}
-\contentsline {paragraph}{コマンドの表示と実行}{9}
+\contentsline {section}{\numberline {3}結果}{6}
+\contentsline {subsection}{\numberline {3.1}開発の結果}{6}
+\contentsline {subsection}{\numberline {3.2}thorとoptparseのコードの比較}{7}
+\contentsline {subsubsection}{\numberline {3.2.1}Thorとは}{7}
+\contentsline {paragraph}{Thorの基本的な流れ}{7}
+\contentsline {subsubsection}{\numberline {3.2.2}optparseとは}{7}
+\contentsline {paragraph}{optparseの基本的な流れ}{7}
+\contentsline {subsubsection}{\numberline {3.2.3}コードの解説}{7}
+\contentsline {paragraph}{Thorの定義}{7}
+\contentsline {paragraph}{実際のコード}{8}
+\contentsline {paragraph}{hikiutilsの実行}{9}
+\contentsline {paragraph}{実際のコード}{10}
+\contentsline {paragraph}{コマンドの表示と実行}{13}
+\contentsline {paragraph}{実際のコード}{14}

@@ -262,6 +262,7 @@ task :check_previous do
   if changed.size != 0
     print("hiki dirで変更が発生しています．\n")
     changed.each{|line| print line+"\n"} 
+    print("問題がなければrake force_syncで強制同期してください．\n")
     exit
   end
 end
