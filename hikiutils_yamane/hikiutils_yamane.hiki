@@ -7,6 +7,12 @@
 !方法
 !序論
 !!目的
+本研究ではhikiの編集作業をより容易にするためのツールの開発を行った． 
+hikiは通常web上で編集を行っているが,GUIとCUIが混在しており,操作に不便な点がある. 
+そこで,編集操作が CUI で完結するために開発をされたのが hikiutils である. 
+しかし,そのユーザインタフェースにはコマンドが直感的でないという問題点がある. 
+そこで，Thorというコマンドラインツール作成ライブラリを用いる．
+optparseというコマンドライン解析ライブラリを使用しているhikiutilsを新たなコマンドライン解析ライブラリを使用することコマンドを書き換え，より直感的なコマンドにして使いやすくする．
 !!既存システムの説明
 図に従ってhiki systemの動作概要を説明する．
 
@@ -21,8 +27,7 @@ hiki web systemの実際の基本動作は，hiki.cgiプログラムを介して
 
 ![[hikiutils_yamane_results]]
 !結果
-!!thor と optparse のコードの比較
-
+!![[hikiutils_yamane_compare]]
 !参考文献
 [1-1] hikidoc, https://rubygems.org/gems/hikidoc/versions/0.1.0, https://github.com/hiki/hikidoc,2017/1/30 アクセス.
 
