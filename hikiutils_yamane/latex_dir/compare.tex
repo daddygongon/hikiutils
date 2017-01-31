@@ -1,22 +1,26 @@
-{{toc}}
-!!thor と optparse のコードの比較
+
+\subsection{thor と optparse のコードの比較}
 hikiutilsのコマンドライン解析ツールをoptparseからthorに換えることでコマンドの書き換えを行うことができた．
 また，thorで書かれたhikiutilsはoptparseで書かれたものよりもコードが短くなり，コマンドの解析も簡単に行えることができた．
 ここではthorとoptparseのコードを比較しthorの良さを確認する．
-!!!Thorとoptparseとは
-!!!!Thorとは
+
+\subsubsection{Thorとoptparseとは}
+\paragraph{Thorとは}
 Thorとは，コマンドラインツールの作成を支援するライブラリのことである．
 gitやbundlerのようにサブコマンドを含むコマンドラインツールを簡単に作成することができる[4]．
 
 Thorの基本的な流れとしては
 
-#Thorを継承したクラスのパブリックメソッドがコマンドになる
-#クラス.start(ARGV)でコマンドラインの処理をスタートする
+\begin{enumerate}
+\item Thorを継承したクラスのパブリックメソッドがコマンドになる
+\item クラス.start(ARGV)でコマンドラインの処理をスタートする
+\end{enumerate}
 という流れである[4].
 
 startに渡す引数が空の場合，Thorはクラスのヘルプリストを出力する．
 また，Thorはサブコマンドやサブサブコマンドも作ることができる．
-!!!!optparseとは
+
+\paragraph{optparseとは}
 optparseモジュールとは，getoptよりも簡便で，柔軟性に富み，かつ強力なコマンドライン解析ライブラリである．
 optparseでは，より宣言的なスタイルのコマンドライン解析手法，すなわちOptionParserのインスタンスでコマンドラインを解析するという手法をとっている．
 これを使うと，GNU/POSIX構文でオプションを指定できるだけでなく，使用法やヘルプメッセージの生成も行える[5]．
@@ -25,28 +29,34 @@ optparseでは，より宣言的なスタイルのコマンドライン解析手
 
 optparseの基本的な流れとしては
 
-#OptionParserオブジェクトoptを生成する
-#オプションを取り扱うブロックをopt.onに登録する
-#opt.parse(ARGV)でコマンドラインを実際にparseする
+\begin{enumerate}
+\item OptionParserオブジェクトoptを生成する
+\item オプションを取り扱うブロックをopt.onに登録する
+\item opt.parse(ARGV)でコマンドラインを実際にparseする
+\end{enumerate}
 という流れである.
 
 OptionParserはコマンドラインのオプション取り扱うためのクラスであるためオブジェクトoptを生成されopt.onにコマンドを登録することができる．
 しかし，OptionParser\#onにはコマンドが登録されているだけであるため，OptionParser\#parseが呼ばれた時，コマンドラインにオプションが指定されていれば実行される．
 optparseにはデフォルトとして--helpと--versionオプションを認識する[6].
-!!!コードの解説
-!!!!Thorの定義                                                      
-{{attach_view(hikiutils_yamane.003.jpg,hikiutils_yamane)}}
+
+\subsubsection{コードの解説}
+\paragraph{Thorの定義}
+\verb|{{attach_view(hikiutils_yamane.003.jpg)}}|
 Thorのinitializeの定義のされ方
-#Hikithor::CLI.start(ARGV)が呼ばれる
-#initializeメソッドが呼ばれる
-#これではThorのinitializeメソッドが呼ばれない
-#superを書くことでThorのinitializeメソッドが呼ばれる
+
+\begin{enumerate}
+\item Hikithor::CLI.start(ARGV)が呼ばれる
+\item initializeメソッドが呼ばれる
+\item これではThorのinitializeメソッドが呼ばれない
+\item superを書くことでThorのinitializeメソッドが呼ばれる
+\end{enumerate}
 optparseではrequireでoptparseを呼ばれoptparseのinitializeを定義する必要はないが，Thorはinitializeを定義する必要がある．
 Thorの定義方法はrequireでThorを呼びCLIクラスで継承し，initializeメソッドにsuperを書くことでThorのinitializeが呼ばれる．
 initializeメソッド内ではThorの初期設定がされていないため，スーパークラスのメソッドを読み出してくれるsuperを書き加えることで図のようにinitializeメソッドでThorのinitilalizeメソッドが
 呼ばれて定義される．
-!!!!!実際のコード
-<<< ruby
+
+\paragraph{実際のコード}\begin{lstlisting}[style=customRuby]
 # -*- coding: utf-8 -*-                                                         
 require 'thor'
 require 'kconv'
@@ -82,31 +92,45 @@ module Hikithor
       p editor_command = @src[:editor_command]
       @editor_command = (editor_command==nil) ? 'open -a mi' : editor_command
    end
->>>
-!!!!hikiutilsの実行
-*Thor
-{{attach_view(hikiutils_yamane.004.jpg,hikiutils_yamane)}}
-
-#hiki_thorのHikithor::CLI.start(ARGV)でhikiutils_thor.rbのCLIクラスを呼ぶ
-
-#hikiutils_thor.rbのCLIクラスのメソッドを順に実行していく
-
-*optparse
-{{attach_view(hikiutils_yamane.001.jpg,hikiutils_yamane)}}
-#HikiのHikiUtils::Command.run(ARGV)でhikiutils.rbのrunメソッドを呼ぶ
-#new(argv).executeでexecuteメソッドが実行される
+\end{lstlisting}
+\paragraph{hikiutilsの実行}
+\begin{itemize}
+\item Thor
+\end{itemize}
+\begin{figure}[htbp]\begin{center}
+\includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_yamane.004.jpg}
+\caption{}
+\label{default}\end{center}\end{figure}
+\begin{enumerate}
+\item hiki\_thorのHikithor::CLI.start(ARGV)でhikiutils\_thor.rbのCLIクラスを呼ぶ
+\end{enumerate}
+\begin{enumerate}
+\item hikiutils\_thor.rbのCLIクラスのメソッドを順に実行していく
+\end{enumerate}
+\begin{itemize}
+\item optparse
+\end{itemize}
+\begin{figure}[htbp]\begin{center}
+\includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_yamane.001.jpg}
+\caption{}
+\label{default}\end{center}\end{figure}
+\begin{enumerate}
+\item HikiのHikiUtils::Command.run(ARGV)でhikiutils.rbのrunメソッドを呼ぶ
+\item new(argv).executeでexecuteメソッドが実行される
+\end{enumerate}
 このようにoptparseでは実行を行うためのメソッドが必要であるが，Thorではクラスのメソッドを順に実行していくため
 runメソッドとexecuteメソッドは必要ない．
-!!!!!実際のコード
-*Thor
-<<< ruby
+
+\paragraph{実際のコード}
+\begin{itemize}
+\item Thor
+\end{itemize}\begin{lstlisting}[style=customRuby]
 #!/usr/bin/env ruby                                                             
 
 require "hikiutils_thor"
 
 Hikithor::CLI.start(ARGV)
->>>
-<<< ruby
+\end{lstlisting}\begin{lstlisting}[style=customRuby]
 # -*- coding: utf-8 -*-                                                         
 require 'thor'
 require 'kconv'
@@ -140,16 +164,16 @@ module Hikithor
       browser = @src[:browser]
       @browser = (browser==nil) ? 'firefox' : browser
 
->>>
-*optparse
-<<< ruby
+\end{lstlisting}
+\begin{itemize}
+\item optparse
+\end{itemize}\begin{lstlisting}[style=customRuby]
 #!/usr/bin/env ruby                                                             
 
 require "hikiutils"
 
 HikiUtils::Command.run(ARGV)
->>>
-<<< ruby
+\end{lstlisting}\begin{lstlisting}[style=customRuby]
     def self.run(argv=[])
       print "hikiutils: provide utilities for helping hiki editing.\n"
       new(argv).execute
@@ -187,21 +211,36 @@ s)}
       dump_sources
       exit
     end  
->>>
-!!!!コマンドの表示と処理
-*Thor
-{{attach_view(hikiutils_yamane.002.jpg,hikiutils_yamane)}}
-#コマンド名，コマンドの説明を一覧に表示させる
-#パブリックメソッドのコマンドを別のコマンド名でも実行できるようにする
-#コマンドの命令の実行コード
+\end{lstlisting}
+\paragraph{コマンドの表示と処理}
+\begin{itemize}
+\item Thor
+\end{itemize}
+\begin{figure}[htbp]\begin{center}
+\includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_yamane.002.jpg}
+\caption{}
+\label{default}\end{center}\end{figure}
+\begin{enumerate}
+\item コマンド名，コマンドの説明を一覧に表示させる
+\item パブリックメソッドのコマンドを別のコマンド名でも実行できるようにする
+\item コマンドの命令の実行コード
+\end{enumerate}
 Thorではdescで一覧を表示させるコマンド名，コマンドの説明を登録する．しかし，ここで記述したコマンドは一覧で表示させるものであり，実行されることはないので実際のコマンドと対応させる必要がある．
 Thorでは処理実行を行うメソッドがコマンドとなる．しかし，それではコマンド名は１つしか使うことができない．
 ここで用いるものがmapである．mapを使うことで別のコマンドを指定することができる．
-*optparse
-{{attach_view(hikiutils_yamane.005.jpg,hikiutils_yamane)}}
-#OptionParserオブジェクトoptを生成
-#optにコマンドを登録
-#入力されたコマンドの処理のメソッドへ移動
+
+\begin{itemize}
+\item optparse
+\end{itemize}
+\begin{figure}[htbp]\begin{center}
+\includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_yamane.005.jpg}
+\caption{}
+\label{default}\end{center}\end{figure}
+\begin{enumerate}
+\item OptionParserオブジェクトoptを生成
+\item optにコマンドを登録
+\item 入力されたコマンドの処理のメソッドへ移動
+\end{enumerate}
 optparseではOptionParserオブジェクトoptの生成を行い，コマンドをoptに登録することでコマンドを作成することができる．しかし，これはコマンドを登録しているだけで
 コマンドの一覧ではこれを表示することができるがコマンドの実行を行うためには実行を行うためのメソッドを作成する必要がある．optparseでのコマンドの実行はoptで登録された
 コマンドが入力されることでそれぞれのコマンドの処理を行うメソッドに移動し処理を行う．しかし，このコマンド登録は-を付けたコマンドした登録ができなく，-なしのコマンド登録は
@@ -209,9 +248,10 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
 以上より，Thorではコマンドの指定と処理にはdesc,map,処理メソッドだけで済むが，optparseではコマンドを登録するためのメソッドと処理メソッドが必要になってくる．
 また，コマンドはThorでは処理メソッドがコマンド名になるが，optparseではコマンドを登録するための処理も必要となってくる．
 
-!!!!!実際のコード
-*Thor
-<<< ruby
+\paragraph{実際のコード}
+\begin{itemize}
+\item Thor
+\end{itemize}\begin{lstlisting}[style=customRuby]
     desc 'show,--show', 'show sources'
     map "--show" => "show"
     def show
@@ -239,9 +279,10 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
         puts command.display_format(id,name,local,global,@i_size,@n_size,@l_size,@g_size)
       }
     end
->>>
-*optparse
-<<< ruby 
+\end{lstlisting}
+\begin{itemize}
+\item optparse
+\end{itemize}\begin{lstlisting}[style=customRuby]
     def execute
       @argv << '--help' if @argv.size==0
       command_parser = OptionParser.new do |opt|
@@ -302,8 +343,9 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
       @src[:srcs] << cont
       show_sources
     end
->>>
+\end{lstlisting}
 コードからもThorのほうが短くなっていることが分かる．
 よって，Thorとoptparseでのコードの違いは以上の部分になるが全体的にもThorのほうがコードが短くなり，
 コマンドの定義も簡単に行うことができる．また，コマンドを簡単に定義できることで書き換えもすぐ行うことが
 できるので，より直感的なコマンドに実装することも可能となった．
+

@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.euc) (TeX Live 2016) (preloaded format=platex 2017.1.26)  30 JAN 2017 12:56
+This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.euc) (TeX Live 2016) (preloaded format=platex 2017.1.26)  31 JAN 2017 10:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -112,7 +112,18 @@ File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
 Package: listings 2015/06/04 1.6 (Carsten Heinz)
 
-(./hikiutils_yamane.aux (./abstract.aux) (./introduction.aux) (./results.aux
+(./hikiutils_yamane.aux (./abstract.aux) (./introduction.aux) (./purpose.aux)
+(./results.aux
+
+LaTeX Warning: Label `default' multiply defined.
+
+) (./compare.aux
+
+LaTeX Warning: Label `default' multiply defined.
+
+
+LaTeX Warning: Label `default' multiply defined.
+
 
 LaTeX Warning: Label `default' multiply defined.
 
@@ -211,25 +222,46 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 
 
 ]) [5]
+\openout2 = `purpose.aux'.
+
+
+(./purpose.tex
+File: ../figs/./hikiutils_yamane.006.jpeg Graphic file (type eps)
+ <../figs/./hikiutils_yamane.006.jpeg>
+LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
+(Font)              scaled to size 8.64899pt on input line 14.
+LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
+(Font)              scaled to size 8.64899pt on input line 14.
+ [6
+
+
+]) [7]
 \openout2 = `results.aux'.
 
-
-(./results.tex
+ (./results.tex
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 6.
-LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 6.
+(Font)              scaled to size 6.72699pt on input line 30.
 
-Overfull \hbox (53.57033pt too wide) in paragraph at lines 7--28
- [][][] 
- []
-
-[6
+[8
 
 
 ]
-File: ../figs/./hikiutils_yamane.003.jpg Graphic file (type eps)
- <../figs/./hikiutils_yamane.003.jpg> [7]
+Overfull \hbox (143.87068pt too wide) in paragraph at lines 52--53
+[][][][] 
+ []
+
+
+Overfull \hbox (16.03305pt too wide) in paragraph at lines 66--88
+ [][][] 
+ []
+
+[9] [10]) [11]
+\openout2 = `compare.aux'.
+
+ (./compare.tex [12
+
+
+]
 (/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
@@ -237,74 +269,87 @@ File: lstlang1.sty 2015/06/04 1.6 listings language file
 File: lstlang2.sty 2015/06/04 1.6 listings language file
 )
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 73.
+(Font)              scaled to size 8.64899pt on input line 59.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 73.
-LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 6.72699pt on input line 74.
+(Font)              scaled to size 8.64899pt on input line 59.
 LaTeX Font Info:    Font shape `JT1/gt/m/it' in size <9> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 74.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 60.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 74.
+(Font)              scaled to size 8.64899pt on input line 60.
 LaTeX Font Info:    Font shape `JY1/gt/m/it' in size <9> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 74.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 60.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 74.
+(Font)              scaled to size 8.64899pt on input line 60.
 LaTeX Font Info:    Font shape `JT1/gt/bx/n' in size <9> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 87.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 73.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 87.
+(Font)              scaled to size 8.64899pt on input line 73.
 LaTeX Font Info:    Font shape `JY1/gt/bx/n' in size <9> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 87.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 73.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 87.
+(Font)              scaled to size 8.64899pt on input line 73.
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <9> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 87.
- [8]
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 73.
+ [13]
 File: ../figs/./hikiutils_yamane.004.jpg Graphic file (type eps)
 
-<../figs/./hikiutils_yamane.004.jpg> [9]
+<../figs/./hikiutils_yamane.004.jpg> [14]
 File: ../figs/./hikiutils_yamane.001.jpg Graphic file (type eps)
  <../figs/./hikiutils_yamane.001.jpg>
-[10] [11] [12]
+[15] [16] [17]
 File: ../figs/./hikiutils_yamane.002.jpg Graphic file (type eps)
- <../figs/./hikiutils_yamane.002.jpg> [13] [14] [15]) [16]
-Overfull \hbox (91.99509pt too wide) in paragraph at lines 56--62
-\OT1/cmr/m/n/10 Ruby Tool-box\JY1/mc/m/n/10 」 \OT1/cmr/m/n/10 , CLI Op-tion Pa
-rsers,\OT1/cmtt/m/n/10 https://www.ruby-toolbox.com/categories/CLI_Option_Parse
-rs
+ <../figs/./hikiutils_yamane.002.jpg>
+File: ../figs/./hikiutils_yamane.005.jpg Graphic file (type eps)
+
+<../figs/./hikiutils_yamane.005.jpg> [18] [19] [20] [21]) [22]
+Overfull \hbox (172.09023pt too wide) in paragraph at lines 58--59
+[]\OT1/cmr/m/n/10 [1-1] hiki-doc, \OT1/cmtt/m/n/10 https://rubygems.org/gems/hi
+kidoc/versions/0.1.0, https://github.com/hiki/hikidoc,2017/1/30
  []
 
 
-Overfull \hbox (146.50548pt too wide) in paragraph at lines 56--62
-\OT1/cmr/m/n/10 ,2017/1/30 \JY1/mc/m/n/10 アクセス\OT1/cmr/m/n/10 .\OT1/cmtt/m/
-n/10 {{br}} \OT1/cmr/m/n/10 [4]  \JY1/mc/m/n/10 「\OT1/cmr/m/n/10 Thor \JY1/mc/
-m/n/10 の使い方まとめ 」 \OT1/cmr/m/n/10 , \OT1/cmtt/m/n/10 http://qiita.com/su
-cci0303/items/32560103190436c9435b
+Overfull \hbox (143.80359pt too wide) in paragraph at lines 63--64
+[]\JY1/mc/m/n/10 「\OT1/cmr/m/n/10 The Ruby Tool-box\JY1/mc/m/n/10 」 \OT1/cmr/
+m/n/10 , CLI Op-tion Parsers,\OT1/cmtt/m/n/10 https://www.ruby-toolbox.com/cate
+gories/CLI_Option_Parsers
  []
 
 
-Overfull \hbox (30.6195pt too wide) in paragraph at lines 56--62
-\OT1/cmr/m/n/10 [6]  \JY1/mc/m/n/10 「\OT1/cmr/m/n/10 li-brary opt-parse\JY1/mc
-/m/n/10 」 \OT1/cmr/m/n/10 , \OT1/cmtt/m/n/10 https://docs.ruby-lang.org/ja/lat
-est/library/optparse.html
+Overfull \hbox (38.25816pt too wide) in paragraph at lines 64--65
+[]\JY1/mc/m/n/10 「\OT1/cmr/m/n/10 Thor \JY1/mc/m/n/10 の使い方まとめ 」 \OT1/c
+mr/m/n/10 , \OT1/cmtt/m/n/10 http://qiita.com/succi0303/items/32560103190436c94
+35b
  []
 
-[17
+
+Overfull \hbox (115.61282pt too wide) in paragraph at lines 65--66
+[]\JY1/mc/m/n/10 「\OT1/cmr/m/n/10 15.5. opt-parse - \JY1/mc/m/n/10 コマンドラ
+インオプシ ョン解析器 」 \OT1/cmr/m/n/10 , \OT1/cmtt/m/n/10 http://docs.python.
+jp/2/library/optparse.html
+ []
+
+
+Overfull \hbox (45.58232pt too wide) in paragraph at lines 66--67
+[]\JY1/mc/m/n/10 「\OT1/cmr/m/n/10 library opt-parse\JY1/mc/m/n/10 」 \OT1/cmr/
+m/n/10 , \OT1/cmtt/m/n/10 https://docs.ruby-lang.org/ja/latest/library/optparse
+.html
+ []
+
+[23
 
 ] (./hikiutils_yamane.aux (./abstract.aux) (./introduction.aux)
-(./results.aux))
+(./purpose.aux) (./results.aux) (./compare.aux))
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 2545 strings out of 493683
- 35022 string characters out of 6149653
- 260726 words of memory out of 5000000
- 6097 multiletter control sequences out of 15000+600000
+ 2568 strings out of 493683
+ 35335 string characters out of 6149653
+ 262109 words of memory out of 5000000
+ 6104 multiletter control sequences out of 15000+600000
  15673 words of font info for 72 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 34i,8n,51p,225b,1745s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 34i,9n,51p,574b,1741s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on hikiutils_yamane.dvi (17 pages, 76660 bytes).
+Output written on hikiutils_yamane.dvi (23 pages, 99400 bytes).

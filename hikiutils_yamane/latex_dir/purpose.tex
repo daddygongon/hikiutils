@@ -1,0 +1,21 @@
+\subsection{目的}
+本研究ではhikiの編集作業をより容易にするためのツールの開発を行った． 
+hikiは通常web上で編集を行っているが,GUIとCUIが混在しており,操作に不便な点がある. 
+そこで,編集操作が CUI で完結するために開発をされたのが hikiutils である. 
+しかし,そのユーザインタフェースにはコマンドが直感的でないという問題点がある. 
+そこで，Thorというコマンドラインツール作成ライブラリを用いる．
+optparseというコマンドライン解析ライブラリを使用しているhikiutilsを新たなコマンドライン解析ライブラリを使用することコマンドを書き換え，より直感的なコマンドにして使いやすくする．
+
+\subsection{既存システムの説明}
+図に従ってhiki systemの動作概要を説明する．
+
+\begin{figure}[htbp]\begin{center}
+\includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_yamane.006.jpeg}
+\caption{hiki web systemとhiki systemの対応関係．}
+\label{default}\end{center}\end{figure}
+hikiは，hiki記法を用いたwiki cloneです．wikiはウォード・カニンガムが作ったwikiwikiwebを源流とするhome page制作を容易にするシステムで，hikiもwikiの基本要求仕様を満足するシステムを提供しています．wikiの特徴であるweb上で編集する機能を提供しています．これを便宜上hiki web systemと呼びます．図にある通り，一般的な表示画面の他に，編集画面が提供されており，ユーザーはこの編集画面からコンテンツを編集することが可能です．リンクやヘッダー，リスト，引用，表，図の表示などの基本テキストフォーマットが用意されています．
+
+hiki web systemの実際の基本動作は，hiki.cgiプログラムを介して行われています．こちらを便宜上hiki systemと呼びます．hiki systemは，data/textに置かれた書かれたプレーンテキストをhtmlへ変換します．この変換はhikidoc[1-1]というhikiフォーマットconverterを使っています．また，添付書類はcache/attachに，一度フォーマットしたhtmlはparserに置かれており，それらを参照してhtmlを表示する画面をhiki.cgiは作っています．さらにhiki systemでは検索機能，自動リンク作成などが提供されています
+
+研究室内の内部文書，あるいは外部への宣伝資料，さらにwikipediaのように重要な研究成果の発信などに西谷研ではこのhiki systemを利用しています．初心者にも覚えやすい直感的な操作です．しかし，慣れてくるとテキスト編集や画面更新にいちいちweb画面へ移行せねばならず，編集の思考が停止します．そこで，テキスト編集に優れたeditorとの連携や，terminal上のshell commandと連携しやすいようにhikiutilsというcli(command line interface)を作成して運用しています．このhikiutilsのコマンドオプションの実装をしなおして，より使いやすくすることが本研究の目的です．
+
