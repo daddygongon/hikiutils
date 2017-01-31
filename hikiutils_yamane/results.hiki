@@ -16,7 +16,7 @@ hikiutilsの振る舞いを予測できるシェルコマンドと同じ名前�
 !!!hikiutilsがあらかじめ想定している利用形態
 ここでhikiutilsがあらかじめ想定している利用形態を解説しておきます．
 !!!!caption:hikiutilsがあらかじめ想定している利用形態
-{{attach_view(hikiutils_yamane.007.jpeg,hikiutils_yamane)}}
+{{attach_view(hikiutils_yamane_09_copy.002.jpg,hikiutils_yamane)}}
 hikiutilsは，
 *local PCとglobal serverとが用意されており，
 *それらのデータをrsyncで同期する
