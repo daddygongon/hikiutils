@@ -43,11 +43,15 @@ task :latex_all do
     convert_to_latex(file, option)
   }
   cont=""
+  p reg_exp = Regexp.new("#{basename}_(.+)")
   File.readlines(File.join($latex_dir,"#{main_file}.tex")).each{|line|
-    if line.match(/section{(.+)}/) 
-      if m=line.match(/section{\\verb\|(.+)\|}/) 
+    if line.match(/section{(.+)}/)
+      if m=line.match(/\\verb\|(.+)\((.+)\)\|/)
         p m
-        p reg_exp = Regexp.new("#{basename}_(.+)")
+        p m_t=m[2].match(reg_exp)[1]
+        line = "\\include{#{m_t}}\n"
+      elsif m=line.match(/section{\\verb\|(.+)\|}/)
+        p m
         p m_t=m[1].match(reg_exp)[1]
         line = "\\include{#{m_t}}\n"
       else
@@ -262,7 +266,6 @@ task :check_previous do
   if changed.size != 0
     print("hiki dirで変更が発生しています．\n")
     changed.each{|line| print line+"\n"} 
-    print("問題がなければrake force_syncで強制同期してください．\n")
     exit
   end
 end
