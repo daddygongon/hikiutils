@@ -1,16 +1,16 @@
 {{toc}}
 !Thorの初期化                                                      
-{{attach_view(hikiutils_yamane.003.jpg,hikiutils_yamane)}}
-Thorの初期化実行手順
+{{attach_view(hikiutils_yamane_09_copy.003.jpg,hikiutils_yamane)}}
+*Thorのinitializeでのコード
 #Hikithor::CLI.start(ARGV)が呼ばれる
 #initializeメソッドが呼ばれる
 #これではThorのinitializeメソッドが呼ばれない
 #superを書くことでThorのinitializeメソッドが呼ばれる
-optparseではrequireでoptparseを呼ばれoptparseのinitializeを定義する必要はないが，Thorはinitializeを定義する必要がある．
+optparseではrequireでoptparseを呼びoptparseのinitializeを定義する必要はないが，Thorはinitializeを定義する必要がある．
 Thorの定義方法はrequireでThorを呼びCLIクラスで継承し，initializeメソッドにsuperを書くことでThorのinitializeが呼ばれる．
-initializeメソッド内ではThorの初期設定がされていないため，スーパークラスのメソッドを読み出してくれるsuperを書き加えることで図のようにinitializeメソッドでThorのinitilalizeメソッドが
-呼ばれて定義される．
-!!実際のコード
+initializeメソッド内ではThorの初期設定がされていないため，スーパークラスのメソッドを読み出してくれるsuperを書き加えることで図のようにinitializeメソッド内でThorのinitilalizeメソッドが
+呼ばれ定義される．
+!!コード
 <<< ruby
 # -*- coding: utf-8 -*-                                                         
 require 'thor'
@@ -49,27 +49,32 @@ module Hikithor
    end
 >>>
 !コマンド表示と処理
-*Thor
-{{attach_view(hikiutils_yamane.002.jpg,hikiutils_yamane)}}
+!!Thor
+{{attach_view(hikiutils_yamane_09_copy.004.jpg,hikiutils_yamane)}}
 #コマンド名，コマンドの説明を一覧に表示させる
 #パブリックメソッドのコマンドを別のコマンド名でも実行できるようにする
 #コマンドの命令の実行コード
 Thorではdescで一覧を表示させるコマンド名，コマンドの説明を登録する．しかし，ここで記述したコマンドは一覧で表示させるものであり，実行されることはないので実際のコマンドと対応させる必要がある．
 Thorでは処理実行を行うメソッドがコマンドとなる．しかし，それではコマンド名は１つしか使うことができない．
-ここで用いるものがmapである．mapを使うことで別のコマンドを指定することができる．
-*optparse
-{{attach_view(hikiutils_yamane.005.jpg,hikiutils_yamane)}}
+ここで用いるものがmapである．
+<<<
+map A => B
+>>>
+mapとはBでしか読めないものをAでも読めるようにしてくれるものである.
+よって，これを使うことで別のコマンドも指定することができる．
+!!optparse
+{{attach_view(hikiutils_yamane_09_copy.005.jpg,hikiutils_yamane)}}
 #OptionParserオブジェクトoptを生成
 #optにコマンドを登録
 #入力されたコマンドの処理のメソッドへ移動
 optparseではOptionParserオブジェクトoptの生成を行い，コマンドをoptに登録することでコマンドを作成することができる．しかし，これはコマンドを登録しているだけで
-コマンドの一覧ではこれを表示することができるがコマンドの実行を行うためには実行を行うためのメソッドを作成する必要がある．optparseでのコマンドの実行はoptで登録された
-コマンドが入力されることでそれぞれのコマンドの処理を行うメソッドに移動し処理を行う．しかし，このコマンド登録は-を付けたコマンドした登録ができなく，-なしのコマンド登録は
-また別のやり方でやらなくてはいけない．
+コマンドの一覧ではこれを表示することができるが，コマンドの実行を行うためには実行を行うためのメソッドを作成する必要がある．optparseでのコマンドの実行はoptで登録された
+コマンドが入力されることでそれぞれのコマンドの処理を行うメソッドに移動し処理を行う．しかし，このコマンド登録はハイフンを付けたコマンドしか登録ができず，ハイフンなしのコマンド登録は
+また別の手段でやらなくてはいけない．
 以上より，Thorではコマンドの指定と処理にはdesc,map,処理メソッドだけで済むが，optparseではコマンドを登録するためのメソッドと処理メソッドが必要になってくる．
 また，コマンドはThorでは処理メソッドがコマンド名になるが，optparseではコマンドを登録するための処理も必要となってくる．
 
-!!実際のコード
+!!コード
 *Thor
 <<< ruby
     desc 'show,--show', 'show sources'
@@ -163,24 +168,27 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
       show_sources
     end
 >>>
-!hikiutilsの実行
-*Thor
-{{attach_view(hikiutils_yamane.004.jpg,hikiutils_yamane)}}
+!CLIの実行
+!!Thor
+{{attach_view(hikiutils_yamane_09_copy.006.jpg,hikiutils_yamane)}}
+*実行手順
 
 #hiki_thorのHikithor::CLI.start(ARGV)でhikiutils_thor.rbのCLIクラスを呼ぶ
 #hikiutils_thor.rbのCLIクラスのメソッドを順に実行していく
 
 Thorではstart(ARGV)を呼び出すことでCLIを開始する．Hikithor::CLI.start(ARGV)を実行されることによりrequireで呼ばれているhikiutils_thor.rbのCLIコマンドを順に実行する．
 そして，入力されたコマンドと一致するメソッドを探し，そのコマンドの処理が実行される．
-*optparse
-{{attach_view(hikiutils_yamane.001.jpg,hikiutils_yamane)}}
+!!optparse
+{{attach_view(hikiutils_yamane_09_copy.007.jpg,hikiutils_yamane)}}
+*実行手順
+
 #HikiのHikiUtils::Command.run(ARGV)でhikiutils.rbのrunメソッドを呼ぶ
 #new(argv).executeでexecuteメソッドが実行される
-一方，optparseではHikiutils::Command.run(ARGV)を実行される．requireで呼び出されたhikiutils.rbでrubメソッドが実行される．
+一方，optparseではHikiutils::Command.run(ARGV)を実行される．requireで呼び出されたhikiutils.rbでrunメソッドが実行される．
 そこでコマンドを登録しているexecuteメソッドへ移動し入力したコマンドと対応させる．そして，対応したコマンドの処理が行われるメソッドに移動することで実行される．
 このようにoptparseでは実行を行うためのメソッドが必要であるが，Thorではクラスのメソッドを順に実行していくため
 runメソッドとexecuteメソッドは必要ない．また，optparseでの実行手順はメソッドの移動回数が多く複雑であるが，Thorは単純で分かりやすいものとなっている．
-!!実際のコード
+!!コード
 *Thor
 <<< ruby
 #!/usr/bin/env ruby                                                             
@@ -274,4 +282,4 @@ s)}
 コードからもThorのほうが短くなっていることが分かる．
 よって，Thorとoptparseでのコードの違いは以上の部分になるが全体的にもThorのほうがコードが短くなり，
 コマンドの定義も簡単に行うことができる．また，実行手順も分かりやすくコードが読みやすいため書き換えもすぐ行うことが
-できるので，より直感的なコマンドに実装することも可能となった．
+できるので，より直感的なコマンドを実装することも可能となった．
