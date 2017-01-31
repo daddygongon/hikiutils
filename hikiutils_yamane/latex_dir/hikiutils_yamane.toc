@@ -1,30 +1,48 @@
-\contentsline {section}{\numberline {1}概要}{3}
-\contentsline {section}{\numberline {2}序論}{4}
-\contentsline {subsection}{\numberline {2.1}目的}{4}
-\contentsline {subsection}{\numberline {2.2}既存システムの背景}{4}
-\contentsline {subsubsection}{\numberline {2.2.1}hiki}{4}
-\contentsline {subsubsection}{\numberline {2.2.2}hikiutils}{4}
-\contentsline {subsection}{\numberline {2.3}目的}{6}
-\contentsline {subsection}{\numberline {2.4}既存システムの説明}{6}
-\contentsline {section}{\numberline {3}結果}{8}
-\contentsline {subsection}{\numberline {3.1}コマンド名の検討}{8}
-\contentsline {subsubsection}{\numberline {3.1.1}コマンドの命名原則}{8}
-\contentsline {subsubsection}{\numberline {3.1.2}hikiutilsがあらかじめ想定している利用形態}{8}
-\contentsline {subsubsection}{\numberline {3.1.3}コメンド名と振る舞いの詳細}{9}
-\contentsline {paragraph}{open FILE}{9}
-\contentsline {paragraph}{ls [FILE]}{10}
-\contentsline {paragraph}{rsync}{10}
-\contentsline {paragraph}{touch FILE}{11}
-\contentsline {paragraph}{pwd}{11}
-\contentsline {paragraph}{cd VAL}{11}
-\contentsline {subsection}{\numberline {3.2}thor と optparse のコードの比較}{12}
-\contentsline {subsubsection}{\numberline {3.2.1}Thorとoptparseとは}{12}
-\contentsline {paragraph}{Thorとは}{12}
-\contentsline {paragraph}{optparseとは}{12}
-\contentsline {subsubsection}{\numberline {3.2.2}コードの解説}{13}
-\contentsline {paragraph}{Thorの定義}{13}
-\contentsline {paragraph}{実際のコード}{13}
-\contentsline {paragraph}{hikiutilsの実行}{14}
-\contentsline {paragraph}{実際のコード}{15}
-\contentsline {paragraph}{コマンドの表示と処理}{18}
-\contentsline {paragraph}{実際のコード}{19}
+\contentsline {section}{\numberline {1}概要}{4}
+\contentsline {section}{\numberline {2}序論}{5}
+\contentsline {section}{\numberline {3}序論}{6}
+\contentsline {subsection}{\numberline {3.1}目的}{6}
+\contentsline {subsection}{\numberline {3.2}既存システムの背景}{6}
+\contentsline {subsubsection}{\numberline {3.2.1}hiki}{6}
+\contentsline {subsubsection}{\numberline {3.2.2}hikiutils}{6}
+\contentsline {subsubsection}{\numberline {3.2.3}目的}{8}
+\contentsline {subsubsection}{\numberline {3.2.4}既存システムの説明}{8}
+\contentsline {section}{\numberline {4}方法}{10}
+\contentsline {section}{\numberline {5}結果}{10}
+\contentsline {subsection}{\numberline {5.1}結果}{11}
+\contentsline {subsubsection}{\numberline {5.1.1}コマンド名の検討}{11}
+\contentsline {paragraph}{コマンドの命名原則}{11}
+\contentsline {paragraph}{hikiutilsがあらかじめ想定している利用形態}{11}
+\contentsline {paragraph}{コメンド名と振る舞いの詳細}{13}
+\contentsline {paragraph}{open FILE}{14}
+\contentsline {paragraph}{ls [FILE]}{14}
+\contentsline {paragraph}{rsync}{14}
+\contentsline {paragraph}{touch FILE}{14}
+\contentsline {paragraph}{pwd}{14}
+\contentsline {paragraph}{cd VAL}{14}
+\contentsline {subsubsection}{\numberline {5.1.2}thor と optparse のコードの比較}{15}
+\contentsline {paragraph}{Thorとoptparseとは}{15}
+\contentsline {paragraph}{Thorとは}{15}
+\contentsline {paragraph}{optparseとは}{15}
+\contentsline {paragraph}{コードの解説}{16}
+\contentsline {paragraph}{Thorの定義}{16}
+\contentsline {paragraph}{実際のコード}{16}
+\contentsline {paragraph}{hikiutilsの実行}{17}
+\contentsline {paragraph}{実際のコード}{18}
+\contentsline {paragraph}{コマンドの表示と処理}{21}
+\contentsline {paragraph}{実際のコード}{22}
+\contentsline {subsubsection}{\numberline {5.1.3}CLIのコード}{26}
+\contentsline {paragraph}{CLIの解説}{26}
+\contentsline {paragraph}{Thor}{26}
+\contentsline {paragraph}{optparse}{26}
+\contentsline {subsubsection}{\numberline {5.1.4}Thorの初期化}{28}
+\contentsline {paragraph}{コード}{28}
+\contentsline {subsubsection}{\numberline {5.1.5}コマンド表示と処理}{29}
+\contentsline {paragraph}{Thor}{29}
+\contentsline {paragraph}{optparse}{30}
+\contentsline {paragraph}{コード}{31}
+\contentsline {subsubsection}{\numberline {5.1.6}CLIの実行}{34}
+\contentsline {paragraph}{Thor}{34}
+\contentsline {paragraph}{optparse}{35}
+\contentsline {paragraph}{コード}{35}
+\contentsline {section}{\numberline {6}参考文献}{39}

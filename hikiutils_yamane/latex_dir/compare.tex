@@ -1,10 +1,10 @@
 
-\subsection{thor と optparse のコードの比較}
+\subsubsection{thor と optparse のコードの比較}
 hikiutilsのコマンドライン解析ツールをoptparseからthorに換えることでコマンドの書き換えを行うことができた．
 また，thorで書かれたhikiutilsはoptparseで書かれたものよりもコードが短くなり，コマンドの解析も簡単に行えることができた．
 ここではthorとoptparseのコードを比較しthorの良さを確認する．
 
-\subsubsection{Thorとoptparseとは}
+\paragraph{Thorとoptparseとは}
 \paragraph{Thorとは}
 Thorとは，コマンドラインツールの作成を支援するライブラリのことである．
 gitやbundlerのようにサブコマンドを含むコマンドラインツールを簡単に作成することができる[4]．
@@ -40,7 +40,7 @@ OptionParserはコマンドラインのオプション取り扱うためのク�
 しかし，OptionParser\#onにはコマンドが登録されているだけであるため，OptionParser\#parseが呼ばれた時，コマンドラインにオプションが指定されていれば実行される．
 optparseにはデフォルトとして--helpと--versionオプションを認識する[6].
 
-\subsubsection{コードの解説}
+\paragraph{コードの解説}
 \paragraph{Thorの定義}
 \verb|{{attach_view(hikiutils_yamane.003.jpg)}}|
 Thorのinitializeの定義のされ方
