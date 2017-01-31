@@ -1,5 +1,5 @@
 
-\section{Thorの初期化}
+\subsubsection{Thorの初期化}
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_yamane_09_copy.003.jpg}
 \caption{}
@@ -18,7 +18,7 @@ Thorの定義方法はrequireでThorを呼びCLIクラスで継承し，initiali
 initializeメソッド内ではThorの初期設定がされていないため，スーパークラスのメソッドを読み出してくれるsuperを書き加えることで図のようにinitializeメソッド内でThorのinitilalizeメソッドが
 呼ばれ定義される．
 
-\subsection{コード}\begin{lstlisting}[style=customRuby]
+\paragraph{コード}\begin{lstlisting}[style=customRuby]
 # -*- coding: utf-8 -*-                                                         
 require 'thor'
 require 'kconv'
@@ -55,8 +55,8 @@ module Hikithor
       @editor_command = (editor_command==nil) ? 'open -a mi' : editor_command
    end
 \end{lstlisting}
-\section{コマンド表示と処理}
-\subsection{Thor}
+\subsubsection{コマンド表示と処理}
+\paragraph{Thor}
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_yamane_09_copy.004.jpg}
 \caption{}
@@ -75,7 +75,7 @@ map A => B
 mapとはBでしか読めないものをAでも読めるようにしてくれるものである.
 よって，これを使うことで別のコマンドも指定することができる．
 
-\subsection{optparse}
+\paragraph{optparse}
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_yamane_09_copy.005.jpg}
 \caption{}
@@ -92,7 +92,7 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
 以上より，Thorではコマンドの指定と処理にはdesc,map,処理メソッドだけで済むが，optparseではコマンドを登録するためのメソッドと処理メソッドが必要になってくる．
 また，コマンドはThorでは処理メソッドがコマンド名になるが，optparseではコマンドを登録するための処理も必要となってくる．
 
-\subsection{コード}
+\paragraph{コード}
 \begin{itemize}
 \item Thor
 \end{itemize}\begin{lstlisting}[style=customRuby]
@@ -188,8 +188,8 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
       show_sources
     end
 \end{lstlisting}
-\section{CLIの実行}
-\subsection{Thor}
+\subsubsection{CLIの実行}
+\paragraph{Thor}
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_yamane_09_copy.006.jpg}
 \caption{}
@@ -204,7 +204,7 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
 Thorではstart(ARGV)を呼び出すことでCLIを開始する．Hikithor::CLI.start(ARGV)を実行されることによりrequireで呼ばれているhikiutils\_thor.rbのCLIコマンドを順に実行する．
 そして，入力されたコマンドと一致するメソッドを探し，そのコマンドの処理が実行される．
 
-\subsection{optparse}
+\paragraph{optparse}
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_yamane_09_copy.007.jpg}
 \caption{}
@@ -221,7 +221,7 @@ Thorではstart(ARGV)を呼び出すことでCLIを開始する．Hikithor::CLI.
 このようにoptparseでは実行を行うためのメソッドが必要であるが，Thorではクラスのメソッドを順に実行していくため
 runメソッドとexecuteメソッドは必要ない．また，optparseでの実行手順はメソッドの移動回数が多く複雑であるが，Thorは単純で分かりやすいものとなっている．
 
-\subsection{コード}
+\paragraph{コード}
 \begin{itemize}
 \item Thor
 \end{itemize}\begin{lstlisting}[style=customRuby]

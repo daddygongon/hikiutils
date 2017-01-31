@@ -9,8 +9,9 @@ rescue => e
   exit
 end
 dirnames=Dir.pwd.split('/')
-basename = (dirnames[-1]=='hikis')? dirnames[-2] : dirnames[-1]
+$basename = (dirnames[-1]=='hikis')? dirnames[-2] : dirnames[-1]
 $latex_dir= 'latex_dir'
+$section_layer = {}
 
 task :github do
   status, stdout, stderr = systemu %q( git remote -v |grep origin )
@@ -32,25 +33,51 @@ task :latex_wrap => [:latex_base, :change_wrap] do
   exit
 end
 
-desc "latex conversion whole hiki files in the current dir."
-task :latex_all do
-  p entries=Dir.entries('.')
+def latex_loop(entries,opts={})
   main_file=""
   entries.each{|file|
-    option={:latex_all=>true}
+    options={:latex_all=>true}
     next unless file.split('.')[1]=='hiki'
     next if file.include?('.hikirc')
     f_name =File.basename(file,'.hiki')
-    if f_name==basename
-      option[:latex]="--listings --head latex_dir/head.tex -p "
-      main_file=f_name
+    if opts[:main]
+      if f_name==$basename
+        options[:latex]="--listings --head latex_dir/head.tex -p "
+        options[:main]=true
+        main_file=f_name
+        convert_to_latex(file, options)
+      end
     else
-      option[:latex]="-l 1 --listings -b "
+      if f_name!=$basename
+        p level = $section_layer[f_name] || 1
+        options[:latex]="-l #{level} --listings -b "
+        convert_to_latex(file, options)
+      end
     end
-    convert_to_latex(file, option)
   }
+  return main_file
+end
+
+def check_section_layers(lines)
+  p reg_exp = Regexp.new("#{$basename}_(.+)")
+  lines.each{|line|
+    p line
+    if m=line.match(/(!+)\[\[(.+)\]\]/)
+      p count = m[1].count('!')
+      p file_name=m[2].match(reg_exp)[1]
+      $section_layer[file_name]=count
+    end
+  }
+  p $section_layer
+end
+
+desc "latex conversion whole hiki files in the current dir."
+task :latex_all do
+  p entries=Dir.entries('.')
+  main_file = latex_loop(entries,opts={:main=>true})
+  latex_loop(entries)
   cont=""
-  p reg_exp = Regexp.new("#{basename}_(.+)")
+  p reg_exp = Regexp.new("#{$basename}_(.+)")
   File.readlines(File.join($latex_dir,"#{main_file}.tex")).each{|line|
     if line.match(/section{(.+)}/)
       if m=line.match(/\\verb\|(.+)\((.+)\)\|/)
@@ -62,7 +89,7 @@ task :latex_all do
         p m_t=m[1].match(reg_exp)[1]
         line = "\\include{#{m_t}}\n"
       else
-        line = ""
+#        line = ""
       end
     end
     cont << line
@@ -79,26 +106,26 @@ task :latex_base do
   system("open #{$save_name}")
 end
 
-def convert_to_latex(file_name, option={})
+def convert_to_latex(file_name, options={})
   p file_name = file_name.include?('.hiki')? file_name : file_name+'.hiki'
   p tex_name = File.basename(file_name,'.hiki')+'.tex'
   p $save_name = ARGV[2] || File.join($latex_dir,tex_name)
   pre_name = File.join($latex_dir,'pre.tex')
   p pre_command = File.exist?(pre_name) ? '--pre '+pre_name : nil
   lines = File.readlines(file_name)
+  check_section_layers(lines) if options[:main]
   cont = ""
   lines.each{|line|
-    p line
     if m=line.match(/\{\{attach_view\((.*),(.*)\)\}\}/)
       p line="\{\{attach_view\(#{m[1]}\)\}\}\n"
-    elsif option[:latex_all]
+    elsif options[:latex_all]
       line="" if line.match(/title:|author:|date:/)
     end
     cont << line
   }
   tf1,tf2='tmp1.txt','tmp2.txt'
   File.open(tf1,'w'){|file| file.print cont}
-  system "hiki2latex #{pre_command} #{option[:latex]} #{tf1} > #{tf2}"
+  system "hiki2latex #{pre_command} #{options[:latex]} #{tf1} > #{tf2}"
   lines = File.readlines(tf2)
   system "rm #{tf1} #{tf2}"
   cont = ""
@@ -209,12 +236,12 @@ task :sync0 do
     next unless source.split('.')[1]=='hiki'
     next if source.include?('.hikirc')
     p base = source.split('.')[0]
-    name = (base==basename)? base : basename+'_'+base
+    name = (base==$basename)? base : $basename+'_'+base
     p target = File.join(target_dir,'text',name)
     FileUtils.cp(source,target,:verbose=>true)
   }
   p entries=Dir.entries('./figs') #cp files in figs
-  p target = File.join(target_dir,'cache','attach',basename)
+  p target = File.join(target_dir,'cache','attach',$basename)
   FileUtils.mkdir_p(target,:verbose=>true) unless File.exists?(target)
   entries[2..-1].each{|file|
     p source = File.join('./figs',file)
@@ -222,7 +249,7 @@ task :sync0 do
   }
 
   File.open('./.hikirc','w'){|file|
-    status, stdout, stderr =systemu "hiki -l #{basename}*"
+    status, stdout, stderr =systemu "hiki -l #{$basename}*"
     file.print(target_dir+"\n")
     stdout.split("\n")[3..-1].each{|line|
       file.print line+"\n"
@@ -253,7 +280,7 @@ desc "check previou and current sync"
 task :check_previous do
   current={}
   print "current hiki dir\n"
-  status, stdout, stderr = systemu("hiki -l #{basename}*")
+  status, stdout, stderr = systemu("hiki -l #{$basename}*")
   stdout.split("\n")[3..-1].each{|line|
     p line
     file=   line.split(/\s+/)[-1]

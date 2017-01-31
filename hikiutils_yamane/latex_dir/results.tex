@@ -1,7 +1,7 @@
 
-\section{結果}
-\subsection{コマンド名の検討}
-\subsubsection{コマンドの命名原則}
+\subsection{結果}
+\subsubsection{コマンド名の検討}
+\paragraph{コマンドの命名原則}
 機能ごとの動作はコマンドのオプションによって指定されます．
 このオプションにどのような名前をつけるかは，どれだけコマンドを覚えやすいかという
 意味で重要です．コマンドの振る舞いを的確に表す名称をつける必要があります．
@@ -11,10 +11,13 @@ pwd, ls, rm, touch, openなどはもっとも直感的に動作がわかるコ�
 hikiutilsの振る舞いを予測できるシェルコマンドと同じ名前でオプションを提供する
 ようにします．
 
-\subsubsection{hikiutilsがあらかじめ想定している利用形態}
+\paragraph{hikiutilsがあらかじめ想定している利用形態}
 ここでhikiutilsがあらかじめ想定している利用形態を解説しておきます．
 
-\verb|{{attach_view(hikiutils_yamane_09_copy.002.jpg)}}|
+\begin{figure}[htbp]\begin{center}
+\includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_yamane_09_copy.002.jpg}
+\caption{hikiutilsがあらかじめ想定している利用形態}
+\label{default}\end{center}\end{figure}
 hikiutilsは，
 
 \begin{itemize}
@@ -57,12 +60,12 @@ editor_command:open -a mi
 \end{lstlisting}
 とすると，それらの一覧と，いまtargetにしているnick\_nameディレクリが表示されます．
 
-\subsubsection{コメンド名と振る舞いの詳細}
+\paragraph{コメンド名と振る舞いの詳細}
 開発の結果コマンドを以下のように書き換えました．
 上部に記した，特によく使うコマンドに関しては，shellでよく使われるコマンド名と一致するにようにしました．
 
 \begin{table}[htbp]\begin{center}
-\caption{hikiutilsがあらかじめ想定している利用形態}
+\caption{}
 \begin{tabular}{llll}
 \hline
 変更前  &変更後  &動作の解説  \\ \hline

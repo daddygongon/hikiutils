@@ -1,11 +1,11 @@
 
-\section{CLIのコード}
+\subsubsection{CLIのコード}
 hikiutilsのコマンドライン解析ツールをoptparseからthorに換えることでコマンドの書き換えを行うことができた．
 また，thorで書かれたhikiutilsはoptparseで書かれたものよりもコードが短くなり，コマンドの解析も簡単に行えることができた．
 ここではthorとoptparseのコードを比較しthorの良さを確認する．
 
-\subsection{CLIの解説}
-\subsubsection{Thor}
+\paragraph{CLIの解説}
+\paragraph{Thor}
 Thorとは，コマンドラインツールの作成を支援するライブラリのことである．
 gitやbundlerのようにサブコマンドを含むコマンドラインツールを簡単に作成することができる[1-2]．
 
@@ -20,7 +20,7 @@ Thorの基本的な流れとしては
 startに渡す引数が空の場合，Thorはクラスのヘルプリストを出力する．
 また，Thorはサブコマンドやサブサブコマンドも作ることができる．
 
-\subsubsection{optparse}
+\paragraph{optparse}
 optparseとは，getoptよりも簡便で，柔軟性に富み，かつ強力なコマンドライン解析ライブラリである．
 optparseでは，より宣言的なスタイルのコマンドライン解析手法，すなわちOptionParserのインスタンスでコマンドラインを解析するという手法をとっている．
 これを使うと，GNU/POSIX構文でオプションを指定できるだけでなく，使用法やヘルプメッセージの生成も行える[1-3]．
