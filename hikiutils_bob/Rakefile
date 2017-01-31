@@ -37,13 +37,12 @@ task :latex_all do
   p entries=Dir.entries('.')
   main_file=""
   entries.each{|file|
-    option={}
-    next unless file.include?('.hiki')
+    option={:latex_all=>true}
+    next unless file.split('.')[1]=='hiki'
     next if file.include?('.hikirc')
     f_name =File.basename(file,'.hiki')
     if f_name==basename
       option[:latex]="--listings --head latex_dir/head.tex -p "
-      option[:frontpage]=true
       main_file=f_name
     else
       option[:latex]="-l 1 --listings -b "
@@ -92,13 +91,8 @@ def convert_to_latex(file_name, option={})
     p line
     if m=line.match(/\{\{attach_view\((.*),(.*)\)\}\}/)
       p line="\{\{attach_view\(#{m[1]}\)\}\}\n"
-    elsif option[:frontpage]
-      if m=line.match(/[title:|(author:|date:]/)
-        line=""
-        p "line match [title:|author:|date:]"
-      else
-        p line
-      end
+    elsif option[:latex_all]
+      line="" if line.match(/title:|author:|date:/)
     end
     cont << line
   }
@@ -106,8 +100,7 @@ def convert_to_latex(file_name, option={})
   File.open(tf1,'w'){|file| file.print cont}
   system "hiki2latex #{pre_command} #{option[:latex]} #{tf1} > #{tf2}"
   lines = File.readlines(tf2)
-#  system "rm #{tf1} #{tf2}"
-  exit
+  system "rm #{tf1} #{tf2}"
   cont = ""
   lines.each{|line|
     if m=line.match(/\\includegraphics\[width=6cm\]\{(.+)\}/)
@@ -213,7 +206,7 @@ desc "sync0 hikis and figs to hiki directory"
 task :sync0 do
   entries=Dir.entries('.')
   entries[2..-1].each{|source| #cp *.hiki
-    next unless source.include?('.hiki')
+    next unless source.split('.')[1]=='hiki'
     next if source.include?('.hikirc')
     p base = source.split('.')[0]
     name = (base==basename)? base : basename+'_'+base

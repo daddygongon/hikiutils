@@ -1,3 +1,3 @@
 module HikiUtils
-  VERSION = "0.2.3.6"
+  VERSION = "0.2.3.7"
 end

@@ -37,7 +37,8 @@ task :latex_all do
   p entries=Dir.entries('.')
   main_file=""
   entries.each{|file|
-    next unless file.include?('.hiki')
+    next unless file.split('.')[1]=='hiki'
+#    next unless file.include?('.hiki')
     next if file.include?('.hikirc')
     f_name =File.basename(file,'.hiki')
     if f_name==basename
