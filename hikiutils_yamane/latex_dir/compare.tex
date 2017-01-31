@@ -7,32 +7,37 @@ hikiutilsのコマンドライン解析ツールをoptparseからthorに換え�
 \subsubsection{Thorとoptparseとは}
 \paragraph{Thorとは}
 Thorとは，コマンドラインツールの作成を支援するライブラリのことである．
-gitやbundlerのようにサブコマンドを含むコマンドラインツールを簡単に作成することができる[4]．\verb|{{br}}|
-Thorの基本的な流れとしては\verb|{{br}}|
+gitやbundlerのようにサブコマンドを含むコマンドラインツールを簡単に作成することができる[4]．
+
+Thorの基本的な流れとしては
 
 \begin{enumerate}
 \item Thorを継承したクラスのパブリックメソッドがコマンドになる
 \item クラス.start(ARGV)でコマンドラインの処理をスタートする
 \end{enumerate}
-という流れである[4].\verb|{{br}}|
+という流れである[4].
+
 startに渡す引数が空の場合，Thorはクラスのヘルプリストを出力する．
 また，Thorはサブコマンドやサブサブコマンドも作ることができる．
 
 \paragraph{optparseとは}
 optparseモジュールとは，getoptよりも簡便で，柔軟性に富み，かつ強力なコマンドライン解析ライブラリである．
 optparseでは，より宣言的なスタイルのコマンドライン解析手法，すなわちOptionParserのインスタンスでコマンドラインを解析するという手法をとっている．
-これを使うと，GNU/POSIX構文でオプションを指定できるだけでなく，使用法やヘルプメッセージの生成も行える[5]．\verb|{{br}}|
-利用頻度はあまり高くないが古くから開発され，使用例が広く紹介されている．\verb|{{br}}|
-optparseの基本的な流れとしては\verb|{{br}}|
+これを使うと，GNU/POSIX構文でオプションを指定できるだけでなく，使用法やヘルプメッセージの生成も行える[5]．
+
+利用頻度はあまり高くないが古くから開発され，使用例が広く紹介されている．
+
+optparseの基本的な流れとしては
 
 \begin{enumerate}
 \item OptionParserオブジェクトoptを生成する
 \item オプションを取り扱うブロックをopt.onに登録する
 \item opt.parse(ARGV)でコマンドラインを実際にparseする
 \end{enumerate}
-という流れである.\verb|{{br}}|
+という流れである.
+
 OptionParserはコマンドラインのオプション取り扱うためのクラスであるためオブジェクトoptを生成されopt.onにコマンドを登録することができる．
-しかし，OptionParser#onにはコマンドが登録されているだけであるため，OptionParser#parseが呼ばれた時，コマンドラインにオプションが指定されていれば実行される．
+しかし，OptionParser\#onにはコマンドが登録されているだけであるため，OptionParser\#parseが呼ばれた時，コマンドラインにオプションが指定されていれば実行される．
 optparseにはデフォルトとして--helpと--versionオプションを認識する[6].
 
 \subsubsection{コードの解説}
@@ -97,8 +102,10 @@ module Hikithor
 \caption{}
 \label{default}\end{center}\end{figure}
 \begin{enumerate}
-\item hiki\_thorのHikithor::CLI.start(ARGV)でhikiutils\_thor.rbのCLIクラスを呼ぶ\verb|{{br}}|
-\item hikiutils\_thor.rbのCLIクラスのメソッドを順に実行していく\verb|{{br}}|
+\item hiki\_thorのHikithor::CLI.start(ARGV)でhikiutils\_thor.rbのCLIクラスを呼ぶ
+\end{enumerate}
+\begin{enumerate}
+\item hikiutils\_thor.rbのCLIクラスのメソッドを順に実行していく
 \end{enumerate}
 \begin{itemize}
 \item optparse
