@@ -1,4 +1,6 @@
-! [[hikiutils_bob_sync]]
-! [[hikiutils_bob_latex_all]]
+!title:卒論編集システムの概要
+*{{attach_anchor(hikiutils_bob.pdf,hikiutils_bob)}}
+! [[hikiとの同期|hikiutils_bob_sync]]
+! [[latexへの変換|hikiutils_bob_latex_all]]
 
 
