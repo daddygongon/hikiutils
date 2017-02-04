@@ -1,5 +1,5 @@
 {{toc}}
-!!Thorの初期化                                                      
+!Thorの初期化                                                      
 {{attach_view(hikiutils_yamane_09_copy.003.jpg,hikiutils_yamane)}}
 *Thorのinitializeでのコード
 #Hikithor::CLI.start(ARGV)が呼ばれる
@@ -10,7 +10,7 @@ optparseではrequireでoptparseを呼びoptparseのinitializeを定義する必
 Thorの定義方法はrequireでThorを呼びCLIクラスで継承し，initializeメソッドにsuperを書くことでThorのinitializeが呼ばれる．
 initializeメソッド内ではThorの初期設定がされていないため，スーパークラスのメソッドを読み出してくれるsuperを書き加えることで図のようにinitializeメソッド内でThorのinitilalizeメソッドが
 呼ばれ定義される．
-!!!コード
+!!コード
 <<< ruby
 # -*- coding: utf-8 -*-                                                         
 require 'thor'
@@ -48,8 +48,8 @@ module Hikithor
       @editor_command = (editor_command==nil) ? 'open -a mi' : editor_command
    end
 >>>
-!!コマンド表示と処理
-!!!Thor
+!コマンド表示と処理
+!!Thor
 {{attach_view(hikiutils_yamane_09_copy.004.jpg,hikiutils_yamane)}}
 #コマンド名，コマンドの説明を一覧に表示させる
 #パブリックメソッドのコマンドを別のコマンド名でも実行できるようにする
@@ -62,7 +62,7 @@ map A => B
 >>>
 mapとはBでしか読めないものをAでも読めるようにしてくれるものである.
 よって，これを使うことで別のコマンドも指定することができる．
-!!!optparse
+!!optparse
 {{attach_view(hikiutils_yamane_09_copy.005.jpg,hikiutils_yamane)}}
 #OptionParserオブジェクトoptを生成
 #optにコマンドを登録
@@ -74,7 +74,7 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
 以上より，Thorではコマンドの指定と処理にはdesc,map,処理メソッドだけで済むが，optparseではコマンドを登録するためのメソッドと処理メソッドが必要になってくる．
 また，コマンドはThorでは処理メソッドがコマンド名になるが，optparseではコマンドを登録するための処理も必要となってくる．
 
-!!!コード
+!!コード
 *Thor
 <<< ruby
     desc 'show,--show', 'show sources'
@@ -168,8 +168,8 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
       show_sources
     end
 >>>
-!!CLIの実行
-!!!Thor
+!CLIの実行
+!!Thor
 {{attach_view(hikiutils_yamane_09_copy.006.jpg,hikiutils_yamane)}}
 *実行手順
 
@@ -178,7 +178,7 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
 
 Thorではstart(ARGV)を呼び出すことでCLIを開始する．Hikithor::CLI.start(ARGV)を実行されることによりrequireで呼ばれているhikiutils_thor.rbのCLIコマンドを順に実行する．
 そして，入力されたコマンドと一致するメソッドを探し，そのコマンドの処理が実行される．
-!!!optparse
+!!optparse
 {{attach_view(hikiutils_yamane_09_copy.007.jpg,hikiutils_yamane)}}
 *実行手順
 
@@ -188,7 +188,7 @@ Thorではstart(ARGV)を呼び出すことでCLIを開始する．Hikithor::CLI.
 そこでコマンドを登録しているexecuteメソッドへ移動し入力したコマンドと対応させる．そして，対応したコマンドの処理が行われるメソッドに移動することで実行される．
 このようにoptparseでは実行を行うためのメソッドが必要であるが，Thorではクラスのメソッドを順に実行していくため
 runメソッドとexecuteメソッドは必要ない．また，optparseでの実行手順はメソッドの移動回数が多く複雑であるが，Thorは単純で分かりやすいものとなっている．
-!!!コード
+!!コード
 *Thor
 <<< ruby
 #!/usr/bin/env ruby                                                             

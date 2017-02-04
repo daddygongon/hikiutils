@@ -1,7 +1,5 @@
 
-\subsection{結果}
-\subsubsection{コマンド名の検討}
-\paragraph{コマンドの命名原則}
+\subsection{コマンドの命名原則}
 機能ごとの動作はコマンドのオプションによって指定されます．
 このオプションにどのような名前をつけるかは，どれだけコマンドを覚えやすいかという
 意味で重要です．コマンドの振る舞いを的確に表す名称をつける必要があります．
@@ -11,7 +9,7 @@ pwd, ls, rm, touch, openなどはもっとも直感的に動作がわかるコ�
 hikiutilsの振る舞いを予測できるシェルコマンドと同じ名前でオプションを提供する
 ようにします．
 
-\paragraph{hikiutilsがあらかじめ想定している利用形態}
+\subsection{hikiutilsがあらかじめ想定している利用形態}
 ここでhikiutilsがあらかじめ想定している利用形態を解説しておきます．
 
 \begin{figure}[htbp]\begin{center}
@@ -19,7 +17,6 @@ hikiutilsの振る舞いを予測できるシェルコマンドと同じ名前�
 \caption{hikiutilsがあらかじめ想定している利用形態}
 \label{default}\end{center}\end{figure}
 hikiutilsは，
-
 \begin{itemize}
 \item local PCとglobal serverとが用意されており，
 \item それらのデータをrsyncで同期する
@@ -60,7 +57,7 @@ editor_command:open -a mi
 \end{lstlisting}
 とすると，それらの一覧と，いまtargetにしているnick\_nameディレクリが表示されます．
 
-\paragraph{コメンド名と振る舞いの詳細}
+\subsection{コメンド名と振る舞いの詳細}
 開発の結果コマンドを以下のように書き換えました．
 上部に記した，特によく使うコマンドに関しては，shellでよく使われるコマンド名と一致するにようにしました．
 
@@ -92,33 +89,39 @@ version           &  &show program version  \\
 %for inserting separate lines, use \hline, \cline{2-3} etc.
 
 それぞれの意図を動作の解説として記述しています．
-
-\paragraph{open FILE}
+\begin{itemize}
+\item open FILE
+\end{itemize}
 ファイルを編集のためにeditorでopen．Editorは~/.hikircに
 \begin{quote}\begin{verbatim}
 :editor_command: open -a mi
 \end{verbatim}\end{quote}
 として保存されている．open -a miをemacsなどに適宜変更して使用．
-
-\paragraph{ls [FILE]}
+\begin{itemize}
+\item ls [FILE]
+\end{itemize}
 local\_dirにあるファイル名を[FILE*]として表示．例えば，hikiutils\_yamane以下の拡張子が
 ついたファイルを表示．hikiシステムではtextディレクトリーは階層構造を取ることができない．
 西谷研ではdirectoryの代わりにスネーク表記で階層構造を表している．
-
-\paragraph{rsync}
+\begin{itemize}
+\item rsync
+\end{itemize}
 local\_dirの内容をglobal\_dirにrsyncする．逆方向は同期に誤差が生じたり，permissionが
 おかしくなるので，現在のところ一方向の同期のみとしている．したがって，作業手順としては
 テキストの変更はlocal\_dirで読み行うようにしている．
-
-\paragraph{touch FILE}
+\begin{itemize}
+\item touch FILE
+\end{itemize}
 loccal\_dirで書き換えたFILEの内容をlocal\_uriに反映させ，ブラウザで表示．シェルコマンドの
 touchによって，変更時間を現在に変え，最新状態とするのに似せてコマンド名をtouchとしている．
-
-\paragraph{pwd}
+\begin{itemize}
+\item pwd
+\end{itemize}
 nick\_nameの一覧とtargetを表示，current targetをcurrent dirとみなして，
 コマンド名をpwdとした．
-
-\paragraph{cd VAL}
+\begin{itemize}
+\item cd VAL
+\end{itemize}
 targetを変える，change directoryとのメタファ．ただし，いまのところnick\_nameでは
 対応しておらず，nick\_nameの番号をVAL入力することで変更する．
 

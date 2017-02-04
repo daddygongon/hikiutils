@@ -10,7 +10,6 @@ Thorとは，コマンドラインツールの作成を支援するライブラ�
 gitやbundlerのようにサブコマンドを含むコマンドラインツールを簡単に作成することができる[4]．
 
 Thorの基本的な流れとしては
-
 \begin{enumerate}
 \item Thorを継承したクラスのパブリックメソッドがコマンドになる
 \item クラス.start(ARGV)でコマンドラインの処理をスタートする
@@ -28,7 +27,6 @@ optparseでは，より宣言的なスタイルのコマンドライン解析手
 利用頻度はあまり高くないが古くから開発され，使用例が広く紹介されている．
 
 optparseの基本的な流れとしては
-
 \begin{enumerate}
 \item OptionParserオブジェクトoptを生成する
 \item オプションを取り扱うブロックをopt.onに登録する
@@ -44,7 +42,6 @@ optparseにはデフォルトとして--helpと--versionオプションを認識
 \paragraph{Thorの定義}
 \verb|{{attach_view(hikiutils_yamane.003.jpg)}}|
 Thorのinitializeの定義のされ方
-
 \begin{enumerate}
 \item Hikithor::CLI.start(ARGV)が呼ばれる
 \item initializeメソッドが呼ばれる
@@ -93,36 +90,30 @@ module Hikithor
       @editor_command = (editor_command==nil) ? 'open -a mi' : editor_command
    end
 \end{lstlisting}
-\paragraph{hikiutilsの実行}
-\begin{itemize}
+\paragraph{hikiutilsの実行}\begin{itemize}
 \item Thor
 \end{itemize}
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_yamane.004.jpg}
 \caption{}
-\label{default}\end{center}\end{figure}
-\begin{enumerate}
+\label{default}\end{center}\end{figure}\begin{enumerate}
 \item hiki\_thorのHikithor::CLI.start(ARGV)でhikiutils\_thor.rbのCLIクラスを呼ぶ
-\end{enumerate}
-\begin{enumerate}
+\end{enumerate}\begin{enumerate}
 \item hikiutils\_thor.rbのCLIクラスのメソッドを順に実行していく
-\end{enumerate}
-\begin{itemize}
+\end{enumerate}\begin{itemize}
 \item optparse
 \end{itemize}
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_yamane.001.jpg}
 \caption{}
-\label{default}\end{center}\end{figure}
-\begin{enumerate}
+\label{default}\end{center}\end{figure}\begin{enumerate}
 \item HikiのHikiUtils::Command.run(ARGV)でhikiutils.rbのrunメソッドを呼ぶ
 \item new(argv).executeでexecuteメソッドが実行される
 \end{enumerate}
 このようにoptparseでは実行を行うためのメソッドが必要であるが，Thorではクラスのメソッドを順に実行していくため
 runメソッドとexecuteメソッドは必要ない．
 
-\paragraph{実際のコード}
-\begin{itemize}
+\paragraph{実際のコード}\begin{itemize}
 \item Thor
 \end{itemize}\begin{lstlisting}[style=customRuby]
 #!/usr/bin/env ruby                                                             
@@ -164,8 +155,7 @@ module Hikithor
       browser = @src[:browser]
       @browser = (browser==nil) ? 'firefox' : browser
 
-\end{lstlisting}
-\begin{itemize}
+\end{lstlisting}\begin{itemize}
 \item optparse
 \end{itemize}\begin{lstlisting}[style=customRuby]
 #!/usr/bin/env ruby                                                             
@@ -212,15 +202,13 @@ s)}
       exit
     end  
 \end{lstlisting}
-\paragraph{コマンドの表示と処理}
-\begin{itemize}
+\paragraph{コマンドの表示と処理}\begin{itemize}
 \item Thor
 \end{itemize}
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_yamane.002.jpg}
 \caption{}
-\label{default}\end{center}\end{figure}
-\begin{enumerate}
+\label{default}\end{center}\end{figure}\begin{enumerate}
 \item コマンド名，コマンドの説明を一覧に表示させる
 \item パブリックメソッドのコマンドを別のコマンド名でも実行できるようにする
 \item コマンドの命令の実行コード
@@ -228,15 +216,13 @@ s)}
 Thorではdescで一覧を表示させるコマンド名，コマンドの説明を登録する．しかし，ここで記述したコマンドは一覧で表示させるものであり，実行されることはないので実際のコマンドと対応させる必要がある．
 Thorでは処理実行を行うメソッドがコマンドとなる．しかし，それではコマンド名は１つしか使うことができない．
 ここで用いるものがmapである．mapを使うことで別のコマンドを指定することができる．
-
 \begin{itemize}
 \item optparse
 \end{itemize}
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=6cm,bb=0 0 442 500]{../figs/./hikiutils_yamane.005.jpg}
 \caption{}
-\label{default}\end{center}\end{figure}
-\begin{enumerate}
+\label{default}\end{center}\end{figure}\begin{enumerate}
 \item OptionParserオブジェクトoptを生成
 \item optにコマンドを登録
 \item 入力されたコマンドの処理のメソッドへ移動
@@ -248,8 +234,7 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
 以上より，Thorではコマンドの指定と処理にはdesc,map,処理メソッドだけで済むが，optparseではコマンドを登録するためのメソッドと処理メソッドが必要になってくる．
 また，コマンドはThorでは処理メソッドがコマンド名になるが，optparseではコマンドを登録するための処理も必要となってくる．
 
-\paragraph{実際のコード}
-\begin{itemize}
+\paragraph{実際のコード}\begin{itemize}
 \item Thor
 \end{itemize}\begin{lstlisting}[style=customRuby]
     desc 'show,--show', 'show sources'
@@ -279,8 +264,7 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
         puts command.display_format(id,name,local,global,@i_size,@n_size,@l_size,@g_size)
       }
     end
-\end{lstlisting}
-\begin{itemize}
+\end{lstlisting}\begin{itemize}
 \item optparse
 \end{itemize}\begin{lstlisting}[style=customRuby]
     def execute
