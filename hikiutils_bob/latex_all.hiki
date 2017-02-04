@@ -33,19 +33,20 @@ DRY(Don't Repeat Yourself)原則さえ守れば，文書管理はいいのです
  hiki -i
 でinstallされています．新たに使うコマンド群は次の通りです．
 <<< bash
-rake change_wrap     # change latex figures to wrap format
-rake latex           # latex conversion FILE1
-rake latex_all       # latex conversion whole hiki files in the current dir
-rake latex_base      # latex conversion FILE1(hiki) to FILE2(latex)
-rake latex_wrap      # latex conversion FILE1 with wrap format
+rake latex            # latex conversion FILE1
+rake latex_all        # latex conversion whole hiki files in the current dir
+rake change_wrap      # change latex figures to wrap format
+rake latex_base       # latex conversion FILE1(hiki) to FILE2(latex)
+rake latex_wrap       # latex conversion FILE1 with wrap format
+rake reset_latex_dir  # reset latex dir
 >>>
 
-!!rake latex手順（個別ファイルの変換）
+!!rake latex（個別ファイルの変換）
  rake latex sync.hiki
 とすると，
  latex_dir/sync.tex
 にlatex変換後のファイルが生成します．これを，TeXShopでcommand_t変換します．
-
+完成例はこちらです．
 *{{attach_anchor(sync.pdf,hikiutils_bob)}}
 
 うまくいかないときは，terminalで
@@ -55,10 +56,13 @@ rake latex_wrap      # latex conversion FILE1 with wrap format
 
 !!!注意
 hikiの初めの部分は，
-<<<
-!title:hikiutils -iによる卒論作成システム
-!author:Shigeto R. Nishitani
-!date: Kwansei Gakuen Univ., 2017/1
+<<< text
+bob% head -3 hikiutils_bob.hiki
+
+! title:hikiutils -iによる卒論作成システム %:
+! author:Shigeto R. Nishitani %:
+! date: Kwansei Gakuen Univ., 2017/1 %:
+
 >>>
 とすると，
 <<< latex
@@ -68,7 +72,8 @@ hikiの初めの部分は，
 \date{ Kwansei Gakuen Univ., 2017/1}
 \maketitle
 >>>
-と変換してくれます．
+と変換してくれます．次節のlatex_allでは，basename.hikiに書かれたそれらの情報は，
+head.texでtitleなどを用意するべきなので，自動で消されます．
 
 必要な図は，figsから自動で取るようになっていますが，
 サイズや解像度が問題のときは手動で調整してください．
@@ -99,9 +104,13 @@ bob% cat hikiutils_bob.hiki
 latex_dir内に幾つかのtex雛形を入れておく必要があります．
  hiki -i
 とhikiutils環境を再度初期化すると，自動でインストールする設定です．
-なかったら手動で作ってください．
+なかったら手動で作ってください．Rakefile以外は上書きしない．
+latex_dir/head.texは修正が必要．
+
 !!!!head.tex
 題目，学生番号，氏名を変更する．年月をチェック．
+\\setcounter{tocdepth}はtocをどこまで表示するかのレベルに対応します．
+原稿作成時は階層がわかりやすいように深めにするが，本番では2程度で十分．
 <<< latex
 bob% cat head.tex
 \title{卒業論文\\
@@ -110,12 +119,14 @@ bob% cat head.tex
 \date{\vspace{3cm} 2017年  3月\\
 \vspace{3cm} 指導教員　　西谷　滋人　教授}
 \maketitle
+\setcounter{tocdepth}{6} %
 \tableofcontents
 >>>
 
+
 !!!!pre.tex
-あまり変更しないほうがいいが，いずれいじる．例えば，フォントポイント数を10から12ptに変える，
-\pagestyle{empty}を外すなど．
+あまり変更しないほうがいいが，いずれいじることになります．
+例えば，フォントポイント数を10から12ptに変える，\pagestyle{empty}を外すなどです．
 <<< latex
 bob% cat pre.tex
 \documentclass[10pt,a4j]{article}
@@ -156,3 +167,31 @@ bob% cat pre.tex
 \usepackage{here}
 >>>
 
+!!補助コマンドの解説
+!!!wrap関係
+figure環境をwrapfigure環境で作るための幾つかのコマンド群．
+卒論ではfigure環境で作る方がいいが，journal論文などのページ数が制限された場合は，
+wrapfigureでtextの回りこみや位置調整を行う必要がある．それらのための環境を
+埋め込む．
+
+*rake change_wrap(wrapで変換)
+*rake latex_base(latexに変換するだけの下請け)
+*rake latex_wrap(figure環境だけをwrapfig環境に変える)
+<<< ruby
+desc "latex conversion FILE1"
+task :latex => [:latex_base] do
+  exit
+end
+
+desc "latex conversion FILE1 with wrap format"
+task :latex_wrap => [:latex_base, :change_wrap] do
+  exit
+end
+>>>
+完成例はこちらです．
+*{{attach_anchor(calphad_bob.pdf,hikiutils_bob)}}
+
+!!!rake reset_latex_dir(latex_dirのゴミ掃除)
+わかりやすいようにまとめたり，ファイルの名称を変更した時には，過去のtexファイルが残る．
+それらを整理する時に使用．head.texだけをescapeしてrm -rfで消すので，注意が必要．
+特に図形のfilesやbb filesは消えるので注意．

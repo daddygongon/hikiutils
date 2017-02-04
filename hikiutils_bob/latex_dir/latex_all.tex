@@ -39,13 +39,14 @@ hiki -i
 \end{verbatim}\end{quote}
 でinstallされています．新たに使うコマンド群は次の通りです．
 \begin{lstlisting}[style=]
-rake change_wrap     # change latex figures to wrap format
-rake latex           # latex conversion FILE1
-rake latex_all       # latex conversion whole hiki files in the current dir
-rake latex_base      # latex conversion FILE1(hiki) to FILE2(latex)
-rake latex_wrap      # latex conversion FILE1 with wrap format
+rake latex            # latex conversion FILE1
+rake latex_all        # latex conversion whole hiki files in the current dir
+rake change_wrap      # change latex figures to wrap format
+rake latex_base       # latex conversion FILE1(hiki) to FILE2(latex)
+rake latex_wrap       # latex conversion FILE1 with wrap format
+rake reset_latex_dir  # reset latex dir
 \end{lstlisting}
-\subsection{rake latex手順（個別ファイルの変換）}\begin{quote}\begin{verbatim}
+\subsection{rake latex（個別ファイルの変換）}\begin{quote}\begin{verbatim}
 rake latex sync.hiki
 \end{verbatim}\end{quote}
 とすると，
@@ -53,6 +54,7 @@ rake latex sync.hiki
 latex_dir/sync.tex
 \end{verbatim}\end{quote}
 にlatex変換後のファイルが生成します．これを，TeXShopでcommand\_t変換します．
+完成例はこちらです．
 
 \begin{itemize}
 \item \verb|{{attach_anchor(sync.pdf,hikiutils_bob)}}|
@@ -66,9 +68,11 @@ dvipdfmx sync.dvi
 
 \subsubsection{注意}
 hikiの初めの部分は，
-\begin{quote}\begin{verbatim}
+\begin{lstlisting}[style=]
+bob% head -3 hikiutils_bob.hiki
 
-\end{verbatim}\end{quote}
+
+\end{lstlisting}
 とすると，
 \begin{lstlisting}[style=]
 \begin{document}
@@ -77,7 +81,8 @@ hikiの初めの部分は，
 \date{ Kwansei Gakuen Univ., 2017/1}
 \maketitle
 \end{lstlisting}
-と変換してくれます．
+と変換してくれます．次節のlatex\_allでは，basename.hikiに書かれたそれらの情報は，
+head.texでtitleなどを用意するべきなので，自動で消されます．
 
 必要な図は，figsから自動で取るようになっていますが，
 サイズや解像度が問題のときは手動で調整してください．
@@ -113,10 +118,13 @@ latex\_dir内に幾つかのtex雛形を入れておく必要があります．
 hiki -i
 \end{verbatim}\end{quote}
 とhikiutils環境を再度初期化すると，自動でインストールする設定です．
-なかったら手動で作ってください．
+なかったら手動で作ってください．Rakefile以外は上書きしない．
+latex\_dir/head.texは修正が必要．
 
 \paragraph{head.tex}
 題目，学生番号，氏名を変更する．年月をチェック．
+\\setcounter{tocdepth}はtocをどこまで表示するかのレベルに対応します．
+原稿作成時は階層がわかりやすいように深めにするが，本番では2程度で十分．
 \begin{lstlisting}[style=]
 bob% cat head.tex
 \title{卒業論文\\
@@ -125,11 +133,12 @@ bob% cat head.tex
 \date{\vspace{3cm} 2017年  3月\\
 \vspace{3cm} 指導教員　　西谷　滋人　教授}
 \maketitle
+\setcounter{tocdepth}{6} %
 
 \end{lstlisting}
 \paragraph{pre.tex}
-あまり変更しないほうがいいが，いずれいじる．例えば，フォントポイント数を10から12ptに変える，
-\pagestyle{empty}を外すなど．
+あまり変更しないほうがいいが，いずれいじることになります．
+例えば，フォントポイント数を10から12ptに変える，\pagestyle{empty}を外すなどです．
 \begin{lstlisting}[style=]
 bob% cat pre.tex
 \documentclass[10pt,a4j]{article}
@@ -169,3 +178,35 @@ bob% cat pre.tex
 \usepackage{subfigure}
 \usepackage{here}
 \end{lstlisting}
+\subsection{補助コマンドの解説}
+\subsubsection{wrap関係}
+figure環境をwrapfigure環境で作るための幾つかのコマンド群．
+卒論ではfigure環境で作る方がいいが，journal論文などのページ数が制限された場合は，
+wrapfigureでtextの回りこみや位置調整を行う必要がある．それらのための環境を
+埋め込む．
+
+\begin{itemize}
+\item rake change\_wrap(wrapで変換)
+\item rake latex\_base(latexに変換するだけの下請け)
+\item rake latex\_wrap(figure環境だけをwrapfig環境に変える)
+\end{itemize}\begin{lstlisting}[style=customRuby]
+desc "latex conversion FILE1"
+task :latex => [:latex_base] do
+  exit
+end
+
+desc "latex conversion FILE1 with wrap format"
+task :latex_wrap => [:latex_base, :change_wrap] do
+  exit
+end
+\end{lstlisting}
+完成例はこちらです．
+
+\begin{itemize}
+\item \verb|{{attach_anchor(calphad_bob.pdf,hikiutils_bob)}}|
+\end{itemize}
+\subsubsection{rake reset\_latex\_dir(latex\_dirのゴミ掃除)}
+わかりやすいようにまとめたり，ファイルの名称を変更した時には，過去のtexファイルが残る．
+それらを整理する時に使用．head.texだけをescapeしてrm -rfで消すので，注意が必要．
+特に図形のfilesやbb filesは消えるので注意．
+

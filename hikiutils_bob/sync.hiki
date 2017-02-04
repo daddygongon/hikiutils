@@ -64,15 +64,16 @@ keynoteで図を作成して，hikiutils_bob.hikiに文章を記述していく�
 rakeの用意しているコマンドは次のとおり．
 
 <<< bash
-rake check_previous  # check previou and current sync
-rake chenv           # For hiki Errno::ENOENT, Errno::EACCES
-rake convert         # convert fig size SCALE TARGET_DIR
-rake force_sync      # force_sync hikis and figs to hiki directory
-rake increment       # increment fig NUBERS in FILE
-rake number          # numbering figs from the NUBER in FILE
-rake self_copy       # self copy to hikiutils template directory
-rake sync            # normal sync hikis and figs to hiki directory
-rake sync0           # sync0 hikis and figs to hiki directory
+rake sync             # hikiの同期
+rake force_sync       # hikiの強制同期
+rake chenv            # For hiki Errno::ENOENT, Errno::EACCES
+
+rake convert          # convert fig size SCALE TARGET_DIR
+rake increment        # increment fig NUBERS in FILE
+rake number           # numbering figs from the NUBER in FILE
+
+rake touch            # hikiシステムを最新状態に更新
+rake github           # Githubのdirをsafariでopen
 >>>
 
 !!!rake sync
@@ -85,17 +86,17 @@ figsディレクトリー内のファイルはhiki/cache/attache/hikiutils_bob�
  {{attach_view(hogehoge.png, hikiutils_bob)}}
 という記述が必要となる．
 
-!!!rake convert VAL DIR
-keynoteが吐き出したイメージを変換するためのコマンド．ImageMagickがインストールされている必要がある．ない場合は，自分でbrewからinstallするか，[[https://www.imagemagick.org/script/binary-releases.php]]からダウンロード．うまくいかない場合はdonkeyに聞いてみてください．
-
- rake convert 80 hikiutils_bob
-によって，DIR=hikiutils_bobにあるpngファイルをVAL=80%に縮小してfigsにためる．
-
 !!!rake force_sync
 hikiシステム側で直接変更を加えると，hikiutilsがsyncした時と差ができる．これを検知して，ユーザに注意を喚起する仕組みがある（rake check_previous)．これはsyncした時に自動的に呼び出される．違いの出たfilesを修正した後に強制的に同期をとるためのコマンドとして，force_syncが用意されている．
 
 !!!rake chenv
 hikiシステム上でerrorが出た場合に試してほしい．errorの状況は個人の設定によってちがうため，対処法の実装は網羅されていない．うまくいかない場合は西谷にIssuesとして投げるように．
+
+!!!rake convert VAL DIR
+keynoteが吐き出したイメージを変換するためのコマンド．ImageMagickがインストールされている必要がある．ない場合は，自分でbrewからinstallするか，[[https://www.imagemagick.org/script/binary-releases.php]]からダウンロード．うまくいかない場合はdonkeyに聞いてみてください．
+
+ rake convert 80 hikiutils_bob
+によって，DIR=hikiutils_bobにあるpngファイルをVAL=80%に縮小してfigsにためる．
 
 !!!rake increment
 keynoteでページを追加するとhikiでの参照(attach_view)にずれが生じる．いまのところこれを解消する方法はなく手で修正を加える必要がある．ずれが単純な場合には，
@@ -123,6 +124,12 @@ cp tmp.hiki hikiutils_bob.hiki
 > {{attach_view(hikiutils_bob.004.jpeg,hikiutils_bob)}}
 >>>
 などと番号を3から順に振り替えてくれる．
+
+!!!rake touch
+hiki touchを行って最新版に更新．
+
+!!!rake github
+git remoteにあるoriginのgithubをsafariでopen．
 
 !!githubによる同期
 # git init, forkが済んでいると仮定
