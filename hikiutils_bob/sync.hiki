@@ -74,6 +74,7 @@ rake number           # numbering figs from the NUBER in FILE
 
 rake touch            # hikiシステムを最新状態に更新
 rake github           # Githubのdirをsafariでopen
+rake reset_hiki       # hikiシステムにあるゴミファイルを掃除する
 >>>
 
 !!!rake sync
@@ -126,10 +127,25 @@ cp tmp.hiki hikiutils_bob.hiki
 などと番号を3から順に振り替えてくれる．
 
 !!!rake touch
-hiki touchを行って最新版に更新．
+hiki touchをおこなって最新版に更新します．
 
 !!!rake github
-git remoteにあるoriginのgithubをsafariでopen．
+git remoteにあるoriginのgithubをsafariでopenします．
+
+!!!rake reset_hiki
+hikiシステムにあるゴミファイルを掃除します．
+<<<
+bob% rake reset_hiki
+hikiutils: provide utilities for helping hiki editing.
+"open -a mi"
+target_dir : /Users/bob/Sites/nishitani0/Internal/data/text
+-rw-rw-rw-  1 bob  staff    182  2  5 12:03 hikiutils_bob
+-rw-rw-rw-  1 bob  staff   7220  2  5 12:03 hikiutils_bob_latex_all
+-rw-rw-rw-  1 bob  staff  10104  2  5 12:03 hikiutils_bob_sync
+-rw-r--r--  1 bob  staff    944  2  5 12:03 hikiutils_bob_toc
+remove hikiutils_bob_toc[ynql]?
+>>>
+となります．yes, no, quit, listのなかから選んでください．
 
 !!githubによる同期
 # git init, forkが済んでいると仮定
