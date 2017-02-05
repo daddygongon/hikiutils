@@ -90,7 +90,7 @@ figsディレクトリー内のファイルはhiki/cache/attache/hikiutils_bob�
 hikiシステム側で直接変更を加えると，hikiutilsがsyncした時と差ができる．これを検知して，ユーザに注意を喚起する仕組みがある（rake check_previous)．これはsyncした時に自動的に呼び出される．違いの出たfilesを修正した後に強制的に同期をとるためのコマンドとして，force_syncが用意されている．
 
 !!!rake chenv
-hikiシステム上でerrorが出た場合に試してほしい．errorの状況は個人の設定によってちがうため，対処法の実装は網羅されていない．うまくいかない場合は西谷にIssuesとして投げるように．
+hikiシステム上でerrorが出た場合(Errno::ENOENT, Errno::EACCES)に試してほしい．errorの状況は個人の設定によってちがうため，対処法の実装は網羅されていない．うまくいかない場合は西谷にIssuesとして投げるように．
 
 !!!rake convert VAL DIR
 keynoteが吐き出したイメージを変換するためのコマンド．ImageMagickがインストールされている必要がある．ない場合は，自分でbrewからinstallするか，[[https://www.imagemagick.org/script/binary-releases.php]]からダウンロード．うまくいかない場合はdonkeyに聞いてみてください．

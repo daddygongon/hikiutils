@@ -17,14 +17,14 @@ task :default do
   system 'rake -T'
 end
 
-desc "Githubのdirをsafariでopen"
+desc "open github origin"
 task :github do
   status, stdout, stderr = systemu %q( git remote -v |grep origin )
   p github_dir=stdout.match(/(.+):(.+) \(push\)/)[2]
   system "open https://github.com/#{github_dir}"
 end
 
-desc "latex_dirのゴミファイルを削除"
+desc "reset latex dir"
 task :reset_latex_dir do
   system "mv latex_dir/head.tex ."
   system "rm -rf latex_dir"
@@ -33,7 +33,7 @@ task :reset_latex_dir do
   system "rake latex_all"
 end
 
-desc "hikiシステムを最新状態に更新"
+desc "touch all hiki files"
 task :touch do
   Dir.entries('.').each{|file|
     file_split=file.split(".")
@@ -45,12 +45,12 @@ task :touch do
   }
 end
 
-desc "FILE1をlatexに変換"
+desc "latex conversion FILE1"
 task :latex => [:latex_base] do
   exit
 end
 
-desc "FILE1をwrap formatでlatexに変換"
+desc "latex conversion FILE1 with wrap format"
 task :latex_wrap => [:latex_base, :change_wrap] do
   exit
 end
@@ -93,7 +93,7 @@ def check_section_layers(lines)
   p $section_layer
 end
 
-desc "すべてのhikiファイルをlatex変換"
+desc "latex conversion whole hiki files in the current dir."
 task :latex_all do
   p entries=Dir.entries('.')
   main_file = latex_loop(entries,opts={:main=>true})
@@ -102,7 +102,7 @@ task :latex_all do
   p reg_exp = Regexp.new("#{$basename}_(.+)")
   toc = false
   File.readlines(File.join($latex_dir,"#{main_file}.tex")).each{|line|
-    line, toc = "", true if (line.match(/\\tableofcontents/) and toc == true) #only one
+    line, toc = "", true if line.match(/\\tableofcontents/) and toc == false #only one
     if line.match(/section{(.+)}/)
       if m=line.match(/\\verb\|(.+)\((.+)\)\|/)
         p m
@@ -116,15 +116,14 @@ task :latex_all do
 #        line = ""
       end
     end
-    p line
     cont << line
   }
-  print cont
   File.open(File.join($latex_dir,"#{main_file}.tex"),'w'){|file| file.print cont}
   system "open latex_dir/#{main_file}.tex"
   exit
 end
 
+desc "latex conversion FILE1(hiki) to FILE2(latex)"
 task :latex_base do
   Dir.mkdir($latex_dir) unless Dir.exist?($latex_dir)
   convert_to_latex(ARGV[1])
@@ -165,6 +164,7 @@ def convert_to_latex(file_name, options={})
   File.open($save_name,'w'){|file| file.print cont }
 end
 
+desc "change latex figures to wrap format"
 task :change_wrap do
   lines = File.readlines($save_name)
 
@@ -246,13 +246,14 @@ task :convert do
   exit
 end
 
-desc "hikiの同期"
+desc "normal sync hikis and figs to hiki directory"
 task :sync => [:check_previous,:sync0]
 
 
-desc "hikiの強制同期"
+desc "force_sync hikis and figs to hiki directory"
 task :force_sync => [:sync0]
 
+desc "sync0 hikis and figs to hiki directory"
 task :sync0 do
   entries=Dir.entries('.')
   entries[2..-1].each{|source| #cp *.hiki
@@ -288,7 +289,7 @@ task :chenv do
 #  system("sudo chown -R #{user} #{target_dir}")
 end
 
-desc "self copy開発用"
+desc "self copy to hikiutils template directory"
 task :self_copy do
   p cp_files=[[File.join(Dir.pwd,'Rakefile'),'Rakefile_hiki_sync'],
             [File.join(ENV['HOME'],'.my_help','hiki_help.yml'),'hiki_help.yml']]
@@ -299,6 +300,7 @@ task :self_copy do
   }
 end
 
+desc "check previou and current sync"
 task :check_previous do
   current={}
   print "current hiki dir\n"

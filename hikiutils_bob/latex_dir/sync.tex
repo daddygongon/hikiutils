@@ -1,3 +1,7 @@
+\title{卒論編集システムにおけるhikiとの同期}
+\author{関西学院大学理工学部情報科学科　西谷滋人}
+\date{}
+\maketitle
 
 \section{イントロダクション}
 卒業論文は，大学で課される普通の授業のレポートに比べて多くの情報内容が要求されます．また，研究という側面から体裁や版権など多くの出版における掟を遵守しながら，高い品質を保つ必要です．そのため，指導教官との編集作業が重要となるます．編集作業の効率を高めるためには，共同作業を促進するプラットフォームが必要です．
@@ -79,15 +83,16 @@ keynoteで図を作成して，hikiutils\_bob.hikiに文章を記述していく
 \subsection{rakeが用意しているタスク}
 rakeの用意しているコマンドは次のとおり．
 \begin{lstlisting}[style=]
-rake check_previous  # check previou and current sync
-rake chenv           # For hiki Errno::ENOENT, Errno::EACCES
-rake convert         # convert fig size SCALE TARGET_DIR
-rake force_sync      # force_sync hikis and figs to hiki directory
-rake increment       # increment fig NUBERS in FILE
-rake number          # numbering figs from the NUBER in FILE
-rake self_copy       # self copy to hikiutils template directory
-rake sync            # normal sync hikis and figs to hiki directory
-rake sync0           # sync0 hikis and figs to hiki directory
+rake sync             # hikiの同期
+rake force_sync       # hikiの強制同期
+rake chenv            # For hiki Errno::ENOENT, Errno::EACCES
+
+rake convert          # convert fig size SCALE TARGET_DIR
+rake increment        # increment fig NUBERS in FILE
+rake number           # numbering figs from the NUBER in FILE
+
+rake touch            # hikiシステムを最新状態に更新
+rake github           # Githubのdirをsafariでopen
 \end{lstlisting}
 \subsubsection{rake sync}
 hikiutils\_bobにある必要な書類をhikiシステムにコピーする．その際，名前の書き換えを行う．
@@ -109,18 +114,18 @@ figsディレクトリー内のファイルはhiki/cache/attache/hikiutils\_bob�
 \verb|{{attach_view(hogehoge.png)}}|
 という記述が必要となる．
 
+\subsubsection{rake force\_sync}
+hikiシステム側で直接変更を加えると，hikiutilsがsyncした時と差ができる．これを検知して，ユーザに注意を喚起する仕組みがある（rake check\_previous)．これはsyncした時に自動的に呼び出される．違いの出たfilesを修正した後に強制的に同期をとるためのコマンドとして，force\_syncが用意されている．
+
+\subsubsection{rake chenv}
+hikiシステム上でerrorが出た場合(Errno::ENOENT, Errno::EACCES)に試してほしい．errorの状況は個人の設定によってちがうため，対処法の実装は網羅されていない．うまくいかない場合は西谷にIssuesとして投げるように．
+
 \subsubsection{rake convert VAL DIR}
 keynoteが吐き出したイメージを変換するためのコマンド．ImageMagickがインストールされている必要がある．ない場合は，自分でbrewからinstallするか，\verb|https://www.imagemagick.org/script/binary-releases.php|からダウンロード．うまくいかない場合はdonkeyに聞いてみてください．
 \begin{quote}\begin{verbatim}
 rake convert 80 hikiutils_bob
 \end{verbatim}\end{quote}
 によって，DIR=hikiutils\_bobにあるpngファイルをVAL=80%に縮小してfigsにためる．
-
-\subsubsection{rake force\_sync}
-hikiシステム側で直接変更を加えると，hikiutilsがsyncした時と差ができる．これを検知して，ユーザに注意を喚起する仕組みがある（rake check\_previous)．これはsyncした時に自動的に呼び出される．違いの出たfilesを修正した後に強制的に同期をとるためのコマンドとして，force\_syncが用意されている．
-
-\subsubsection{rake chenv}
-hikiシステム上でerrorが出た場合に試してほしい．errorの状況は個人の設定によってちがうため，対処法の実装は網羅されていない．うまくいかない場合は西谷にIssuesとして投げるように．
 
 \subsubsection{rake increment}
 keynoteでページを追加するとhikiでの参照(attach\_view)にずれが生じる．いまのところこれを解消する方法はなく手で修正を加える必要がある．ずれが単純な場合には，
@@ -148,6 +153,12 @@ cp tmp.hiki hikiutils_bob.hiki
 {{attach_view(hikiutils_bob.004.jpeg)}}
 \end{verbatim}\end{quote}
 などと番号を3から順に振り替えてくれる．
+
+\subsubsection{rake touch}
+hiki touchを行って最新版に更新．
+
+\subsubsection{rake github}
+git remoteにあるoriginのgithubをsafariでopen．
 
 \subsection{githubによる同期}
 \begin{enumerate}
