@@ -17,14 +17,14 @@ task :default do
   system 'rake -T'
 end
 
-desc "open github origin"
+desc "Githubのdirをsafariでopen"
 task :github do
   status, stdout, stderr = systemu %q( git remote -v |grep origin )
   p github_dir=stdout.match(/(.+):(.+) \(push\)/)[2]
   system "open https://github.com/#{github_dir}"
 end
 
-desc "reset latex dir"
+desc "latex_dirのゴミを掃除"
 task :reset_latex_dir do
   system "mv latex_dir/head.tex ."
   system "rm -rf latex_dir"
@@ -102,7 +102,8 @@ task :latex_all do
   p reg_exp = Regexp.new("#{$basename}_(.+)")
   toc = false
   File.readlines(File.join($latex_dir,"#{main_file}.tex")).each{|line|
-    line, toc = "", true if line.match(/\\tableofcontents/) and toc == false #only one
+    line, toc = "", true if line.match(/\\tableofcontents/) and toc == true #only one
+
     if line.match(/section{(.+)}/)
       if m=line.match(/\\verb\|(.+)\((.+)\)\|/)
         p m

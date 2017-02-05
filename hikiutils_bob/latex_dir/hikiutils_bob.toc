@@ -5,11 +5,13 @@
 \contentsline {subsection}{\numberline {2.3}一般的な執筆手順}{6}
 \contentsline {subsection}{\numberline {2.4}rakeが用意しているタスク}{7}
 \contentsline {subsubsection}{\numberline {2.4.1}rake sync}{7}
-\contentsline {subsubsection}{\numberline {2.4.2}rake convert VAL DIR}{8}
-\contentsline {subsubsection}{\numberline {2.4.3}rake force\_sync}{8}
-\contentsline {subsubsection}{\numberline {2.4.4}rake chenv}{8}
+\contentsline {subsubsection}{\numberline {2.4.2}rake force\_sync}{8}
+\contentsline {subsubsection}{\numberline {2.4.3}rake chenv}{8}
+\contentsline {subsubsection}{\numberline {2.4.4}rake convert VAL DIR}{8}
 \contentsline {subsubsection}{\numberline {2.4.5}rake increment}{8}
 \contentsline {subsubsection}{\numberline {2.4.6}rake number}{8}
+\contentsline {subsubsection}{\numberline {2.4.7}rake touch}{9}
+\contentsline {subsubsection}{\numberline {2.4.8}rake github}{9}
 \contentsline {subsection}{\numberline {2.5}githubによる同期}{9}
 \contentsline {subsection}{\numberline {2.6}hikiutil関連のヘルプ}{10}
 \contentsline {subsubsection}{\numberline {2.6.1}hikiで卒論を書くときの初期化と掟}{10}
@@ -24,5 +26,5 @@
 \contentsline {paragraph}{head.tex}{15}
 \contentsline {paragraph}{pre.tex}{15}
 \contentsline {subsection}{\numberline {3.4}補助コマンドの解説}{16}
-\contentsline {subsubsection}{\numberline {3.4.1}wrap関係}{16}
-\contentsline {subsubsection}{\numberline {3.4.2}rake reset\_latex\_dir(latex\_dirのゴミ掃除)}{17}
+\contentsline {subsubsection}{\numberline {3.4.1}rake reset\_latex\_dir(latex\_dirのゴミ掃除)}{16}
+\contentsline {subsubsection}{\numberline {3.4.2}wrap関係}{16}
