@@ -1,8 +1,9 @@
 {{toc}}
 //!結果
 //!!開発の結果
-!コマンド名の検討
-!!コマンドの命名原則
+//!コマンド名の検討
+!コマンドの命名原則
+
 機能ごとの動作はコマンドのオプションによって指定されます．
 このオプションにどのような名前をつけるかは，どれだけコマンドを覚えやすいかという
 意味で重要です．コマンドの振る舞いを的確に表す名称をつける必要があります．
@@ -13,10 +14,10 @@ hikiutilsの振る舞いを予測できるシェルコマンドと同じ名前�
 ようにします．
 
 
-!!hikiutilsがあらかじめ想定している利用形態
+!hikiutilsがあらかじめ想定している利用形態
 ここでhikiutilsがあらかじめ想定している利用形態を解説しておきます．
 
-!!!caption:hikiutilsがあらかじめ想定している利用形態
+!!caption:hikiutilsがあらかじめ想定している利用形態
 {{attach_view(hikiutils_yamane_09_copy.002.jpg,hikiutils_yamane)}}
 
 hikiutilsは，
@@ -58,7 +59,8 @@ editor_command:open -a mi
 >>>
 とすると，それらの一覧と，いまtargetにしているnick_nameディレクリが表示されます．
 
-!!コメンド名と振る舞いの詳細
+!コメンド名と振る舞いの詳細
+
 開発の結果コマンドを以下のように書き換えました．
 上部に記した，特によく使うコマンドに関しては，shellでよく使われるコマンド名と一致するにようにしました．
 
@@ -80,30 +82,31 @@ editor_command:open -a mi
 ||help [COMMAND]  || ||  Describe available commands or one specific command
 ||version         || ||  show program version
 それぞれの意図を動作の解説として記述しています．
-!!! open FILE
+
+* open FILE
 ファイルを編集のためにeditorでopen．Editorは~/.hikircに
  :editor_command: open -a mi
 として保存されている．open -a miをemacsなどに適宜変更して使用．
 
-!!! ls [FILE]
+* ls [FILE]
 local_dirにあるファイル名を[FILE*]として表示．例えば，hikiutils_yamane以下の拡張子が
 ついたファイルを表示．hikiシステムではtextディレクトリーは階層構造を取ることができない．
 西谷研ではdirectoryの代わりにスネーク表記で階層構造を表している．
 
-!!! rsync
+* rsync
 local_dirの内容をglobal_dirにrsyncする．逆方向は同期に誤差が生じたり，permissionが
 おかしくなるので，現在のところ一方向の同期のみとしている．したがって，作業手順としては
 テキストの変更はlocal_dirで読み行うようにしている．
 
-!!! touch FILE
+* touch FILE
 loccal_dirで書き換えたFILEの内容をlocal_uriに反映させ，ブラウザで表示．シェルコマンドの
 touchによって，変更時間を現在に変え，最新状態とするのに似せてコマンド名をtouchとしている．
 
-!!! pwd
+* pwd
 nick_nameの一覧とtargetを表示，current targetをcurrent dirとみなして，
 コマンド名をpwdとした．
 
-!!! cd VAL
+* cd VAL
 targetを変える，change directoryとのメタファ．ただし，いまのところnick_nameでは
 対応しておらず，nick_nameの番号をVAL入力することで変更する．
 
