@@ -28,3 +28,5 @@
 \contentsline {subsection}{\numberline {3.4}補助コマンドの解説}{16}
 \contentsline {subsubsection}{\numberline {3.4.1}rake reset\_latex\_dir(latex\_dirのゴミ掃除)}{16}
 \contentsline {subsubsection}{\numberline {3.4.2}wrap関係}{16}
+\contentsline {section}{\numberline {4}hikiへのlatexからの変換}{18}
+\contentsline {subsection}{\numberline {4.1}rake mk\_toc}{18}

@@ -2,8 +2,14 @@
 !title:コマンドラインツール作成ライブラリThorによるhikiutilsの書き換え
 !author:関西学院大学理工学部情報科学科 27013554 山根亮太
 
+<<<<<<< HEAD
 ![[概要|hikiutils_yamane_abstract]]
 ![[序論|hikiutils_yamane_introduction]]
+=======
+!概要
+![[hikiutils_yamane_abstract]]
+!序論
+>>>>>>> 0a050b07396ce158c55cc518e00eb0cbfc8b2587
 !![[hikiutils_yamane_purpose]]
 ![[方法|hikiutils_yamane_method]]
 !結果
