@@ -1,11 +1,11 @@
 \contentsline {section}{\numberline {1}イントロダクション}{4}
-\contentsline {section}{\numberline {2}hikiとの同期}{4}
-\contentsline {subsection}{\numberline {2.1}hikiutilsのinstall}{4}
+\contentsline {section}{\numberline {2}hikiとの同期}{5}
+\contentsline {subsection}{\numberline {2.1}hikiutilsのinstall}{5}
 \contentsline {subsection}{\numberline {2.2}個別ディレクトリーの構成}{5}
 \contentsline {subsection}{\numberline {2.3}一般的な執筆手順}{6}
 \contentsline {subsection}{\numberline {2.4}rakeが用意しているタスク}{7}
 \contentsline {subsubsection}{\numberline {2.4.1}rake sync}{7}
-\contentsline {subsubsection}{\numberline {2.4.2}rake force\_sync}{8}
+\contentsline {subsubsection}{\numberline {2.4.2}rake force\_sync}{7}
 \contentsline {subsubsection}{\numberline {2.4.3}rake chenv}{8}
 \contentsline {subsubsection}{\numberline {2.4.4}rake convert VAL DIR}{8}
 \contentsline {subsubsection}{\numberline {2.4.5}rake increment}{8}

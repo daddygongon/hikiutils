@@ -33,6 +33,32 @@ task :reset_latex_dir do
   system "rake latex_all"
 end
 
+desc "toc.hikiの作成"
+task :mk_toc do
+  p target = $basename+'.toc'
+  cont=""
+  File.readlines(File.join('latex_dir',target)).each{|line|
+    if m=line.match(/\\contentsline \{(.+)\}\{\\numberline \{([\d|\.]+)\}(.+)\}\{\d+\}/)
+      layer,sec_no,title=m[1],m[2],m[3]
+      d = case m[1]
+          when 'section'
+            1
+          when 'subsection'
+            2
+          when 'subsubsection'
+            3
+          else
+            4
+          end
+      layer = "!"*d
+      title.gsub!('\_','_')
+      cont <<  "#{layer}#{sec_no}:#{title}\n"
+    end
+  }
+  print cont
+  File.open("toc.hiki",'w'){|file| file.print cont}
+end
+
 desc "hikiシステムを最新状態に更新"
 task :touch do
   Dir.entries('.').each{|file|
@@ -60,6 +86,7 @@ def latex_loop(entries,opts={})
   entries.each{|file|
     options={:latex_all=>true}
     next unless file.split('.')[1]=='hiki'
+    next if file=='toc.hiki'
     next if file.include?('.hikirc')
     f_name =File.basename(file,'.hiki')
     if opts[:main]
@@ -142,7 +169,7 @@ def convert_to_latex(file_name, options={})
   lines.each_with_index{|line,i|
     if m=line.match(/\{\{attach_view\((.*),(.*)\)\}\}/)
       p line="\{\{attach_view\(#{m[1]}\)\}\}\n"
-    elsif options[:latex_all] and i>5
+    elsif options[:latex_all] and i<5
       line="" if line.match(/^!title:|^!author:|^!date:/)
     end
     cont << line
@@ -155,7 +182,7 @@ def convert_to_latex(file_name, options={})
   cont = ""
   lines.each{|line|
     if m=line.match(/\\includegraphics\[width=6cm\]\{(.+)\}/)
-      p line="\\includegraphics\[width=6cm,bb=0 0 442 500\]\{../figs/#{m[1]}\}\n"
+      p line="\\includegraphics\[width=6cm,bb=0 0 442 432\]\{../figs/#{m[1]}\}\n"
       cont << line
     else
       cont << line
