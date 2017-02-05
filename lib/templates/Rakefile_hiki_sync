@@ -24,6 +24,32 @@ task :github do
   system "open https://github.com/#{github_dir}"
 end
 
+desc "hikiシステムにあるゴミファイルを掃除する"
+task :reset_hiki do
+  status, stdout, stderr = systemu "hiki -l #{$basename}"
+  print stdout
+  files=[]
+  stdout.split("\n").each{|line|
+    files << line.split(/\s+/)[-1]
+  }
+  r_files = files.reverse[0..-5]
+  r_files.each{|file|
+    print "remove #{file}[ynql]?"
+    input=STDIN.gets.chomp
+    case input
+    when 'y'
+      p command="hiki --remove #{file}"
+      system command
+    when 'n'
+    when 'l'
+      p command="hiki -l #{$basename}"
+      system command
+    when 'q'
+      exit
+    end
+  }
+end
+
 desc "latex_dirのゴミを掃除"
 task :reset_latex_dir do
   system "mv latex_dir/head.tex ."
