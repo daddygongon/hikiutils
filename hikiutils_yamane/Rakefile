@@ -129,7 +129,11 @@ task :latex_all do
   p reg_exp = Regexp.new("#{$basename}_(.+)")
   toc = false
   File.readlines(File.join($latex_dir,"#{main_file}.tex")).each{|line|
-    line, toc = "", true if line.match(/\\tableofcontents/) and toc == true #only one
+    if line.match(/\\tableofcontents/) 
+      p line
+      line = "" if toc== true 
+      toc = true if toc == false
+    end
 
     if line.match(/section{(.+)}/)
       if m=line.match(/\\verb\|(.+)\((.+)\)\|/)
