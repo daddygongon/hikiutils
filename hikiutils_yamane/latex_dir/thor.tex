@@ -1,5 +1,6 @@
 \subsection{Thorによる実装}
 手法のところで概観した通り，thorを用いることで記述の簡略化が期待できる．ここでは，実際に書き換える前後，すなわちoptparse版とthor版の対応するコードを比較することで，以下の具体的な違い
+
 \begin{itemize}
 \item クラス初期化
 \item コマンド定義
@@ -15,6 +16,7 @@
 \caption{Thorのinitializeでのコード}
 \label{default}\end{center}\end{figure}
 Thorのinitializeでのコードはつぎの通りである．
+
 \begin{enumerate}
 \item Hikithor::CLI.start(ARGV)が呼ばれる
 \item initializeメソッドが呼ばれる
@@ -45,6 +47,7 @@ module Hikithor
 \caption{thorにおけるコマンド記述のひな形．}
 \label{default}\end{center}\end{figure}
 thorではoptparseのような登録処理はない．図にある通りにコマンドが記述され，それらは以下のように構成される．
+
 \begin{enumerate}
 \item desc以降にコマンド名と，その説明が記述される．これらはコマンドhelpで一覧として表示させる
 \item mapによって別のコマンド名でも実行できるように定義される．
@@ -75,6 +78,7 @@ mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれる
 \caption{CLIの実行プロセス．}
 \label{default}\end{center}\end{figure}
 Thorにおけるcliの実行プロセスは次の通りである．
+
 \begin{enumerate}
 \item hiki\_thorのHikithor::CLI.start(ARGV)でhikiutils\_thor.rbのCLIクラスを呼ぶ
 \item hikiutils\_thor.rbのCLIクラスのメソッドを順に実行していく

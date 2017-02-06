@@ -32,9 +32,9 @@ task :reset_hiki do
   stdout.split("\n").each{|line|
     files << line.split(/\s+/)[-1]
   }
-  r_files = files.reverse[0..-5]
+  p r_files = files.reverse[0..-4]
   r_files.each{|file|
-    print "remove #{file}[ynql]?"
+    print "remove #{file}[ynqlA]?"
     input=STDIN.gets.chomp
     case input
     when 'y'
@@ -46,6 +46,17 @@ task :reset_hiki do
       system command
     when 'q'
       exit
+    when 'A'
+      print "\nAre you sure?[Yn]"
+      input2 = STDIN.gets.chomp
+      case input2
+        when 'Y'
+        r_files.each{|file| system "hiki --remove #{file}"}
+        p target = File.join($hiki_dir,'cache','attach',$basename)
+        exit
+        when 'n'
+        exit
+      end
     end
   }
 end
@@ -149,7 +160,8 @@ def check_section_layers(lines)
 end
 
 def check_bounding_box
-  $bounding_box="0 0 442 432"
+#  $bounding_box="0 0 442 432"
+  $bounding_box=" 0 0 737 453"
 end
 
 desc "すべてのhikiファイルをlatex変換"
@@ -215,7 +227,7 @@ def convert_to_latex(file_name, options={})
   cont = ""
   lines.each{|line|
     if m=line.match(/\\includegraphics\[width=6cm\]\{(.+)\}/)
-      p line="\\includegraphics\[width=6cm,bb=#{$bounding_box}\]\{../figs/#{m[1]}\}\n"
+      p line="\\includegraphics\[width=10cm,bb=#{$bounding_box}\]\{../figs/#{m[1]}\}\n"
       cont << line
     else
       cont << line

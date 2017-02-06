@@ -153,9 +153,12 @@ remove hikiutils_bob_toc[ynql]?
 となります．yes, no, quit, listのなかから選んでください．
 
 !!githubによる同期
-# git init, forkが済んでいると仮定
-# upstream, originの確認
-## bob% git remote -v
+
+これらの作業の流れを示すシーケンス図は次の通りである．
+!!!caption:卒論編集時のgithubによる同期のシーケンス図．
+{{attach_view(hikiutils_bob.005.jpeg,hikiutils_bob)}}
+
+git init, forkが済んでいると仮定して同期の手順を以下に示す．
 # git push作業
 ## git add -A
 ## git commit -m 'first commit'
@@ -164,10 +167,10 @@ remove hikiutils_bob_toc[ynql]?
 # bobの編集後，通知がくる．まつことなく作業してもok．
 # git pull作業
 ## git pull upstream master
-これがうまくいかん時は聞いてください．
 
-!!!caption:卒論編集時のgithubによる同期のシーケンス図．
-{{attach_view(hikiutils_bob.005.jpeg,hikiutils_bob)}}
+以下には関連するコマンドと動作を記した．
+:git remote -v: githubのremoteアドレスを表示
+:git remote add upstream git@...:githubのアドレスをupstreamとして登録．
 
 !!hikiutil関連のヘルプ
 !!!hikiで卒論を書くときの初期化と掟

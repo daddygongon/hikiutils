@@ -125,7 +125,7 @@ hiki -i
 題目，学生番号，氏名を変更する．年月をチェック．
 \\setcounter{tocdepth}はtocをどこまで表示するかのレベルに対応します．
 原稿作成時は階層がわかりやすいように深めにしていますが，本番では2程度で十分です．
-\begin{lstlisting}[style=]
+\begin{lstlisting}[style=customTeX]
 bob% cat head.tex
 \title{卒業論文\\
 \vspace{4cm} hikiutilsを用いた\\卒業論文作成}
@@ -138,8 +138,8 @@ bob% cat head.tex
 \end{lstlisting}
 \paragraph{pre.tex}
 あまり変更しないほうがいいですが，いずれいじることになります．
-例えば，フォントポイント数を10から12ptに変える，\pagestyle{empty}を外すなどです．
-\begin{lstlisting}[style=]
+例えば，フォントポイント数を12から10ptに変える，\\pagestyle\{empty\}を外すなどです．
+\begin{lstlisting}[style=customTeX]
 bob% cat pre.tex
 \documentclass[10pt,a4j]{article}
 

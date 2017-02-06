@@ -20,8 +20,8 @@
   - rake syncによってhikiディレクトリーと同期が取られる
   - hiki -u TARGETによってブラウザー表示される
   - テキストの拡張子は'.hiki'
-  - hikiでのurlはテキスト前とディレクトリーから自動生成される
-  - 例えば，hiki2latex_saki/introduciton.hikiとするとhiki2latex_saki_introducitonと変換される
+  - hikiでのurlはテキスト名とディレクトリーから自動生成される
+  - 例えば，hiki2latex_saki/introduciton.hikiはhiki2latex_saki_introducitonと変換される
 :error:
   :opts:
     :short: "-e"
