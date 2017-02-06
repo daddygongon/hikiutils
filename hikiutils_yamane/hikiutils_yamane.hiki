@@ -3,14 +3,15 @@
 !author:関西学院大学理工学部情報科学科 27013554 山根亮太
 
 ![[概要|hikiutils_yamane_abstract]]
-![[序論|hikiutils_yamane_purpose]]
-![[方法|hikiutils_yamane_method]]
+![[序論|hikiutils_yamane_introduction]]
+!方法
+//他人の仕事，あるものを探す
+!![[hikiutils_yamane_compare]]
+!![[既存のhikiutilsのコマンド解説|hikiutils_yamane_optparse]]
 !結果
-!![[hikiutils_yamane_results]]
-//!![[hikiutils_yamane_compare]]
-//!本論
-!![[hikiutils_yamane_clidescription]]
-!![[hikiutils_yamane_code]]
+//自分の仕事，ないものをつくる
+!![[コマンドの命名原則|hikiutils_yamane_command]]
+!![[hikiutilsのthorのコード解説|hikiutils_yamane_thor]]
 
 !参考文献
 [1-1] hikidoc, https://rubygems.org/gems/hikidoc/versions/0.1.0, https://github.com/hiki/hikidoc,2017/1/30 アクセス.
