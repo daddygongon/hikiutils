@@ -1,6 +1,6 @@
 
 \section{イントロダクション}
-卒業論文は，大学で課される普通の授業のレポートに比べて多くの情報内容が要求されます．また，研究という側面から体裁や版権など多くの出版における掟を遵守しながら，高い品質を保つ必要です．そのため，指導教官との編集作業が重要となるます．編集作業の効率を高めるためには，共同作業を促進するプラットフォームが必要です．
+卒業論文は，大学で課される普通の授業のレポートに比べて深い内容が要求されます．また，研究という側面から体裁や版権など出版における多くの掟を遵守しながら，高い品質を保つ必要です．そのため，指導教官との編集作業が重要となります．編集作業の効率を高めるためには，共同作業を促進するプラットフォームが必要です．
 
 体裁などを考えるとLatexの使用が標準ですが，執筆段階での煩わしさを低減するため，Mark Up記法による文章作成が一般的です(「ドキュメント作成システム構築ガイド，GitHub, RedPen, Asciidoctor, CIによるモダンライティング」, 伊藤敬彦，吉村孝広，技術評論社)．西谷研ではMark Up記法の一種であるhiki記法を用いて執筆します．hiki記法からhtmlへ変換するソフトhikidocによる容易な変換が可能なため，日記web appliのhiki diaryでも利用されている有名なソフトです．hiki記法をベースにして，wiki wiki webと同等の機能を提供するhikiシステムがgithubに公開されており，個人の手持ちのパソコンにインストールしてwikiを利用することができます．西谷研ではさらにhiki記法を拡張して，コードのカラー表示，数式のlatex記述が可能となるシステムを利用しています．
 
@@ -8,9 +8,9 @@
 
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_bob.002.jpeg}
-\caption{卒論編集システムの概要．}
+\caption{卒論編集システムの基本概念．}
 \label{default}\end{center}\end{figure}
-例えば，卒業生をyamaneとしましょう．yamaneの個人のMacの自分のdirectory(hikiutils\_yamane)に幾つかのファイルを作成して卒論を書いているとします．これを指導教官(bob)が編集するとします．この同期には，Githubにより提供される共同作業環境を使います．これだけでは編集中の文書の体裁がわかりにくいでしょう．そこで，hikiシステムにより容易にwebブラウザ上に完成形を表示しつつ執筆することが求められます．このような操作環境を提供するのが，hikiutils -iです．
+例えば，卒業生をyamaneとしましょう．yamaneの個人のMacの自分のdirectory(hikiutils\_yamane)に幾つかのファイルを作成して卒論を書いているとします．これを指導教官(bob)が編集するとします．この同期には，Githubにより提供される共同作業環境を使います．これだけでは編集中の文書の体裁がわかりにくいでしょう．そこで，hikiシステムにより容易にwebブラウザ上に完成形を表示しつつ執筆することが求められます．このような環境を提供するのが，本システムです．
 
 \section{hikiとの同期}
 \subsection{hikiutilsのinstall}
@@ -52,6 +52,13 @@ drwxr-xr-x  26 bob  501     884  1 20 11:00 ../
 
 keynoteで図を作成して，hikiutils\_bob.hikiに文章を記述していく．
 
+\subsection{システムの概要}
+図に論文作成システムの概要を示している．gemのなかに作られた例えば，hikiutils\_bobなどのdirectory内にRakefileなどを次節のコマンドを使って入れる．このdirectoryでhikiutils\_bob.hikiなどのhikiフォーマットのdocumentを作っていく．rake syncによってwebを提供するhikiのtext, attach, parserなどと同期する．一方，最終の卒業論文形態であるpdfにするためにlatex\_dir内に*.texを生成する．これは次章で解説する．
+
+\begin{figure}[htbp]\begin{center}
+\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_bob.004.jpeg}
+\caption{システムの概要．}
+\label{default}\end{center}\end{figure}
 \subsection{一般的な執筆手順}
 \begin{enumerate}
 \item 書類の作成
@@ -65,7 +72,7 @@ keynoteで図を作成して，hikiutils\_bob.hikiに文章を記述していく
 \item keynoteのイメージをfigsに
 \begin{enumerate}
 \item keynoteでイメージへ書き出し(hikiutils\_bobを仮定)
-\item rake convert 80 hikiutils\_bob
+\item rake convert 60 hikiutils\_bob
 \end{enumerate}
 \item hikiシステムとの同期
 \begin{enumerate}
@@ -73,7 +80,8 @@ keynoteで図を作成して，hikiutils\_bob.hikiに文章を記述していく
 \end{enumerate}
 \item hikiシステムで表示
 \begin{enumerate}
-\item hiki -u hikiutils\_bob
+\item hiki -u hikiutils\_bob (個別のhiki fileを表示)
+\item rake touch (全てを表示)
 \end{enumerate}
 \end{enumerate}
 \subsection{rakeが用意しているタスク}
@@ -195,7 +203,7 @@ remove hikiutils_bob_toc[ynql]?
 これがうまくいかん時は聞いてください．
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_bob.004.jpeg}
+\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_bob.005.jpeg}
 \caption{卒論編集時のgithubによる同期のシーケンス図．}
 \label{default}\end{center}\end{figure}
 \subsection{hikiutil関連のヘルプ}

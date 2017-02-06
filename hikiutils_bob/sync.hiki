@@ -2,15 +2,15 @@
 !title:卒論編集システムにおけるhikiとの同期
 !author:関西学院大学理工学部情報科学科　西谷滋人
 !イントロダクション
-卒業論文は，大学で課される普通の授業のレポートに比べて多くの情報内容が要求されます．また，研究という側面から体裁や版権など多くの出版における掟を遵守しながら，高い品質を保つ必要です．そのため，指導教官との編集作業が重要となるます．編集作業の効率を高めるためには，共同作業を促進するプラットフォームが必要です．
+卒業論文は，大学で課される普通の授業のレポートに比べて深い内容が要求されます．また，研究という側面から体裁や版権など出版における多くの掟を遵守しながら，高い品質を保つ必要です．そのため，指導教官との編集作業が重要となります．編集作業の効率を高めるためには，共同作業を促進するプラットフォームが必要です．
 
 体裁などを考えるとLatexの使用が標準ですが，執筆段階での煩わしさを低減するため，Mark Up記法による文章作成が一般的です(「ドキュメント作成システム構築ガイド，GitHub, RedPen, Asciidoctor, CIによるモダンライティング」, 伊藤敬彦，吉村孝広，技術評論社)．西谷研ではMark Up記法の一種であるhiki記法を用いて執筆します．hiki記法からhtmlへ変換するソフトhikidocによる容易な変換が可能なため，日記web appliのhiki diaryでも利用されている有名なソフトです．hiki記法をベースにして，wiki wiki webと同等の機能を提供するhikiシステムがgithubに公開されており，個人の手持ちのパソコンにインストールしてwikiを利用することができます．西谷研ではさらにhiki記法を拡張して，コードのカラー表示，数式のlatex記述が可能となるシステムを利用しています．
 
 本資料では，卒論の編集作業を効率化する図に示すようなシステムの使い方を紹介します．
-!!!caption:卒論編集システムの概要．
+!!!caption:卒論編集システムの基本概念．
 {{attach_view(hikiutils_bob.002.jpeg,hikiutils_bob)}}
 
-例えば，卒業生をyamaneとしましょう．yamaneの個人のMacの自分のdirectory(hikiutils_yamane)に幾つかのファイルを作成して卒論を書いているとします．これを指導教官(bob)が編集するとします．この同期には，Githubにより提供される共同作業環境を使います．これだけでは編集中の文書の体裁がわかりにくいでしょう．そこで，hikiシステムにより容易にwebブラウザ上に完成形を表示しつつ執筆することが求められます．このような操作環境を提供するのが，hikiutils -iです．
+例えば，卒業生をyamaneとしましょう．yamaneの個人のMacの自分のdirectory(hikiutils_yamane)に幾つかのファイルを作成して卒論を書いているとします．これを指導教官(bob)が編集するとします．この同期には，Githubにより提供される共同作業環境を使います．これだけでは編集中の文書の体裁がわかりにくいでしょう．そこで，hikiシステムにより容易にwebブラウザ上に完成形を表示しつつ執筆することが求められます．このような環境を提供するのが，本システムです．
 
 !hikiとの同期
 !! hikiutilsのinstall
@@ -46,6 +46,10 @@ drwxr-xr-x  26 bob  501     884  1 20 11:00 ../
 この.hikircにデータが設定データが自動的に入る．さらにhikiutils_bob.hikiおよびhikiutils_bob.keyを作成する．これで執筆ファイルの基本構成が出来上がる．
 
 keynoteで図を作成して，hikiutils_bob.hikiに文章を記述していく．
+!!システムの概要
+図に論文作成システムの概要を示している．gemのなかに作られた例えば，hikiutils_bobなどのdirectory内にRakefileなどを次節のコマンドを使って入れる．このdirectoryでhikiutils_bob.hikiなどのhikiフォーマットのdocumentを作っていく．rake syncによってwebを提供するhikiのtext, attach, parserなどと同期する．一方，最終の卒業論文形態であるpdfにするためにlatex_dir内に*.texを生成する．これは次章で解説する．
+!!!caption:システムの概要．
+{{attach_view(hikiutils_bob.004.jpeg,hikiutils_bob)}}
 
 !!一般的な執筆手順
 #書類の作成
@@ -54,11 +58,12 @@ keynoteで図を作成して，hikiutils_bob.hikiに文章を記述していく�
 ##open hikiutils_bob.key
 #keynoteのイメージをfigsに
 ##keynoteでイメージへ書き出し(hikiutils_bobを仮定)
-##rake convert 80 hikiutils_bob
+##rake convert 60 hikiutils_bob
 #hikiシステムとの同期
 ## rake sync
 # hikiシステムで表示
-## hiki -u hikiutils_bob
+## hiki -u hikiutils_bob (個別のhiki fileを表示)
+## rake touch (全てを表示)
 
 !!rakeが用意しているタスク
 rakeの用意しているコマンドは次のとおり．
@@ -162,7 +167,7 @@ remove hikiutils_bob_toc[ynql]?
 これがうまくいかん時は聞いてください．
 
 !!!caption:卒論編集時のgithubによる同期のシーケンス図．
-{{attach_view(hikiutils_bob.004.jpeg,hikiutils_bob)}}
+{{attach_view(hikiutils_bob.005.jpeg,hikiutils_bob)}}
 
 !!hikiutil関連のヘルプ
 !!!hikiで卒論を書くときの初期化と掟

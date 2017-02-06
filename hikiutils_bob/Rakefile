@@ -3,7 +3,7 @@ require 'systemu'
 require 'tempfile'
 # -*- coding: utf-8 -*-
 begin
-  target_dir = File.readlines('./.hikirc')[0].chomp
+  $hiki_dir = File.readlines('./.hikirc')[0].chomp
 rescue => e
   puts e
   exit
@@ -87,6 +87,8 @@ end
 
 desc "hikiシステムを最新状態に更新"
 task :touch do
+  p target = File.join($hiki_dir,'cache','attach',$basename)
+  system "touch #{target}/*"
   Dir.entries('.').each{|file|
     file_split=file.split(".")
     if file_split[1]=='hiki'
@@ -146,9 +148,14 @@ def check_section_layers(lines)
   p $section_layer
 end
 
+def check_bounding_box
+  $bounding_box="0 0 442 432"
+end
+
 desc "すべてのhikiファイルをlatex変換"
 task :latex_all do
   p entries=Dir.entries('.')
+  check_bounding_box
   main_file = latex_loop(entries,opts={:main=>true})
   latex_loop(entries)
   cont=""
@@ -208,7 +215,7 @@ def convert_to_latex(file_name, options={})
   cont = ""
   lines.each{|line|
     if m=line.match(/\\includegraphics\[width=6cm\]\{(.+)\}/)
-      p line="\\includegraphics\[width=6cm,bb=0 0 442 432\]\{../figs/#{m[1]}\}\n"
+      p line="\\includegraphics\[width=6cm,bb=#{$bounding_box}\]\{../figs/#{m[1]}\}\n"
       cont << line
     else
       cont << line
@@ -312,11 +319,11 @@ task :sync0 do
     next if source.include?('.hikirc')
     p base = source.split('.')[0]
     name = (base==$basename)? base : $basename+'_'+base
-    p target = File.join(target_dir,'text',name)
+    p target = File.join($hiki_dir,'text',name)
     FileUtils.cp(source,target,:verbose=>true)
   }
   p entries=Dir.entries('./figs') #cp files in figs
-  p target = File.join(target_dir,'cache','attach',$basename)
+  p target = File.join($hiki_dir,'cache','attach',$basename)
   FileUtils.mkdir_p(target,:verbose=>true) unless File.exists?(target)
   entries[2..-1].each{|file|
     p source = File.join('./figs',file)
@@ -325,7 +332,7 @@ task :sync0 do
 
   File.open('./.hikirc','w'){|file|
     status, stdout, stderr =systemu "hiki -l #{$basename}*"
-    file.print(target_dir+"\n")
+    file.print($hiki_dir+"\n")
     stdout.split("\n")[3..-1].each{|line|
       file.print line+"\n"
     }
@@ -336,8 +343,8 @@ end
 desc "For hiki Errno::ENOENT, Errno::EACCES"
 task :chenv do
   p user = ENV['USER']
-  system("sudo chmod -R a+w #{target_dir}")
-#  system("sudo chown -R #{user} #{target_dir}")
+  system("sudo chmod -R a+w #{$hiki_dir}")
+#  system("sudo chown -R #{user} #{$hiki_dir}")
 end
 
 desc "self copy to hikiutils template directory"
