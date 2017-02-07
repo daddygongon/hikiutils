@@ -204,3 +204,30 @@ git init, forkが済んでいると仮定して同期の手順を以下に示す
 *rake convert 60 boundary_bob
 *rake sync
 *hiki -u boundary_bob_tmp
+
+\subsection{hikiutils}
+gem中のhikisからhikiへの自動変換をする．
+rubyのライブラリーパッケージの標準となるgemのdirectory構造にhikisというdirectoryを作って文書作成している．hiki --initializeでこのなかのhikidocファイルをウェブ上のhikiと同期する機能を提供する．
+これによって，gem/hikisで作成した文書は，githubあるいはrubygems.orgを通じて共有可能となる．
+以下にこの同期をスムーズに行うための幾つかのconventionを使用法とともにまとめている．
+
+\paragraph{同期に関する制約}
+\begin{itemize}
+\item hikiはフラットなdirectory構造を取っている
+\item hikiの文書はスネーク表記(例えば，latex2hiki\_saki)で階層構造に似せている
+\item hikiのurlの接頭語となる名前をbasenameのdirectory名とする．
+\item directory名が'hikis'である場合はその親directory名となる．
+\item ~/.hikircのtarget directoryを同期先のdirectoryとする．
+\item ~/.hikircがない場合は同期先のdirectoryを聞く．
+\item それらは./.hikircに保存される
+\end{itemize}
+\paragraph{テキスト}
+\begin{itemize}
+\item テキストの拡張子は'.hiki'としている
+\item hikiでのurlはテキスト前とディレクトリーから自動生成される
+\item 例えば，hiki2latex\_saki/introduciton.hikiとするとhiki2latex\_saki\_introducitonと変換される
+\item attach\_anchorでは
+\end{itemize}\begin{quote}\begin{verbatim}
+'{{attach_anchor(test.png, hiki2latex_saki)}}'
+\end{verbatim}\end{quote}
+と，directory指定しなければならない.
