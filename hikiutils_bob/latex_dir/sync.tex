@@ -36,7 +36,7 @@ hiki -v
 hiki -i
 \end{verbatim}\end{quote}
 によって以下のようなファイルが作成される．
-\begin{lstlisting}[style=]
+\begin{lstlisting}[style=customCsh,basicstyle={\scriptsize\ttfamily}]
 bob% ls -lat
 total 1072
 -rw-r--r--   1 bob  501      99  1 20 12:44 .hikirc
@@ -86,7 +86,7 @@ keynoteで図を作成して，hikiutils\_bob.hikiに文章を記述していく
 \end{enumerate}
 \subsection{rakeが用意しているタスク}
 rakeの用意しているコマンドは次のとおり．
-\begin{lstlisting}[style=]
+\begin{lstlisting}[style=customCsh,basicstyle={\scriptsize\ttfamily}]
 rake sync             # hikiの同期
 rake force_sync       # hikiの強制同期
 rake chenv            # For hiki Errno::ENOENT, Errno::EACCES
@@ -134,7 +134,7 @@ rake convert 80 hikiutils_bob
 
 \subsubsection{rake increment}
 keynoteでページを追加するとhikiでの参照(attach\_view)にずれが生じる．いまのところこれを解消する方法はなく手で修正を加える必要がある．ずれが単純な場合には，
-\begin{lstlisting}[style=]
+\begin{lstlisting}[style=,basicstyle={\scriptsize\ttfamily}]
 cp hikiutils_bob.hiki tmp.hiki
 rake increment 2 tmp.hiki > tmp2.hiki
 \end{lstlisting}
@@ -142,12 +142,12 @@ rake increment 2 tmp.hiki > tmp2.hiki
 
 \subsubsection{rake number}
 rake incrementと同じくfigs内の通し番号が変わった時にattach\_viewの通し番号を調整するコマンド．
-\begin{lstlisting}[style=]
+\begin{lstlisting}[style=customCsh,basicstyle={\scriptsize\ttfamily}]
 rake number 3 hikiutils_bob.hiki > tmp.hiki
 cp tmp.hiki hikiutils_bob.hiki
 \end{lstlisting}
 とすると
-\begin{quote}\begin{verbatim}
+\begin{lstlisting}[style=customCsh,basicstyle={\scriptsize\ttfamily}]
 8c8
 {{attach_view(hikiutils_bob.002.jpeg)}}
 ---
@@ -156,7 +156,7 @@ cp tmp.hiki hikiutils_bob.hiki
 {{attach_view(hikiutils_bob.003.jpeg)}}
 ---
 {{attach_view(hikiutils_bob.004.jpeg)}}
-\end{verbatim}\end{quote}
+\end{lstlisting}
 などと番号を3から順に振り替えてくれる．
 
 \subsubsection{rake touch}
@@ -167,7 +167,7 @@ git remoteにあるoriginのgithubをsafariでopenします．
 
 \subsubsection{rake reset\_hiki}
 hikiシステムにあるゴミファイルを掃除します．
-\begin{quote}\begin{verbatim}
+\begin{lstlisting}[style=customCsh,basicstyle={\scriptsize\ttfamily}]
 bob% rake reset_hiki
 hikiutils: provide utilities for helping hiki editing.
 "open -a mi"
@@ -177,7 +177,7 @@ target_dir : /Users/bob/Sites/nishitani0/Internal/data/text
 -rw-rw-rw-  1 bob  staff  10104  2  5 12:03 hikiutils_bob_sync
 -rw-r--r--  1 bob  staff    944  2  5 12:03 hikiutils_bob_toc
 remove hikiutils_bob_toc[ynql]?
-\end{verbatim}\end{quote}
+\end{lstlisting}
 となります．yes, no, quit, listのなかから選んでください．
 
 \subsection{githubによる同期}
@@ -213,7 +213,6 @@ git init, forkが済んでいると仮定して同期の手順を以下に示す
 \subsection{hikiutil関連のヘルプ}
 \subsubsection{hikiで卒論を書くときの初期化と掟}
 \begin{itemize}
-\item 開発メモ:figs,dataも作成
 \item 目的：西谷が後で迷わないように決まったファイル構造を堅持すべし
 \item 文書：hikiで書く.のちには，latexに変換するプログラムを提供します
 \item 図表：すべての図表をkeynoteにまとめる，タイトルを分かりやすく書く
@@ -227,25 +226,33 @@ git init, forkが済んでいると仮定して同期の手順を以下に示す
 \item hikiでのurlはテキスト前とディレクトリーから自動生成される
 \item 例えば，hiki2latex\_saki/introduciton.hikiとするとhiki2latex\_saki\_introducitonと変換される
 \end{itemize}
-\subsubsection{error対応}
+\subsubsection{図表に関する制約}
 \begin{itemize}
-\item Permission denied - ./data/text/boundary\_narita (Errno::EACCES)->テキストにhikiが書き込めない，chmod a+w FILE
-\end{itemize}
-\subsubsection{図表：すべての図表をkeynoteにまとめる，タイトルを分かりやすく書く}
-\begin{itemize}
+\item すべての図表をkeynoteにまとめる
 \item keynoteに書いたスライドはイメージに書き出して，rake convert 80 TARGET\_DIRでfigsに変換
 \item rake syncでfigsにあるfilesはhiki/target\_dirにcpされる
 \item \verb|convert #{source} -resize 20% #{target}によって，target=figs/TAERGET.pngに20%に縮小して保存される|
 \item convert -density 300 view.svg view.pngで300dpiで変換
-\item attach\_anchorでは
-\end{itemize}
-'\verb|{{attach_anchor(test.png, hiki2latex_saki)}}|'
-と，directory指定しなければならない.
-
-\begin{itemize}
+\item attach\_anchorでは'\verb|{{attach_anchor(test.png, hiki2latex_saki)}}|'と，directory指定しなければならない.
 \item keynoteであとで図を挿入して番号が変わった時の原稿の一括変換
 \item rake increment 2 boundary\_bob.hiki boundary\_bob > tmp.hiki
 \item rake convert 60 boundary\_bob
 \item rake sync
 \item hiki -u boundary\_bob\_tmp
+\end{itemize}
+\subsubsection{同期に関する制約}
+\begin{itemize}
+\item hikiはフラットなdirectory構造を取っている
+\item hikiの文書はスネーク表記(例えば，latex2hiki\_saki)で階層構造に似せている
+\item hikiのurlの接頭語となる名前をbasenameのdirectory名とする．
+\item directory名が'hikis'である場合はその親directory名となる．
+\item ~/.hikircのtarget directoryを同期先のdirectoryとする．
+\item ~/.hikircがない場合は同期先のdirectoryを聞く．
+\item それらは./.hikircに保存される
+\end{itemize}
+\subsubsection{テキストに関する制約}
+\begin{itemize}
+\item テキストの拡張子は'.hiki'としている
+\item hikiでのurlはテキスト前とディレクトリーから自動生成される
+\item 例えば，hiki2latex\_saki/introduciton.hikiとするとhiki2latex\_saki\_introducitonと変換される
 \end{itemize}

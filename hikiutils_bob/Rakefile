@@ -195,7 +195,7 @@ task :latex_all do
   toc = false
   File.readlines(File.join($latex_dir,"#{main_file}.tex")).each{|line|
     line, toc = "", true if line.match(/\\tableofcontents/) and toc == true #only one
-
+    line ="\\usepackage{listings,jlisting}" if line.match(/\\usepackage{listings}/)
     if line.match(/section{(.+)}/)
       if m=line.match(/\\verb\|(.+)\((.+)\)\|/)
         p m

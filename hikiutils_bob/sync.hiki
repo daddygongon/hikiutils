@@ -30,7 +30,7 @@ hikiuitlsをgemからinstallしておく必要がある．コマンドは以下�
  hiki -i
 によって以下のようなファイルが作成される．
 
-<<< bash
+<<< tcsh
 bob% ls -lat
 total 1072
 -rw-r--r--   1 bob  501      99  1 20 12:44 .hikirc
@@ -68,7 +68,7 @@ keynoteで図を作成して，hikiutils_bob.hikiに文章を記述していく�
 !!rakeが用意しているタスク
 rakeの用意しているコマンドは次のとおり．
 
-<<< bash
+<<< tcsh
 rake sync             # hikiの同期
 rake force_sync       # hikiの強制同期
 rake chenv            # For hiki Errno::ENOENT, Errno::EACCES
@@ -114,12 +114,12 @@ rake increment 2 tmp.hiki > tmp2.hiki
 
 !!!rake number
 rake incrementと同じくfigs内の通し番号が変わった時にattach_viewの通し番号を調整するコマンド．
-<<< bash
+<<< tcsh
 rake number 3 hikiutils_bob.hiki > tmp.hiki
 cp tmp.hiki hikiutils_bob.hiki
 >>>
 とすると
-<<<
+<<< tcsh
 8c8
 < {{attach_view(hikiutils_bob.002.jpeg,hikiutils_bob)}}
 ---
@@ -139,7 +139,7 @@ git remoteにあるoriginのgithubをsafariでopenします．
 
 !!!rake reset_hiki
 hikiシステムにあるゴミファイルを掃除します．
-<<<
+<<< tcsh
 bob% rake reset_hiki
 hikiutils: provide utilities for helping hiki editing.
 "open -a mi"
@@ -202,7 +202,7 @@ git init, forkが済んでいると仮定して同期の手順を以下に示す
 
 !!!同期に関する制約
 *hikiはフラットなdirectory構造を取っている
-*hikiの文書はスネーク表記(例えば，latex2hiki\_saki)で階層構造に似せている
+*hikiの文書はスネーク表記(例えば，latex2hiki_saki)で階層構造に似せている
 *hikiのurlの接頭語となる名前をbasenameのdirectory名とする．
 *directory名が'hikis'である場合はその親directory名となる．
 * ~/.hikircのtarget directoryを同期先のdirectoryとする．
@@ -212,4 +212,4 @@ git init, forkが済んでいると仮定して同期の手順を以下に示す
 !!!テキストに関する制約
 * テキストの拡張子は'.hiki'としている
 * hikiでのurlはテキスト前とディレクトリーから自動生成される
-* 例えば，hiki2latex\_saki/introduciton.hikiとするとhiki2latex\_saki\_introducitonと変換される
+* 例えば，hiki2latex_saki/introduciton.hikiとするとhiki2latex_saki_introducitonと変換される

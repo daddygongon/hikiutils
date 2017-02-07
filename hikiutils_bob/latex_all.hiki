@@ -32,7 +32,7 @@ DRY(Don't Repeat Yourself)原則さえ守れば，文書管理はいいのです
 !!install
  hiki -i
 でinstallされています．新たに使うコマンド群は次の通りです．
-<<< bash
+<<<
 rake latex            # FILE1をlatexに変換
 rake latex_all        # すべてのhikiファイルをlatex変換
 rake latex_wrap       # FILE1をwrap formatでlatexに変換
@@ -59,10 +59,9 @@ bob% head -3 hikiutils_bob.hiki
 ! title:hikiutils -iによる卒論作成システム
 ! autor:Shigeto R. Nishitani
 ! date: Kwansei Gakuen Univ., 2017/1
-
 >>>
 とすると，
-<<< latex
+<<<
 \begin{document}
 \title{hikiutils -iによる卒論作成システム}
 \author{Shigeto R. Nishitani}
@@ -80,7 +79,7 @@ pwdのdirectoryと同名のbasenameに.hikiの拡張子がついたファイル�
  rake latex_all
 をおこなうと自動で全部を一体にまとめた文書へのlatex変換が出来上がります．
 たとえば，hikiutils_bob.hikiの記述を
-<<<
+<<< tcsh
 bob% cat hikiutils_bob.hiki 
 !hikiutilsを用いた卒業論文作成
 
@@ -122,46 +121,50 @@ bob% cat head.tex
 
 
 !!!!pre.tex
+latex_allのときは使っていません．formatedの時に読むようにしていますが．．．読めてないようです．いずれ調べます．
+
+!!!!mainのpreamble部
 あまり変更しないほうがいいですが，いずれいじることになります．
-例えば，フォントポイント数を12から10ptに変える，\\pagestyle\{empty\}を外すなどです．
+例えば，フォントポイント数を12から10ptに変えるなどです．
 <<< tex
-bob% cat pre.tex
-\documentclass[10pt,a4j]{article}
-
-\def\Vec#1{\mbox{\boldmath $#1$}}
+\documentclass[12pt,a4paper]{jsarticle}
 \usepackage[dvipdfmx]{graphicx}
-
-\setlength{\textheight}{275mm}
-\headheight 5mm
-\topmargin -20mm
-\textwidth 160mm
-\textheight 250mm
-\oddsidemargin -0mm
-\evensidemargin -5mm
-
-\pagestyle{empty}
-\makeatletter
-  \def\@maketitle{%
-  \newpage\null
-  \vskip 2em%
-  \begin{center}%
-  \let\footnote\thanks
-    {\large\bf \@title \par}%
-    \vskip 1.5em%
-    {\large\bf \@author \par}%
-    \vskip 1.5em%
-    {\small \@date}%
-  \end{center}%
+\usepackage[dvipdfmx]{color}
+\usepackage{listings,jlisting}% to use japanese correctly, install jlistings.
+\lstset{
+  basicstyle={\small\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\small\itshape\color{red}},
+  keywordstyle={\small\bfseries\color{cyan}},
+  ndkeywordstyle={\small},
+  stringstyle={\small\color{blue}},
+  frame={tb},
+  breaklines=true,
+  numbers=left,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  lineskip=-0.5ex
 }
-\makeatother
+\lstdefinestyle{customCsh}{
+  language={csh},
+  numbers=none,
+}
+\lstdefinestyle{customRuby}{
+  language={ruby},
+  numbers=left,
+}
+\lstdefinestyle{customTex}{
+  language={tex},
+  numbers=none,
+}
+\lstdefinestyle{customJava}{
+  language={java},
+  numbers=left,
+}
 
-%\documentclass[10pt, a4j]{article}
-%%\usepackage{citesort}
-\usepackage{amssymb}
-\usepackage[dvipdfmx]{graphicx}% 図を入れるときに使用
-\usepackage{wrapfig}% 図の周りに本文を流し込みたいときに使用
-\usepackage{subfigure}
-\usepackage{here}
 >>>
 
 !!補助コマンドの解説
@@ -193,3 +196,10 @@ end
 完成例はこちらです．
 *{{attach_anchor(calphad_bob.pdf,hikiutils_bob)}}
 
+!!開発メモ（2017/2/8)
+* hikiutilsにlatex2hiki, hiki2latexも統合すべきか？
+* {{ref}} {{cite}}を組み込む
+* hikiにではなく，rake syncで変換
+* listingsの調整
+* jlistingは，\\lstsetや\\lstdefinestyleで引っかかってダメ
+* basicstyle={\small\ttfamily}これ効いてんにゃろか？？

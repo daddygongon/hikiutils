@@ -1,3 +1,25 @@
-!hikiへのlatexからの変換
+!latexからhikiへの変換
 !!rake mk_toc
 latexが作成するtableofcontentsの実態であるtocファイルからhiki用のtoc.hikiを作成する．
+
+!!listings
+<<< latex
+\lstset{
+  basicstyle={\ttfamily\scriptsize},
+  identifierstyle={\scriptsize},
+  commentstyle={\scriptsize\itshape\color{red}},
+  keywordstyle={\scriptsize\bfseries\color{cyan}},
+  ndkeywordstyle={\scriptsize},
+  stringstyle={\scriptsize\color{blue}},
+  frame={tb},
+  breaklines=true,
+  numbers=left,
+  numberstyle={\footnotesize},
+  stepnumber=1,
+  numbersep=1zw,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  lineskip=-0.5ex
+}
+>>>
+
