@@ -96,18 +96,38 @@ task :mk_toc do
   File.open("toc.hiki",'w'){|file| file.print cont}
 end
 
-desc "hikiシステムを最新状態に更新"
+desc "FILE.hikiあるいはhikiファイルすべてを最新状態に更新"
 task :touch do
-  p target = File.join($hiki_dir,'cache','attach',$basename)
-  system "touch #{target}/*"
-  Dir.entries('.').each{|file|
-    file_split=file.split(".")
-    if file_split[1]=='hiki'
-      next if file_split[0]==$basename
-      p target = $basename+"_"+file_split[0]
-      system "hiki -u #{target}"
-    end
-  }
+  if file=ARGV[1] 
+    p target = $basename+"_"+file.split('.')[0]
+    system "hiki -u #{target}"
+  else
+    p target = File.join($hiki_dir,'cache','attach',$basename)
+    system "touch #{target}/*"
+    Dir.entries('.').each{|file|
+      file_split=file.split(".")
+      if file_split[1]=='hiki'
+        next if file_split[0]==$basename
+        p target = $basename+"_"+file_split[0]
+        system "hiki -u #{target}"
+      end
+    }
+  end
+end
+
+desc "FILE.hikiあるいはhikiファイルをedtiorで開く"
+task :open do
+  if file=ARGV[1] 
+    system "open -a mi #{file}"
+  else
+    Dir.entries('.').each{|file|
+      file_split=file.split(".")
+      if file_split[1]=='hiki'
+        p target = file_split[0]
+        system "open -a mi #{target}"
+      end
+    }
+  end
 end
 
 desc "FILE1をlatexに変換"

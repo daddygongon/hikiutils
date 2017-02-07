@@ -174,7 +174,6 @@ git init, forkが済んでいると仮定して同期の手順を以下に示す
 
 !!hikiutil関連のヘルプ
 !!!hikiで卒論を書くときの初期化と掟
-*開発メモ:figs,dataも作成
 *目的：西谷が後で迷わないように決まったファイル構造を堅持すべし
 *文書：hikiで書く.のちには，latexに変換するプログラムを提供します
 *図表：すべての図表をkeynoteにまとめる，タイトルを分かりやすく書く
@@ -188,46 +187,29 @@ git init, forkが済んでいると仮定して同期の手順を以下に示す
 *hikiでのurlはテキスト前とディレクトリーから自動生成される
 *例えば，hiki2latex_saki/introduciton.hikiとするとhiki2latex_saki_introducitonと変換される
 
-!!!error対応
-*Permission denied - ./data/text/boundary_narita (Errno::EACCES)->テキストにhikiが書き込めない，chmod a+w FILE
-
-!!!図表：すべての図表をkeynoteにまとめる，タイトルを分かりやすく書く
+!!!図表に関する制約
+*すべての図表をkeynoteにまとめる
 *keynoteに書いたスライドはイメージに書き出して，rake convert 80 TARGET_DIRでfigsに変換
 *rake syncでfigsにあるfilesはhiki/target_dirにcpされる
 *\verb|convert #{source} -resize 20% #{target}によって，target=figs/TAERGET.pngに20%に縮小して保存される|
 *convert -density 300 view.svg view.pngで300dpiで変換
-*attach_anchorでは
-'{{attach_anchor(test.png, hiki2latex_saki)}}'
-と，directory指定しなければならない.
+*attach_anchorでは'{{attach_anchor(test.png, hiki2latex_saki)}}'と，directory指定しなければならない.
 *keynoteであとで図を挿入して番号が変わった時の原稿の一括変換
 *rake increment 2 boundary_bob.hiki boundary_bob > tmp.hiki
 *rake convert 60 boundary_bob
 *rake sync
 *hiki -u boundary_bob_tmp
 
-\subsection{hikiutils}
-gem中のhikisからhikiへの自動変換をする．
-rubyのライブラリーパッケージの標準となるgemのdirectory構造にhikisというdirectoryを作って文書作成している．hiki --initializeでこのなかのhikidocファイルをウェブ上のhikiと同期する機能を提供する．
-これによって，gem/hikisで作成した文書は，githubあるいはrubygems.orgを通じて共有可能となる．
-以下にこの同期をスムーズに行うための幾つかのconventionを使用法とともにまとめている．
+!!!同期に関する制約
+*hikiはフラットなdirectory構造を取っている
+*hikiの文書はスネーク表記(例えば，latex2hiki\_saki)で階層構造に似せている
+*hikiのurlの接頭語となる名前をbasenameのdirectory名とする．
+*directory名が'hikis'である場合はその親directory名となる．
+* ~/.hikircのtarget directoryを同期先のdirectoryとする．
+* ~/.hikircがない場合は同期先のdirectoryを聞く．
+* それらは./.hikircに保存される
 
-\paragraph{同期に関する制約}
-\begin{itemize}
-\item hikiはフラットなdirectory構造を取っている
-\item hikiの文書はスネーク表記(例えば，latex2hiki\_saki)で階層構造に似せている
-\item hikiのurlの接頭語となる名前をbasenameのdirectory名とする．
-\item directory名が'hikis'である場合はその親directory名となる．
-\item ~/.hikircのtarget directoryを同期先のdirectoryとする．
-\item ~/.hikircがない場合は同期先のdirectoryを聞く．
-\item それらは./.hikircに保存される
-\end{itemize}
-\paragraph{テキスト}
-\begin{itemize}
-\item テキストの拡張子は'.hiki'としている
-\item hikiでのurlはテキスト前とディレクトリーから自動生成される
-\item 例えば，hiki2latex\_saki/introduciton.hikiとするとhiki2latex\_saki\_introducitonと変換される
-\item attach\_anchorでは
-\end{itemize}\begin{quote}\begin{verbatim}
-'{{attach_anchor(test.png, hiki2latex_saki)}}'
-\end{verbatim}\end{quote}
-と，directory指定しなければならない.
+!!!テキストに関する制約
+* テキストの拡張子は'.hiki'としている
+* hikiでのurlはテキスト前とディレクトリーから自動生成される
+* 例えば，hiki2latex\_saki/introduciton.hikiとするとhiki2latex\_saki\_introducitonと変換される
