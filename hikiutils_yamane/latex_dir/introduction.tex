@@ -4,7 +4,7 @@ hikiは，hiki記法を用いたwiki cloneです．wikiはウォード・カニ�
 hiki web systemの実際の基本動作は，hiki.cgiプログラムを介して行われています．こちらを便宜上hiki systemと呼びます．図に従ってhiki systemの動作概要を説明します．hiki systemは，data/textに置かれた書かれたプレーンテキストをhtmlへ変換します．この変換はhikidoc[1-1]というhikiフォーマットconverterを使っています．また，添付書類はcache/attachに，一度フォーマットしたhtmlはparserに置かれており，それらを参照してhtmlを表示する画面をhiki.cgiは作っています．さらにhiki systemでは検索機能，自動リンク作成などが提供されています
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_yamane_09_copy.001.jpg}
+\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_yamane.001.jpg}
 \caption{hiki web systemとhiki systemの対応関係．}
 \label{default}\end{center}\end{figure}
 研究室内の内部文書，あるいは外部への宣伝資料，さらにwikipediaのように重要な研究成果の発信などに西谷研ではこのhiki systemを利用しています．初心者にも覚えやすい直感的な操作です．しかし，慣れてくるとテキスト編集や画面更新にいちいちweb画面へ移行せねばならず，編集の思考が停止します．そこで，テキスト編集に優れたeditorとの連携や，terminal上のshell commandと連携しやすいようにhikiutilsというcli(command line interface)を作成して運用しています．しかし，そのユーザインタフェースにはコマンドが直感的でないという問題点がある．そこで，Thorというコマンドラインツール作成ライブラリを用いる．hikiutilsでは，optparseというコマンドライン解析ライブラリを使用しているが，新たなライブラリThorを使用してコマンドを書き換え，より直感的なコマンドに変更する．

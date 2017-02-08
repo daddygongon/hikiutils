@@ -1,7 +1,8 @@
 {{toc}}
 !optparseとthorの比較
-ここでは，FizzBuzzという単純なコードを例にoptparseとCLIのコードの比較を行う．
-
+今回の研究課題のシステムであるhikiutilsはコマンドライン解析ライブラリが用いられている．
+これを使うことでコマンドの作成を行うことができ，本研究ではoptparseとThorの２種類のコマンドライン解析ライブラリが用いられている．
+ここでは，FizzBuzzという単純なコードを例にoptparseとThorのコードの比較を行う．
 !!optparse
 optparseとは，getoptよりも簡便で，柔軟性に富み，かつ強力なコマンドライン解析ライブラリである．optparseでは，より宣言的なスタイルのコマンドライン解析手法，すなわちOptionParserのインスタンスでコマンドラインを解析するという手法をとっている．これを使うと，GNU/POSIX構文でオプションを指定できるだけでなく，使用法やヘルプメッセージの生成も行える[1-3]．利用頻度はあまり高くないが古くから開発され，使用例が広く紹介されている．
 
@@ -13,6 +14,51 @@ optparseの基本的な流れとしては
 
 OptionParserはコマンドラインのオプション取り扱うためのクラスであるためオブジェクトoptを生成されopt.onにコマンドを登録することができる．しかし，OptionParser\#onにはコマンドが登録されているだけであるため，OptionParser\#parseが呼ばれた時，コマンドラインにオプションが指定されていれば実行される．optparseにはデフォルトとして--helpと--versionオプションを認識する[1-4].
 
+以下に示したコードがoptparseで記述されたfizzbuzzである．
+
+<<< ruby
+module Fizzbuzz
+  class Command
+
+     def self.run(argv)
+       new(argv).execute
+     end
+
+     def initialize(argv)
+       @argv = argv
+     end
+
+     def execute
+       options = Options.parse!(@argv)
+       sub_command = options.delete(:command)
+       case sub_command
+            when 'fizzbuzz'
+              fizzbuzz(options[:id])
+            when 'version'
+              version
+            end
+     end
+
+     def fizzbuzz(limit_number)
+       (0..limit_number).map do |num|
+         if (num % 15).zero? then print 'FizzBuzz'
+         elsif (num % 5).zero? then print 'Buzz'
+         elsif (num % 3).zero? then print 'Fizz'
+         else print num.to_s
+         end
+         print ' '
+       end
+     end
+
+     def version
+       puts Fizzbuzz::VERSION
+       exit
+     end
+  end
+end
+>>>
+
+このコードはfizzbuzzとversionのコマンドを実行させる．上記でoptparseではopt.onにコマンドを登録する必要があると説明したが，opt.onで登録できるものはハイフンがついたコマンドだけであり，ハイフンなしのコマンドの登録はexecuteメソッドで書かれた記述になる．このようにoptparseではハイフンあり，なしによってもコマンドの登録の仕方が変わってくる．どちらのコマンドを登録してもoptparseではコマンドの登録(executeメソッド)と実行処理(fizzbuzzメソッド，versionメソッド)を分けて記述する特徴がある．
 !!Thor
 Thorとは，コマンドラインツールの作成を支援するライブラリのことである．gitやbundlerのようにサブコマンドを含むコマンドラインツールを簡単に作成することができる[1-2]．
 
@@ -21,5 +67,27 @@ Thorの基本的な流れとしては
 #クラス.start(ARGV)でコマンドラインの処理をスタートする
 である[1-2].
 
+
 startに渡す引数が空の場合，Thorはクラスのヘルプリストを出力する．また，Thorはサブコマンドやサブサブコマンドも容易に作ることができる．
 
+以下に示したコードがThorで記述されたfizzbuzzである．
+
+<<< ruby
+module Fizzbuzz                                                   
+  class CLI < Thor
+
+    desc 'fizzbuzz', 'Get fizzbuzz result from limit number'
+    def fizzbuzz(limit)
+      print Fizzbuzz.fizzbuzz(limit).join(',')
+      exit
+    end
+
+    desc 'version', 'version'
+    def version
+      puts Fizzbuzz::VERSION
+    end
+  end
+end
+>>>
+
+このコードもoptparseのfizzbuzzと同様fizzbuzzとversionのコマンドを実行させる．Thorはoptparseと違ってそれぞれのメソッド名がコマンドとなるためコードが比較的短くなる．しかし，optparseではexecuteメソッドで登録されたコマンドが一覧表示されるが，Thorではないので一覧表示させるコマンドの登録を行うdescで記述する必要がある．
