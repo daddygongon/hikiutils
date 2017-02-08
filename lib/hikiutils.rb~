@@ -98,7 +98,9 @@ EOS
       cp_files=[['Rakefile_hiki_sync','Rakefile'],
                 ['hiki_help.yml','hiki_help.yml'],
                 ['head.tex','latex_dir/head.tex'],
-                ['pre.tex','latex_dir/pre.tex']]
+                ['pre.tex','latex_dir/pre.tex'],
+                ['jlisting.sty','latex_dir/jlisting.tex'],
+               ]
       cp_files.each_with_index{|files,i|
         p source = File.join(File.expand_path('..', __FILE__),'templates',files[0])
         p target = File.join(Dir.pwd,files[1])

@@ -99,7 +99,7 @@ EOS
                 ['hiki_help.yml','hiki_help.yml'],
                 ['head.tex','latex_dir/head.tex'],
                 ['pre.tex','latex_dir/pre.tex'],
-                ['jlisting.sty','latex_dir/jlisting.tex'],
+                ['jlisting.sty','latex_dir/jlisting.sty'],
                ]
       cp_files.each_with_index{|files,i|
         p source = File.join(File.expand_path('..', __FILE__),'templates',files[0])

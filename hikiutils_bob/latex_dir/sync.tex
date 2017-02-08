@@ -95,9 +95,10 @@ rake convert          # convert fig size SCALE TARGET_DIR
 rake increment        # increment fig NUBERS in FILE
 rake number           # numbering figs from the NUBER in FILE
 
-rake touch            # hikiシステムを最新状態に更新
-rake github           # Githubのdirをsafariでopen
-rake reset_hiki       # hikiシステムにあるゴミファイルを掃除する
+rake touch            # FILE.hikiあるいはhikiファイルすべてを最新状態に更新(new)
+rake open             # FILE.hikiあるいはhikiファイルをedtiorで開く(new)
+rake github           # Githubのdirをsafariでopen(new)
+rake reset_hiki       # hikiシステムにあるゴミファイルを掃除する(new)
 \end{lstlisting}
 \subsubsection{rake sync}
 hikiutils\_bobにある必要な書類をhikiシステムにコピーする．その際，名前の書き換えを行う．
@@ -159,13 +160,16 @@ cp tmp.hiki hikiutils_bob.hiki
 \end{lstlisting}
 などと番号を3から順に振り替えてくれる．
 
-\subsubsection{rake touch}
-hiki touchをおこなって最新版に更新します．
+\subsubsection{rake open [FILE] (new)}
+FILE.hikiあるいはhikiファイルをedtiorで開く.
 
-\subsubsection{rake github}
-git remoteにあるoriginのgithubをsafariでopenします．
+\subsubsection{rake touch [FILE](new)}
+FILE.hikiあるいはhikiファイルすべてを最新状態に更新．
 
-\subsubsection{rake reset\_hiki}
+\subsubsection{rake github(new)}
+git remote -vにあるoriginをsafariでopenします．
+
+\subsubsection{rake reset\_hiki(new)}
 hikiシステムにあるゴミファイルを掃除します．
 \begin{lstlisting}[style=customCsh,basicstyle={\scriptsize\ttfamily}]
 bob% rake reset_hiki
@@ -176,9 +180,9 @@ target_dir : /Users/bob/Sites/nishitani0/Internal/data/text
 -rw-rw-rw-  1 bob  staff   7220  2  5 12:03 hikiutils_bob_latex_all
 -rw-rw-rw-  1 bob  staff  10104  2  5 12:03 hikiutils_bob_sync
 -rw-r--r--  1 bob  staff    944  2  5 12:03 hikiutils_bob_toc
-remove hikiutils_bob_toc[ynql]?
+remove hikiutils_bob_toc[ynqlA]?
 \end{lstlisting}
-となります．yes, no, quit, listのなかから選んでください．
+となります．yes, no, quit, list, Allのなかから選んでください．
 
 \subsection{githubによる同期}
 これらの作業の流れを示すシーケンス図は次の通りである．

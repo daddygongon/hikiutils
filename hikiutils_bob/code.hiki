@@ -23,3 +23,15 @@ latexが作成するtableofcontentsの実態であるtocファイルからhiki�
 }
 >>>
 
+!!日本語のcode listings
+日本語のjlistingの挙動がようやく判明しました．listingsでは日本語表示が
+ちゃんとなされません．そこで，
+ \usepackage{listings,jlisting}
+としています．これで，日本語が含まれたcodeも綺麗に表示してくれます．
+
+*{{cite(listings1)}}
+*{{cite(listings2)}}
+
+!Reference:
+:listings1:[[基本的な使い方|http://d.hatena.ne.jp/mallowlabs/20061226/1167137637]]
+:listings2:[[listingsの定義の仕方|http://www.ipc.akita-nct.ac.jp/~yamamoto/comp/latex/make_doc/source/source.html]]

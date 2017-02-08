@@ -66,20 +66,20 @@ dvipdfmx sync.dvi
 
 \subsubsection{注意}
 hikiの初めの部分は，
-\begin{quote}\begin{verbatim}
+\begin{lstlisting}[style=customCsh,basicstyle={\scriptsize\ttfamily}]
 bob% head -3 hikiutils_bob.hiki
 ! title:hikiutils -iによる卒論作成システム
 ! autor:Shigeto R. Nishitani
 ! date: Kwansei Gakuen Univ., 2017/1
-\end{verbatim}\end{quote}
+\end{lstlisting}
 とすると，
-\begin{quote}\begin{verbatim}
+\begin{lstlisting}[style=customTeX,basicstyle={\scriptsize\ttfamily}]
 \begin{document}
 \title{hikiutils -iによる卒論作成システム}
 \author{Shigeto R. Nishitani}
 \date{ Kwansei Gakuen Univ., 2017/1}
 \maketitle
-\end{verbatim}\end{quote}
+\end{lstlisting}
 と変換してくれます．次節のlatex\_allでは，basename.hikiに書かれたそれらの情報は，
 head.texでtitleなどを用意するべきなので，自動で消されます．
 
@@ -140,7 +140,7 @@ latex\_allのときは使っていません．formatedの時に読むように�
 
 \paragraph{mainのpreamble部}
 あまり変更しないほうがいいですが，いずれいじることになります．
-例えば，フォントポイント数を12から10ptに変える，\\pagestyle\{empty\}を外すなどです．
+例えば，フォントポイント数を12から10ptに変えるなどです．
 \begin{lstlisting}[style=customTeX,basicstyle={\scriptsize\ttfamily}]
 \documentclass[12pt,a4paper]{jsarticle}
 \usepackage[dvipdfmx]{graphicx}

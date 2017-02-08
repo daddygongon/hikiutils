@@ -54,14 +54,14 @@ rake reset_latex_dir  # latex_dirのゴミファイルを削除
 
 !!!注意
 hikiの初めの部分は，
-<<<
+<<< tcsh
 bob% head -3 hikiutils_bob.hiki
 ! title:hikiutils -iによる卒論作成システム
 ! autor:Shigeto R. Nishitani
 ! date: Kwansei Gakuen Univ., 2017/1
 >>>
 とすると，
-<<<
+<<< latex
 \begin{document}
 \title{hikiutils -iによる卒論作成システム}
 \author{Shigeto R. Nishitani}
