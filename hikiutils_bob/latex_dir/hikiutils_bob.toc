@@ -34,3 +34,8 @@
 \contentsline {subsubsection}{\numberline {3.4.1}rake reset\_latex\_dir(latex\_dirのゴミ掃除)}{17}
 \contentsline {subsubsection}{\numberline {3.4.2}wrap関係}{17}
 \contentsline {subsection}{\numberline {3.5}開発メモ（2017/2/8)}{18}
+\contentsline {section}{\numberline {4}Rakefile開発に関するメモ}{19}
+\contentsline {subsection}{\numberline {4.1}日本語のcode listings}{19}
+\contentsline {subsection}{\numberline {4.2}文献参照のシステム}{19}
+\contentsline {subsection}{\numberline {4.3}システムの概要}{20}
+\contentsline {subsection}{\numberline {4.4}rake mk\_toc}{20}
