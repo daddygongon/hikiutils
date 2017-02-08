@@ -6,8 +6,8 @@ listingsでは日本語表示がちゃんとなされません．そこで，
  \usepackage{listings,jlisting}
 とします．これで，日本語が含まれたcodeも綺麗に表示してくれます．
 
-!!文献参照のシステム
-latexへ文献参照を渡すために，下記のようなフォーマットでの記述を行う．
+!!参照のシステム
+latexへ文献参照を渡すために，下記のようなフォーマットでの記述を行ってください．
 
 <<< tcsh
 図{{ref(fig:SystemOverview)}}に卒論編集システムの概観を示しています．
@@ -21,6 +21,8 @@ latexへ文献参照を渡すために，下記のようなフォーマットで
 :listings1:[[http://d.hatena.ne.jp/mallowlabs/20061226/1167137637]]
 :listings2:[[http://www.ipc.akita-nct.ac.jp/~yamamoto/comp/latex/make_doc/source/source.html]]
 >>>
+
+ここで，fig:以下にsnake nameは使えません．Camelで書くようにしてください．
 
 これをlatexにかけると次の通りになります．（体裁は乱れている）
 

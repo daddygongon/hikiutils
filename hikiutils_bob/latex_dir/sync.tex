@@ -7,7 +7,7 @@
 本資料では，卒論の編集作業を効率化する図に示すようなシステムの使い方を紹介します．
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=10cm,bb= 0 0 737 453]{../figs/./hikiutils_bob.002.jpeg}
+\includegraphics[width=10cm,bb=]{../figs/./hikiutils_bob.002.jpeg}
 \caption{卒論編集システムの基本概念．}
 \label{default}\end{center}\end{figure}
 例えば，卒業生をyamaneとしましょう．yamaneの個人のMacの自分のdirectory(hikiutils\_yamane)に幾つかのファイルを作成して卒論を書いているとします．これを指導教官(bob)が編集するとします．この同期には，Githubにより提供される共同作業環境を使います．これだけでは編集中の文書の体裁がわかりにくいでしょう．そこで，hikiシステムにより容易にwebブラウザ上に完成形を表示しつつ執筆することが求められます．このような環境を提供するのが，本システムです．
@@ -28,7 +28,7 @@ hiki -v
 図にhikiutils\_bobのディレクトリー構成を示す．
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=10cm,bb= 0 0 737 453]{../figs/./hikiutils_bob.003.jpeg}
+\includegraphics[width=10cm,bb=]{../figs/./hikiutils_bob.003.jpeg}
 \caption{hikiutils\_bobのディレクトリー構成．}
 \label{default}\end{center}\end{figure}
 コマンド
@@ -56,7 +56,7 @@ keynoteで図を作成して，hikiutils\_bob.hikiに文章を記述していく
 図に論文作成システムの概要を示している．gemのなかに作られた例えば，hikiutils\_bobなどのdirectory内にRakefileなどを次節のコマンドを使って入れる．このdirectoryでhikiutils\_bob.hikiなどのhikiフォーマットのdocumentを作っていく．rake syncによってwebを提供するhikiのtext, attach, parserなどと同期する．一方，最終の卒業論文形態であるpdfにするためにlatex\_dir内に*.texを生成する．これは次章で解説する．
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=10cm,bb= 0 0 737 453]{../figs/./hikiutils_bob.004.jpeg}
+\includegraphics[width=10cm,bb=]{../figs/./hikiutils_bob.004.jpeg}
 \caption{システムの概要．}
 \label{default}\end{center}\end{figure}
 \subsection{一般的な執筆手順}
@@ -188,7 +188,7 @@ remove hikiutils_bob_toc[ynqlA]?
 これらの作業の流れを示すシーケンス図は次の通りである．
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=10cm,bb= 0 0 737 453]{../figs/./hikiutils_bob.005.jpeg}
+\includegraphics[width=10cm,bb=]{../figs/./hikiutils_bob.005.jpeg}
 \caption{卒論編集時のgithubによる同期のシーケンス図．}
 \label{default}\end{center}\end{figure}
 git init, forkが済んでいると仮定して同期の手順を以下に示す．

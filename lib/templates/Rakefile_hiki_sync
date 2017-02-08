@@ -110,7 +110,7 @@ task :touch do
       file_split=file.split(".")
       if file_split[1]=='hiki'
         next if file_split[0]==$basename
-        p target = $basename+"_"+file_split[0]
+        p target = $basename==file_split[0] ? $basename : $basename+"_"+file_split[0]
         system "hiki -u #{target}"
       end
     }
