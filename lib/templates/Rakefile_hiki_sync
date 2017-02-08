@@ -34,7 +34,7 @@ task :reset_hiki do
   stdout.split("\n").each{|line|
     files << line.split(/\s+/)[-1]
   }
-  p r_files = files.reverse[0..-4]
+  r_files = files.reverse[0..-4]
   r_files.each{|file|
     print "remove #{file}[ynqlA]? ".red
     input=STDIN.gets.chomp
@@ -184,13 +184,12 @@ end
 
 def check_bounding_box
 #  $bounding_box="0 0 442 432"
-  $bounding_box=" 0 0 737 453"
+  $bounding_box=" 0 0 737 553"
 end
 
 desc "すべてのhikiファイルをlatex変換"
 task :latex_all do
   p entries=Dir.entries('.')
-  check_bounding_box
   main_file = latex_loop(entries,opts={:main=>true})
   latex_loop(entries)
   cont=""
@@ -220,6 +219,7 @@ task :latex_all do
 end
 
 task :latex_base do
+  check_bounding_box
   Dir.mkdir($latex_dir) unless Dir.exist?($latex_dir)
   convert_to_latex(ARGV[1])
   system("open #{$save_name}")
@@ -249,22 +249,15 @@ def convert_to_latex(file_name, options={})
   system "rm #{tf1} #{tf2}"
   in_bib,cont=false,""
   lines.each{|line|
-    if m=line.match(/\\verb\|{{cite\((.+)\)}}\|/)
-      puts m[1].red
-      puts line.sub!(/\\verb\|{{cite\((.+)\)}}\|/,"\\cite\{#{m[1]}\}").red
-    end
-    if m=line.match(/\\caption{\s*\((.+)\)(.+)}/)
+    line=latex_cite_ref(line)
+    if m=line.match(/\\caption{\s*\((.+?)\)(.+)}/)
       p m
       puts line = "\\caption{#{m[2]}}\n\\label{#{m[1]}}\n"
-    end
-    if m=line.match(/\\verb\|{{ref\((.+)\)}}\|/)
-      puts m[1].red
-      puts line.sub!(/\\verb\|{{ref\((.+)\)}}\|/,"\\ref\{#{m[1]}\}").red
     end
     if m=line.match(/\\section{reference:}(.+)/) and in_bib==false
       in_bib=true
       line = "\\begin{thebibliography}{99}\n"
-      p line.blue
+      puts line.blue
     end
     if m=line.match(/\\end{description}/) and in_bib==true
       in_bib=false
@@ -281,6 +274,18 @@ def convert_to_latex(file_name, options={})
     end
   }
   File.open($save_name,'w'){|file| file.print cont }
+end
+
+def latex_cite_ref(line)
+  r_pair=[/\\verb\|{{cite\((.+?)\)}}\|/,/\\verb\|{{ref\((.+?)\)}}\|/]
+  while m=line.match(r_pair[0])
+    line.sub!(r_pair[0],"\\cite\{#{m[1]}\}")
+  end
+  while m=line.match(r_pair[1])
+    line.sub!(r_pair[1],"\\ref\{#{m[1]}\}")
+  end
+  puts line.chomp.blue
+  return line
 end
 
 task :change_wrap do
@@ -371,23 +376,26 @@ task :sync => [:check_previous,:sync0]
 desc "hikiの強制同期"
 task :force_sync => [:sync0]
 
-def check_refs(file)
+def hiki_cite_ref(file)
   tf1 = 'tmp1.txt'
   lines = File.readlines(file)
   inside_pre_form,cont = false,""
   lines.each{|line|
     inside_pre_form=true if line.match(/^<<</) and !inside_pre_form
     inside_pre_form=false if line.match(/^>>>/) and inside_pre_form
-    if m=line.match(/\{\{cite\((.+)\)\}\}/) and !inside_pre_form
-      puts line.sub!(/\{\{cite\((.+)\)\}\}/, "[[#{m[1]}|#{$basename}_references]]").chomp.green
-    elsif m=line.match(/\{\{ref\((.+)\)\}\}/) and !inside_pre_form
-      puts line.sub!(/\{\{ref\((.+)\)\}\}/, "#{m[1]}").chomp.green
+    tr_pair=[/\{\{cite\((.+?)\)\}\}/,/\{\{ref\((.+)\)\}\}/]
+    while m=line.match(tr_pair[0]) and !inside_pre_form
+      puts line.sub!(tr_pair[0], "\[[[#{m[1]}|#{$basename}_references]]\]").chomp.green
+    end
+    while m=line.match(tr_pair[1]) and !inside_pre_form
+      puts line.sub!(tr_pair[1],"#{m[1]}").chomp.green
     end
     cont << line
   }
   File.open(tf1,'w'){|file| file.print cont }
   return tf1
 end
+
 task :sync0 do
   entries=Dir.entries('.')
   entries[2..-1].each{|source| #cp *.hiki
@@ -396,7 +404,7 @@ task :sync0 do
     p base = source.split('.')[0]
     name = (base==$basename)? base : $basename+'_'+base
     p target = File.join($hiki_dir,'text',name)
-    source = check_refs(source)
+    source = hiki_cite_ref(source)
     FileUtils.cp(source,target,:verbose=>true)
   }
   p entries=Dir.entries('./figs') #cp files in figs
