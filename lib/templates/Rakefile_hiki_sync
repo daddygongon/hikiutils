@@ -80,14 +80,10 @@ task :mk_toc do
     if m=line.match(/\\contentsline \{(.+)\}\{\\numberline \{([\d|\.]+)\}(.+)\}\{\d+\}/)
       layer,sec_no,title=m[1],m[2],m[3]
       d = case m[1]
-          when 'section'
-            1
-          when 'subsection'
-            2
-          when 'subsubsection'
-            3
-          else
-            4
+          when 'section'; 1
+          when 'subsection'; 2
+          when 'subsubsection'; 3
+          else; 4
           end
       layer = "!"*d
       title.gsub!('\_','_')
@@ -144,6 +140,7 @@ task :latex_wrap => [:latex_base, :change_wrap] do
 end
 
 def latex_loop(entries,opts={})
+  check_bounding_box
   main_file=""
   entries.each{|file|
     options={:latex_all=>true}
@@ -196,7 +193,14 @@ task :latex_all do
   p reg_exp = Regexp.new("#{$basename}_(.+)")
   toc = false
   File.readlines(File.join($latex_dir,"#{main_file}.tex")).each{|line|
-    line, toc = "", true if line.match(/\\tableofcontents/) and toc == true #only one
+#    line, toc = "", true if line.match(/\\tableofcontents/) and toc == true #only one
+    if line.match(/\\tableofcontents/)
+      if toc == false #only one
+        toc = true 
+      else
+        line = ''
+      end
+    end
     line ="\\usepackage{listings,jlisting}" if line.match(/\\usepackage{listings}/)
     if line.match(/section{(.+)}/)
       if m=line.match(/\\verb\|(.+)\((.+)\)\|/)
@@ -284,7 +288,7 @@ def latex_cite_ref(line)
   while m=line.match(r_pair[1])
     line.sub!(r_pair[1],"\\ref\{#{m[1]}\}")
   end
-  puts line.chomp.blue
+#  puts line.chomp.blue
   return line
 end
 

@@ -1,24 +1,23 @@
 \documentclass[12pt,a4paper]{jsarticle}
 \usepackage[dvipdfmx]{graphicx}
 \usepackage[dvipdfmx]{color}
-\usepackage{listings}
-% to use japanese correctly, install jlistings.
+\usepackage{listings,jlisting}% to use japanese correctly, install jlistings.
 \lstset{
-  basicstyle={\small\ttfamily},
-  identifierstyle={\small},
-  commentstyle={\small\itshape\color{red}},
-  keywordstyle={\small\bfseries\color{cyan}},
-  ndkeywordstyle={\small},
-  stringstyle={\small\color{blue}},
+  basicstyle={\ttfamily},
+  identifierstyle={},
+  commentstyle={\color{red}},
+  keywordstyle={\bfseries\color{cyan}},
+  ndkeywordstyle={},
+  stringstyle={\color{blue}},
   frame={tb},
   breaklines=true,
   numbers=left,
-  numberstyle={\scriptsize},
+  numberstyle={},
   stepnumber=1,
   numbersep=1zw,
   xrightmargin=0zw,
   xleftmargin=3zw,
-  lineskip=-0.5ex
+  lineskip=0.5ex
 }
 \lstdefinestyle{customCsh}{
   language={csh},
@@ -55,12 +54,10 @@
 \section{結果}
 \include{command}
 \include{thor}
-\section{参考文献}
-[1-1] hikidoc, \verb|https://rubygems.org/gems/hikidoc/versions/0.1.0,| \verb|https://github.com/hiki/hikidoc,2017/1/30| アクセス.
-
-[1-2] 「Thorの使い方まとめ」, \verb|http://qiita.com/succi0303/items/32560103190436c9435b| ,2017/1/30 アクセス.
-
-[1-3] 「15.5. optparse - コマンドラインオプション解析器」, \verb|http://docs.python.jp/2/library/optparse.html| ,2017/1/30 アクセス.
-
-[1-4] 「library optparse」, \verb|https://docs.ruby-lang.org/ja/latest/library/optparse.html| ,2017/1/30 アクセス.
+\begin{thebibliography}{99}
+\bibitem{1-1}   hikidoc, \verb|https://rubygems.org/gems/hikidoc/versions/0.1.0,| \verb|https://github.com/hiki/hikidoc,2017/1/30| アクセス.
+\bibitem{1-2}   「Thorの使い方まとめ」, \verb|http://qiita.com/succi0303/items/32560103190436c9435b| ,2017/1/30 アクセス.
+\bibitem{1-3}   「15.5. optparse - コマンドラインオプション解析器」, \verb|http://docs.python.jp/2/library/optparse.html| ,2017/1/30 アクセス.
+\bibitem{1-4}   「library optparse」, \verb|https://docs.ruby-lang.org/ja/latest/library/optparse.html| ,2017/1/30 アクセス.
+\end{thebibliography}
 \end{document}

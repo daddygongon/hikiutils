@@ -6,15 +6,14 @@ optparseの特徴は，「コマンドの登録，実行method」に分けて記
 
 !!コマンドの登録と実行メソッド
 
-!!!caption:コマンドの登録と実行メソッドの対応
-{{attach_view(hikiutils_yamane_09_copy.005.jpg,hikiutils_yamane)}}
+!!!caption:(fig:005)コマンドの登録と実行メソッドの対応．
+{{attach_view(hikiutils_yamane.005.jpg,hikiutils_yamane)}}
 
 optparseでは以下の通り，コマンドの登録と実行が行われる．
 #OptionParserオブジェクトoptを生成
 #optにコマンドを登録
 #入力されたコマンドの処理のメソッドへ移動
 optparseではOptionParserオブジェクトoptの生成を行い，コマンドをoptに登録することでコマンドを作成することができる．しかし，これはコマンドを登録しているだけでコマンドの一覧ではこれを表示することができるが，コマンドの実行を行うためには実行を行うためのメソッドを作成する必要がある．optparseでのコマンドの実行はoptで登録されたコマンドが入力されることでそれぞれのコマンドの処理を行うメソッドに移動し処理を行う．しかし，このコマンド登録はハイフンを付けたコマンドしか登録ができず，ハイフンなしのコマンド登録はまた別の手段でやらなくてはいけない．
-
 
 <<< ruby 
     def execute
@@ -54,8 +53,8 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
 >>>
 
 !!CLIの実行プロセス
-!!!caption:CLIの実行プロセス．
-{{attach_view(hikiutils_yamane_09_copy.007.jpg,hikiutils_yamane)}}
+!!!caption:(fig:007)CLIの実行プロセス．
+{{attach_view(hikiutils_yamane.007.jpg,hikiutils_yamane)}}
 
 optparseを用いた場合のCLIの実行プロセスは次の通りとなる．
 #HikiのHikiUtils::Command.run(ARGV)でhikiutils.rbのrunメソッドを呼ぶ
@@ -64,7 +63,7 @@ optparseを用いた場合のCLIの実行プロセスは次の通りとなる．
 optparseではHikiutils::Command.run(ARGV)を実行される．requireで呼び出されたhikiutils.rbでrunメソッドが実行される．そこでコマンドを登録しているexecuteメソッドへ移動し入力したコマンドと対応させる．そして，対応したコマンドの処理が行われるメソッドに移動することで実行される．このようにoptparseでは実行を行うためのメソッドが必要であるが，
 !!コード
 
-*optparse
+optparseの呼び出し側のexe/hikiのコードは次の通りである．
 <<< ruby
 #!/usr/bin/env ruby                                                             
 
@@ -72,6 +71,8 @@ require "hikiutils"
 
 HikiUtils::Command.run(ARGV)
 >>>
+
+また呼び出される側のlib/hikiutils.rbのrunおよびexecute部のコードは次の通りとなる．
 <<< ruby
     def self.run(argv=[])
       print "hikiutils: provide utilities for helping hiki editing.\n"

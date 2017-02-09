@@ -8,7 +8,7 @@
 !!クラス初期化
  
 !!!caption:Thorのinitializeでのコード
-{{attach_view(hikiutils_yamane_09_copy.003.jpg,hikiutils_yamane)}}
+{{attach_view(hikiutils_yamane.003.jpg,hikiutils_yamane)}}
 
 Thorのinitializeでのコードはつぎの通りである．
 #Hikithor::CLI.start(ARGV)が呼ばれる
@@ -38,7 +38,7 @@ module Hikithor
 !!コマンド定義
 
 !!!caption:thorにおけるコマンド記述のひな形．
-{{attach_view(hikiutils_yamane_09_copy.004.jpg,hikiutils_yamane)}}
+{{attach_view(hikiutils_yamane.004.jpg,hikiutils_yamane)}}
 
 thorではoptparseのような登録処理はない．図にある通りにコマンドが記述され，それらは以下のように構成される．
 #desc以降にコマンド名と，その説明が記述される．これらはコマンドhelpで一覧として表示させる
@@ -70,7 +70,7 @@ mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれる
 
 
 !!!caption:CLIの実行プロセス．
-{{attach_view(hikiutils_yamane_09_copy.006.jpg,hikiutils_yamane)}}
+{{attach_view(hikiutils_yamane.006.jpg,hikiutils_yamane)}}
 
 Thorにおけるcliの実行プロセスは次の通りである．
 #hiki_thorのHikithor::CLI.start(ARGV)でhikiutils_thor.rbのCLIクラスを呼ぶ
@@ -86,7 +86,7 @@ require "hikiutils_thor"
 Hikithor::CLI.start(ARGV)
 >>>
 
-<<<
+<<< ruby
 
 module Hikithor
 
