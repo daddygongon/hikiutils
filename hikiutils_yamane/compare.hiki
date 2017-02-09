@@ -65,7 +65,7 @@ end
 !!!initializeメソッド
 初期化を行うメソッドである．
 <<<
- @argv = argv
+@argv = argv
 >>>
 こうすることでargvをクラス内で利用できるようにする．
 !!!executeメソッド
