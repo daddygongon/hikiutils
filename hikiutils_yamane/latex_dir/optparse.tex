@@ -6,8 +6,9 @@ optparseの特徴は，「コマンドの登録，実行method」に分けて記
 
 \subsubsection{コマンドの登録と実行メソッド}
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_yamane_09_copy.005.jpg}
-\caption{コマンドの登録と実行メソッドの対応}
+\includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.005.jpg}
+\caption{コマンドの登録と実行メソッドの対応．}
+\label{fig:005}
 \label{default}\end{center}\end{figure}
 optparseでは以下の通り，コマンドの登録と実行が行われる．
 
@@ -17,7 +18,7 @@ optparseでは以下の通り，コマンドの登録と実行が行われる．
 \item 入力されたコマンドの処理のメソッドへ移動
 \end{enumerate}
 optparseではOptionParserオブジェクトoptの生成を行い，コマンドをoptに登録することでコマンドを作成することができる．しかし，これはコマンドを登録しているだけでコマンドの一覧ではこれを表示することができるが，コマンドの実行を行うためには実行を行うためのメソッドを作成する必要がある．optparseでのコマンドの実行はoptで登録されたコマンドが入力されることでそれぞれのコマンドの処理を行うメソッドに移動し処理を行う．しかし，このコマンド登録はハイフンを付けたコマンドしか登録ができず，ハイフンなしのコマンド登録はまた別の手段でやらなくてはいけない．
-\begin{lstlisting}[style=customRuby]
+\begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
     def execute
       @argv << '--help' if @argv.size==0
       command_parser = OptionParser.new do |opt|
@@ -55,8 +56,9 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
 \end{lstlisting}
 \subsubsection{CLIの実行プロセス}
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_yamane_09_copy.007.jpg}
+\includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.007.jpg}
 \caption{CLIの実行プロセス．}
+\label{fig:007}
 \label{default}\end{center}\end{figure}
 optparseを用いた場合のCLIの実行プロセスは次の通りとなる．
 
@@ -67,15 +69,16 @@ optparseを用いた場合のCLIの実行プロセスは次の通りとなる．
 optparseではHikiutils::Command.run(ARGV)を実行される．requireで呼び出されたhikiutils.rbでrunメソッドが実行される．そこでコマンドを登録しているexecuteメソッドへ移動し入力したコマンドと対応させる．そして，対応したコマンドの処理が行われるメソッドに移動することで実行される．このようにoptparseでは実行を行うためのメソッドが必要であるが，
 
 \subsubsection{コード}
-\begin{itemize}
-\item optparse
-\end{itemize}\begin{lstlisting}[style=customRuby]
+optparseの呼び出し側のexe/hikiのコードは次の通りである．
+\begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
 #!/usr/bin/env ruby                                                             
 
 require "hikiutils"
 
 HikiUtils::Command.run(ARGV)
-\end{lstlisting}\begin{lstlisting}[style=customRuby]
+\end{lstlisting}
+また呼び出される側のlib/hikiutils.rbのrunおよびexecute部のコードは次の通りとなる．
+\begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
     def self.run(argv=[])
       print "hikiutils: provide utilities for helping hiki editing.\n"
       new(argv).execute

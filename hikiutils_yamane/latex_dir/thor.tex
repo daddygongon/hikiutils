@@ -12,7 +12,7 @@
 
 \end{verbatim}\end{quote}
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_yamane_09_copy.003.jpg}
+\includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.003.jpg}
 \caption{Thorのinitializeでのコード}
 \label{default}\end{center}\end{figure}
 Thorのinitializeでのコードはつぎの通りである．
@@ -24,7 +24,7 @@ Thorのinitializeでのコードはつぎの通りである．
 \item superを書くことでThorのinitializeメソッドが呼ばれる
 \end{enumerate}
 optparseではrequireでoptparseを呼びoptparseのinitializeを定義する必要はないが，Thorはinitializeを定義する必要がある．Thorの定義方法はrequireでThorを呼びCLIクラスで継承し，initializeメソッドにsuperを書くことでThorのinitializeが呼ばれる．initializeメソッド内ではThorの初期設定がされていないため，スーパークラスのメソッドを読み出してくれるsuperを書き加えることで図のようにinitializeメソッド内でThorのinitilalizeメソッドが呼ばれ定義される．
-\begin{lstlisting}[style=customRuby]
+\begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
 
 module Hikithor
 
@@ -43,7 +43,7 @@ module Hikithor
 \end{lstlisting}
 \subsubsection{コマンド定義}
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_yamane_09_copy.004.jpg}
+\includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.004.jpg}
 \caption{thorにおけるコマンド記述のひな形．}
 \label{default}\end{center}\end{figure}
 thorではoptparseのような登録処理はない．図にある通りにコマンドが記述され，それらは以下のように構成される．
@@ -61,7 +61,7 @@ map A => B
 \end{verbatim}\end{quote}
 mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれるものである．
 よって，これを使うことでコマンドの別名を指定することができる．
-\begin{lstlisting}[style=customRuby]
+\begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
     desc 'show,--show', 'show sources'
     map "--show" => "show"
     def show
@@ -74,7 +74,7 @@ mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれる
 
 \subsubsection{CLIの実行プロセス}
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_yamane_09_copy.006.jpg}
+\includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.006.jpg}
 \caption{CLIの実行プロセス．}
 \label{default}\end{center}\end{figure}
 Thorにおけるcliの実行プロセスは次の通りである．
@@ -84,13 +84,13 @@ Thorにおけるcliの実行プロセスは次の通りである．
 \item hikiutils\_thor.rbのCLIクラスのメソッドを順に実行していく
 \end{enumerate}
 Thorではstart(ARGV)を呼び出すことでCLIを開始する．Hikithor::CLI.start(ARGV)を実行されることによりrequireで呼ばれているhikiutils\_thor.rbのCLIコマンドを順に実行する．そして，入力されたコマンドと一致するメソッドを探し，そのコマンドの処理が実行される．
-\begin{lstlisting}[style=customRuby]
+\begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
 #!/usr/bin/env ruby                                                             
 
 require "hikiutils_thor"
 
 Hikithor::CLI.start(ARGV)
-\end{lstlisting}\begin{quote}\begin{verbatim}
+\end{lstlisting}\begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
 
 module Hikithor
 
@@ -104,7 +104,7 @@ module Hikithor
       data_path = File.join(ENV['HOME'], '.hikirc')
       DataFiles.prepare(data_path)
       ...以下略...
-\end{verbatim}\end{quote}
+\end{lstlisting}
 Thorではクラスのメソッドを順に実行していくためrunメソッドとexecuteメソッドは必要ない．また，optparseでの実行手順はメソッドの移動回数が多く複雑であるが，Thorは単純で分かりやすいものとなっている．
 
 \subsubsection{optparseとの全体的な比較}
