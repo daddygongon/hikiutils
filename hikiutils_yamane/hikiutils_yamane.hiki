@@ -14,16 +14,20 @@
 !![[hikiutilsのthorのコード解説|hikiutils_yamane_thor]]
 
 !参考文献
-[1-1] hikidoc, https://rubygems.org/gems/hikidoc/versions/0.1.0, https://github.com/hiki/hikidoc,2017/1/30 アクセス.
+[1] hikidoc, https://rubygems.org/gems/hikidoc/versions/0.1.0, https://github.com/hiki/hikidoc,2017/1/30 アクセス.
 
 // 「hiki」,hikiwiki.org/ja/about.html ,2017/1/30 アクセス.
 // 「hikiutils」,https://rubygems.org/gems/hikiutils ,2017/1/30 アクセス.
 // 「The Ruby Toolbox」, CLI Option Parsers,https://www.ruby-toolbox.com/categories/CLI_Option_Parsers ,2017/1/30 アクセス.
-[1-2] 「Thorの使い方まとめ」, http://qiita.com/succi0303/items/32560103190436c9435b ,2017/1/30 アクセス.
+[2] 「15.5. optparse - コマンドラインオプション解析器」, http://docs.python.jp/2/library/optparse.html ,2017/1/30 アクセス.
 
-[1-3] 「15.5. optparse - コマンドラインオプション解析器」, http://docs.python.jp/2/library/optparse.html ,2017/1/30 アクセス.
+[3] 「library optparse」, https://docs.ruby-lang.org/ja/latest/library/optparse.html ,2017/1/30 アクセス.
 
-[1-4] 「library optparse」, https://docs.ruby-lang.org/ja/latest/library/optparse.html ,2017/1/30 アクセス.
+[4] 「Thorの使い方まとめ」, http://qiita.com/succi0303/items/32560103190436c9435b ,2017/1/30 アクセス.
+
+
+
+
 
 
 

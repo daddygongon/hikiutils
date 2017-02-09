@@ -7,7 +7,7 @@ optparseの特徴は，「コマンドの登録，実行method」に分けて記
 !!コマンドの登録と実行メソッド
 
 !!!caption:コマンドの登録と実行メソッドの対応
-{{attach_view(hikiutils_yamane_09_copy.005.jpg,hikiutils_yamane)}}
+{{attach_view(hikiutils_yamane.005.jpg,hikiutils_yamane)}}
 
 optparseでは以下の通り，コマンドの登録と実行が行われる．
 #OptionParserオブジェクトoptを生成
@@ -55,7 +55,7 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
 
 !!CLIの実行プロセス
 !!!caption:CLIの実行プロセス．
-{{attach_view(hikiutils_yamane_09_copy.007.jpg,hikiutils_yamane)}}
+{{attach_view(hikiutils_yamane.007.jpg,hikiutils_yamane)}}
 
 optparseを用いた場合のCLIの実行プロセスは次の通りとなる．
 #HikiのHikiUtils::Command.run(ARGV)でhikiutils.rbのrunメソッドを呼ぶ
