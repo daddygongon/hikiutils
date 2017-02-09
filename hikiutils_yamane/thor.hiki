@@ -85,7 +85,7 @@ require "hikiutils_thor"
 Hikithor::CLI.start(ARGV)
 >>>
 
-<<<
+<<< ruby
 
 module Hikithor
 

@@ -64,7 +64,7 @@ EOS
         opt.on('-r', '--rsync','rsync files') {rsync_files}
         opt.on('--database FILE','read database file') {|file| db_file(file)}
         opt.on('--display FILE','display converted hikifile') {|file| display(file)}
-        opt.on('-c', '--checkdb','check database file') {check_db}       
+        opt.on('-c', '--checkdb','check database file') {check_db}
         opt.on('--remove FILE','remove file') {|file| remove_file(file)}
         opt.on('--move FILES','move file1,file2',Array) {|files| move_file(files)}
         opt.on('--euc FILE','translate file to euc') {|file| euc_file(file) }
@@ -98,7 +98,9 @@ EOS
       cp_files=[['Rakefile_hiki_sync','Rakefile'],
                 ['hiki_help.yml','hiki_help.yml'],
                 ['head.tex','latex_dir/head.tex'],
-                ['pre.tex','latex_dir/pre.tex']]
+                ['pre.tex','latex_dir/pre.tex'],
+                ['jlisting.sty','latex_dir/jlisting.tex'],
+               ]
       cp_files.each_with_index{|files,i|
         p source = File.join(File.expand_path('..', __FILE__),'templates',files[0])
         p target = File.join(Dir.pwd,files[1])

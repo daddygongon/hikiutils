@@ -38,12 +38,12 @@ DRY(Don't Repeat Yourself)原則さえ守れば，文書管理はいいのです
 hiki -i
 \end{verbatim}\end{quote}
 でinstallされています．新たに使うコマンド群は次の通りです．
-\begin{lstlisting}[style=]
+\begin{quote}\begin{verbatim}
 rake latex            # FILE1をlatexに変換
 rake latex_all        # すべてのhikiファイルをlatex変換
 rake latex_wrap       # FILE1をwrap formatでlatexに変換
 rake reset_latex_dir  # latex_dirのゴミファイルを削除
-\end{lstlisting}
+\end{verbatim}\end{quote}
 \subsection{rake latex（個別ファイルの変換）}\begin{quote}\begin{verbatim}
 rake latex sync.hiki
 \end{verbatim}\end{quote}
@@ -66,15 +66,14 @@ dvipdfmx sync.dvi
 
 \subsubsection{注意}
 hikiの初めの部分は，
-\begin{quote}\begin{verbatim}
+\begin{lstlisting}[style=customCsh,basicstyle={\scriptsize\ttfamily}]
 bob% head -3 hikiutils_bob.hiki
 ! title:hikiutils -iによる卒論作成システム
 ! autor:Shigeto R. Nishitani
 ! date: Kwansei Gakuen Univ., 2017/1
-
-\end{verbatim}\end{quote}
+\end{lstlisting}
 とすると，
-\begin{lstlisting}[style=]
+\begin{lstlisting}[style=customTeX,basicstyle={\scriptsize\ttfamily}]
 \begin{document}
 \title{hikiutils -iによる卒論作成システム}
 \author{Shigeto R. Nishitani}
@@ -94,14 +93,14 @@ rake latex_all
 \end{verbatim}\end{quote}
 をおこなうと自動で全部を一体にまとめた文書へのlatex変換が出来上がります．
 たとえば，hikiutils\_bob.hikiの記述を
-\begin{quote}\begin{verbatim}
+\begin{lstlisting}[style=customCsh,basicstyle={\scriptsize\ttfamily}]
 bob% cat hikiutils_bob.hiki 
 !hikiutilsを用いた卒業論文作成
 
 ! [[hikiutils_bob_sync]]
 ! [[hikiutils_bob_latex_all]]
 
-\end{verbatim}\end{quote}
+\end{lstlisting}
 とすると，sync.tex, latex\_all.texがlatex\_dir内に変換されます．
 さらに，開いているhikiutils\_bob.texをTeXShopで変換してみてください．
 
@@ -125,7 +124,7 @@ hiki -i
 題目，学生番号，氏名を変更する．年月をチェック．
 \\setcounter{tocdepth}はtocをどこまで表示するかのレベルに対応します．
 原稿作成時は階層がわかりやすいように深めにしていますが，本番では2程度で十分です．
-\begin{lstlisting}[style=]
+\begin{lstlisting}[style=customTeX,basicstyle={\scriptsize\ttfamily}]
 bob% cat head.tex
 \title{卒業論文\\
 \vspace{4cm} hikiutilsを用いた\\卒業論文作成}
@@ -137,46 +136,50 @@ bob% cat head.tex
 
 \end{lstlisting}
 \paragraph{pre.tex}
+latex\_allのときは使っていません．formatedの時に読むようにしていますが．．．読めてないようです．いずれ調べます．
+
+\paragraph{mainのpreamble部}
 あまり変更しないほうがいいですが，いずれいじることになります．
-例えば，フォントポイント数を10から12ptに変える，\pagestyle{empty}を外すなどです．
-\begin{lstlisting}[style=]
-bob% cat pre.tex
-\documentclass[10pt,a4j]{article}
-
-\def\Vec#1{\mbox{\boldmath $#1$}}
+例えば，フォントポイント数を12から10ptに変えるなどです．
+\begin{lstlisting}[style=customTeX,basicstyle={\scriptsize\ttfamily}]
+\documentclass[12pt,a4paper]{jsarticle}
 \usepackage[dvipdfmx]{graphicx}
-
-\setlength{\textheight}{275mm}
-\headheight 5mm
-\topmargin -20mm
-\textwidth 160mm
-\textheight 250mm
-\oddsidemargin -0mm
-\evensidemargin -5mm
-
-\pagestyle{empty}
-\makeatletter
-  \def\@maketitle{%
-  \newpage\null
-  \vskip 2em%
-  \begin{center}%
-  \let\footnote\thanks
-    {\large\bf \@title \par}%
-    \vskip 1.5em%
-    {\large\bf \@author \par}%
-    \vskip 1.5em%
-    {\small \@date}%
-  \end{center}%
+\usepackage[dvipdfmx]{color}
+\usepackage{listings,jlisting}% to use japanese correctly, install jlistings.
+\lstset{
+  basicstyle={\small\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\small\itshape\color{red}},
+  keywordstyle={\small\bfseries\color{cyan}},
+  ndkeywordstyle={\small},
+  stringstyle={\small\color{blue}},
+  frame={tb},
+  breaklines=true,
+  numbers=left,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  lineskip=-0.5ex
 }
-\makeatother
+\lstdefinestyle{customCsh}{
+  language={csh},
+  numbers=none,
+}
+\lstdefinestyle{customRuby}{
+  language={ruby},
+  numbers=left,
+}
+\lstdefinestyle{customTex}{
+  language={tex},
+  numbers=none,
+}
+\lstdefinestyle{customJava}{
+  language={java},
+  numbers=left,
+}
 
-%\documentclass[10pt, a4j]{article}
-%%\usepackage{citesort}
-\usepackage{amssymb}
-\usepackage[dvipdfmx]{graphicx}% 図を入れるときに使用
-\usepackage{wrapfig}% 図の周りに本文を流し込みたいときに使用
-\usepackage{subfigure}
-\usepackage{here}
 \end{lstlisting}
 \subsection{補助コマンドの解説}
 \subsubsection{rake reset\_latex\_dir(latex\_dirのゴミ掃除)}
@@ -194,7 +197,7 @@ wrapfigureでtextの回りこみや位置調整を行う必要があります．
 \item rake change\_wrap(wrapで変換)
 \item rake latex\_base(latexに変換するだけの下請け)
 \item rake latex\_wrap(figure環境だけをwrapfig環境に変える)
-\end{itemize}\begin{lstlisting}[style=customRuby]
+\end{itemize}\begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
 desc "latex conversion FILE1"
 task :latex => [:latex_base] do
   exit
@@ -209,4 +212,13 @@ end
 
 \begin{itemize}
 \item \verb|{{attach_anchor(calphad_bob.pdf,hikiutils_bob)}}|
+\end{itemize}
+\subsection{開発メモ（2017/2/8)}
+\begin{itemize}
+\item hikiutilsにlatex2hiki, hiki2latexも統合すべきか？
+\item \verb|{{ref}}| \verb|{{cite}}|を組み込む
+\item hikiにではなく，rake syncで変換
+\item listingsの調整
+\item jlistingは，\\lstsetや\\lstdefinestyleで引っかかってダメ
+\item basicstyle={\small\ttfamily}これ効いてんにゃろか？？
 \end{itemize}

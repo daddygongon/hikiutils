@@ -1,0 +1,52 @@
+!Rakefile開発に関するメモ
+
+!!日本語のcode listings
+日本語のjlistingの使用法が判明しました．
+listingsでは日本語表示がちゃんとなされません．そこで，
+ \usepackage{listings,jlisting}
+とします．これで，日本語が含まれたcodeも綺麗に表示してくれます．
+
+!!参照のシステム
+latexへ文献参照を渡すために，下記のようなフォーマットでの記述を行ってください．
+
+<<< tcsh
+図{{ref(fig:SystemOverview)}}に卒論編集システムの概観を示しています．
+
+!!!caption: (fig:SystemOverview)卒論編集システムの概観．
+{{attach_view(hikiutils_bob.006.jpeg,hikiutils_bob)}}
+
+*基本的な使い方{{cite(listings1)}}
+*独自のカラー化{{cite(listings2)}}
+!reference:
+:listings1:[[http://d.hatena.ne.jp/mallowlabs/20061226/1167137637]]
+:listings2:[[http://www.ipc.akita-nct.ac.jp/~yamamoto/comp/latex/make_doc/source/source.html]]
+>>>
+
+ここで，fig:以下にsnake nameは使えません．Camelで書くようにしてください．
+
+これをlatexにかけると次の通りになります．（体裁は乱れている）
+
+図{{ref(fig:SystemOverview)}}に卒論編集システムの概観を示しています．
+
+!!!caption: (fig:SystemOverview)卒論編集システムの概観．
+{{attach_view(hikiutils_bob.006.jpeg,hikiutils_bob)}}
+
+*基本的な使い方{{cite(listings1)}}
+*独自のカラー化{{cite(listings2)}}
+!reference:
+:listings1:[[http://d.hatena.ne.jp/mallowlabs/20061226/1167137637]]
+:listings2:[[http://www.ipc.akita-nct.ac.jp/~yamamoto/comp/latex/make_doc/source/source.html]]
+
+!!システムの概要
+卒論編集システム開発時のメモです．図{{ref(fig:SystemOverview)}}に卒論編集システムの概観を示しています．
+
+hikiシステムとの同期は，hikiutilsのhikiが下請けしている．
+一方，latex_dirへの出力はlatex2hikiが引き受けている．
+フォーマットをいじるときには，基本的に
+:hikiへ:hikiがやるので，そのまえにtmp.txtへ写して置換
+:texへ:latex2hikiからの出力(tmp.txt)を処理してtexへ
+で行っている，あるいはおこなう．
+
+!!rake mk_toc
+latexが作成するtableofcontentsの実態であるtocファイルからhiki用のtoc.hikiを作成する．
+

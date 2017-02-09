@@ -30,7 +30,7 @@ hikiuitlsをgemからinstallしておく必要がある．コマンドは以下�
  hiki -i
 によって以下のようなファイルが作成される．
 
-<<< bash
+<<< tcsh
 bob% ls -lat
 total 1072
 -rw-r--r--   1 bob  501      99  1 20 12:44 .hikirc
@@ -68,7 +68,7 @@ keynoteで図を作成して，hikiutils_bob.hikiに文章を記述していく�
 !!rakeが用意しているタスク
 rakeの用意しているコマンドは次のとおり．
 
-<<< bash
+<<< tcsh
 rake sync             # hikiの同期
 rake force_sync       # hikiの強制同期
 rake chenv            # For hiki Errno::ENOENT, Errno::EACCES
@@ -77,9 +77,10 @@ rake convert          # convert fig size SCALE TARGET_DIR
 rake increment        # increment fig NUBERS in FILE
 rake number           # numbering figs from the NUBER in FILE
 
-rake touch            # hikiシステムを最新状態に更新
-rake github           # Githubのdirをsafariでopen
-rake reset_hiki       # hikiシステムにあるゴミファイルを掃除する
+rake touch            # FILE.hikiあるいはhikiファイルすべてを最新状態に更新(new)
+rake open             # FILE.hikiあるいはhikiファイルをedtiorで開く(new)
+rake github           # Githubのdirをsafariでopen(new)
+rake reset_hiki       # hikiシステムにあるゴミファイルを掃除する(new)
 >>>
 
 !!!rake sync
@@ -114,12 +115,12 @@ rake increment 2 tmp.hiki > tmp2.hiki
 
 !!!rake number
 rake incrementと同じくfigs内の通し番号が変わった時にattach_viewの通し番号を調整するコマンド．
-<<< bash
+<<< tcsh
 rake number 3 hikiutils_bob.hiki > tmp.hiki
 cp tmp.hiki hikiutils_bob.hiki
 >>>
 とすると
-<<<
+<<< tcsh
 8c8
 < {{attach_view(hikiutils_bob.002.jpeg,hikiutils_bob)}}
 ---
@@ -131,15 +132,19 @@ cp tmp.hiki hikiutils_bob.hiki
 >>>
 などと番号を3から順に振り替えてくれる．
 
-!!!rake touch
-hiki touchをおこなって最新版に更新します．
+!!!rake open [FILE] (new)
+FILE.hikiあるいはhikiファイルをedtiorで開く.
 
-!!!rake github
-git remoteにあるoriginのgithubをsafariでopenします．
+!!!rake touch [FILE](new)
+FILE.hikiあるいはhikiファイルすべてを最新状態に更新．
 
-!!!rake reset_hiki
+!!!rake github(new)
+git remote -vにあるoriginをsafariでopenします．
+
+!!!rake reset_hiki(new)
 hikiシステムにあるゴミファイルを掃除します．
-<<<
+
+<<< tcsh
 bob% rake reset_hiki
 hikiutils: provide utilities for helping hiki editing.
 "open -a mi"
@@ -148,14 +153,17 @@ target_dir : /Users/bob/Sites/nishitani0/Internal/data/text
 -rw-rw-rw-  1 bob  staff   7220  2  5 12:03 hikiutils_bob_latex_all
 -rw-rw-rw-  1 bob  staff  10104  2  5 12:03 hikiutils_bob_sync
 -rw-r--r--  1 bob  staff    944  2  5 12:03 hikiutils_bob_toc
-remove hikiutils_bob_toc[ynql]?
+remove hikiutils_bob_toc[ynqlA]?
 >>>
-となります．yes, no, quit, listのなかから選んでください．
+となります．yes, no, quit, list, Allのなかから選んでください．
 
 !!githubによる同期
-# git init, forkが済んでいると仮定
-# upstream, originの確認
-## bob% git remote -v
+
+これらの作業の流れを示すシーケンス図は次の通りである．
+!!!caption:卒論編集時のgithubによる同期のシーケンス図．
+{{attach_view(hikiutils_bob.005.jpeg,hikiutils_bob)}}
+
+git init, forkが済んでいると仮定して同期の手順を以下に示す．
 # git push作業
 ## git add -A
 ## git commit -m 'first commit'
@@ -164,14 +172,13 @@ remove hikiutils_bob_toc[ynql]?
 # bobの編集後，通知がくる．まつことなく作業してもok．
 # git pull作業
 ## git pull upstream master
-これがうまくいかん時は聞いてください．
 
-!!!caption:卒論編集時のgithubによる同期のシーケンス図．
-{{attach_view(hikiutils_bob.005.jpeg,hikiutils_bob)}}
+以下には関連するコマンドと動作を記した．
+:git remote -v: githubのremoteアドレスを表示
+:git remote add upstream git@...:githubのアドレスをupstreamとして登録．
 
 !!hikiutil関連のヘルプ
 !!!hikiで卒論を書くときの初期化と掟
-*開発メモ:figs,dataも作成
 *目的：西谷が後で迷わないように決まったファイル構造を堅持すべし
 *文書：hikiで書く.のちには，latexに変換するプログラムを提供します
 *図表：すべての図表をkeynoteにまとめる，タイトルを分かりやすく書く
@@ -185,19 +192,29 @@ remove hikiutils_bob_toc[ynql]?
 *hikiでのurlはテキスト前とディレクトリーから自動生成される
 *例えば，hiki2latex_saki/introduciton.hikiとするとhiki2latex_saki_introducitonと変換される
 
-!!!error対応
-*Permission denied - ./data/text/boundary_narita (Errno::EACCES)->テキストにhikiが書き込めない，chmod a+w FILE
-
-!!!図表：すべての図表をkeynoteにまとめる，タイトルを分かりやすく書く
+!!!図表に関する制約
+*すべての図表をkeynoteにまとめる
 *keynoteに書いたスライドはイメージに書き出して，rake convert 80 TARGET_DIRでfigsに変換
 *rake syncでfigsにあるfilesはhiki/target_dirにcpされる
 *\verb|convert #{source} -resize 20% #{target}によって，target=figs/TAERGET.pngに20%に縮小して保存される|
 *convert -density 300 view.svg view.pngで300dpiで変換
-*attach_anchorでは
-'{{attach_anchor(test.png, hiki2latex_saki)}}'
-と，directory指定しなければならない.
+*attach_anchorでは'{{attach_anchor(test.png, hiki2latex_saki)}}'と，directory指定しなければならない.
 *keynoteであとで図を挿入して番号が変わった時の原稿の一括変換
 *rake increment 2 boundary_bob.hiki boundary_bob > tmp.hiki
 *rake convert 60 boundary_bob
 *rake sync
 *hiki -u boundary_bob_tmp
+
+!!!同期に関する制約
+*hikiはフラットなdirectory構造を取っている
+*hikiの文書はスネーク表記(例えば，latex2hiki_saki)で階層構造に似せている
+*hikiのurlの接頭語となる名前をbasenameのdirectory名とする．
+*directory名が'hikis'である場合はその親directory名となる．
+* ~/.hikircのtarget directoryを同期先のdirectoryとする．
+* ~/.hikircがない場合は同期先のdirectoryを聞く．
+* それらは./.hikircに保存される
+
+!!!テキストに関する制約
+* テキストの拡張子は'.hiki'としている
+* hikiでのurlはテキスト前とディレクトリーから自動生成される
+* 例えば，hiki2latex_saki/introduciton.hikiとするとhiki2latex_saki_introducitonと変換される

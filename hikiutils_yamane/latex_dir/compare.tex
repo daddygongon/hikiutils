@@ -1,8 +1,8 @@
 
 \subsection{optparseとthorの比較}
-今回の研究課題のシステムであるhikiutilsはコマンドライン解析ライブラリが用いられている．
-これを使うことでコマンドの作成を行うことができ，本研究ではoptparseとThorの２種類のコマンドライン解析ライブラリが用いられている．
-ここでは，FizzBuzzという単純なコードを例にoptparseとThorのコードの比較を行う．
+今回の既存システムであるhikiutilsはoptparseというコマンドライン解析ライブラリが用いられている．
+本研究ではこの代替ライブラリとしてThorの採用を検討した．
+本章の最初では，FizzBuzzという簡単なコードを例にoptparseとThorにより作成するコマンドライン解析コードの比較を行う．
 
 \subsubsection{optparse}
 optparseとは，getoptよりも簡便で，柔軟性に富み，かつ強力なコマンドライン解析ライブラリである．optparseでは，より宣言的なスタイルのコマンドライン解析手法，すなわちOptionParserのインスタンスでコマンドラインを解析するという手法をとっている．これを使うと，GNU/POSIX構文でオプションを指定できるだけでなく，使用法やヘルプメッセージの生成も行える[2]．利用頻度はあまり高くないが古くから開発され，使用例が広く紹介されている．
@@ -60,7 +60,28 @@ module Fizzbuzz
   end
 end
 \end{lstlisting}
-このコードはfizzbuzzとversionのコマンドを実行させる．上記でoptparseではopt.onにコマンドを登録する必要があると説明したが，opt.onで登録できるものはハイフンがついたコマンドだけであり，ハイフンなしのコマンドの登録はexecuteメソッドで書かれた記述になる．このようにoptparseではハイフンあり，なしによってもコマンドの登録の仕方が変わってくる．どちらのコマンドを登録してもoptparseではコマンドの登録(executeメソッド)と実行処理(fizzbuzzメソッド，versionメソッド)を分けて記述する特徴がある．
+このコードはfizzbuzzとversionのコマンドを実行させる．
+
+\paragraph{runメソッド}
+コマンド実行を行うためのメソッドであり，argv配列を代入することでexecuteメソッドを実行する．
+
+\paragraph{initializeメソッド}
+初期化を行うメソッドである．
+\begin{quote}\begin{verbatim}
+ @argv = argv
+\end{verbatim}\end{quote}
+こうすることでargvをクラス内で利用できるようにする．
+
+\paragraph{executeメソッド}
+上記でoptparseではopt.onにコマンドを登録する必要があると説明したが，opt.onで登録できるものはハイフンがついたコマンドだけであり，ハイフンなしのコマンドの登録はこのようになる．
+
+Options.parse!(@argv)をoptionsに代入して解析を行いsub\_commandに代入する．sub\_commandがfizzbuzzであればfizzbuzz(options[:id])メソッドを実行，versionであればversionメソッドを実行する．
+
+\paragraph{fizzbuzzメソッド}
+引数としてlimit\_numberを受け取り，0〜limit\_numberまでの数字を繰り返す．numが15であればFizzbuzzを表示，5であればBuzzを表示，3であればFizzを表示，それ以外は数字を表示し，その後に空白を表示する．
+
+\paragraph{versionメソッド}
+fizzbuzzのバージョンを表示する．
 
 \subsubsection{Thor}
 Thorとは，コマンドラインツールの作成を支援するライブラリのことである．gitやbundlerのようにサブコマンドを含むコマンドラインツールを簡単に作成することができる[4]．
@@ -93,5 +114,10 @@ module Fizzbuzz
   end
 end
 \end{lstlisting}
-このコードもoptparseのfizzbuzzと同様fizzbuzzとversionのコマンドを実行させる．Thorはoptparseと違ってそれぞれのメソッド名がコマンドとなるためコードが比較的短くなる．しかし，optparseではexecuteメソッドで登録されたコマンドが一覧表示されるが，Thorではないので一覧表示させるコマンドの登録を行うdescで記述する必要がある．
+このコードもoptparseのfizzbuzzと同様fizzbuzzとversionのコマンドを実行させる．
+
+\paragraph{fizzbuzzメソッド，versionメソッド}
+descでコマンド一覧で表示させるコマンド名と説明を書く．
+
+メソッド内ではそれぞれのコマンドの処理内容が書かれている．
 

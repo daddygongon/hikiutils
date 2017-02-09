@@ -14,7 +14,11 @@ hikiutilsの振る舞いを予測できるシェルコマンドと同じ名前�
 !!hikiutilsの想定利用形態
 ここでhikiutilsがあらかじめ想定している利用形態を解説しておきます．
 
+<<<<<<< HEAD
 !!!caption:hikiutilsがあらかじめ想定している利用形態．
+=======
+!!!caption:(fig:002)hikiutilsがあらかじめ想定している利用形態．
+>>>>>>> 313783c079d7cc98c76e7b45d4fcefaf3c61b75b
 {{attach_view(hikiutils_yamane.002.jpg,hikiutils_yamane)}}
 
 hikiutilsは，
@@ -47,12 +51,12 @@ hikiutils: provide utilities for helping hiki editing.
 "open -a mi"
 target_no:1
 editor_command:open -a mi
- id | name      | local directory                               | global uri     
----------------------------------------------------------------------------------
-  0 | new_ist   | /Users/bob/Sites/new_ist_data/ist_data        | http://ist.ksc.k
- *1 | dmz0      | /Users/bob/Sites/nishitani0/Internal/data     | http://nishitani
-  2 | ist       | /Users/bob/Sites/hiki-data/data               | http://ist.ksc.k
-  3 | new_maple | /Users/bob/Sites/new_ist_data/maple_hiki_data | http://ist.ksc.k
+ id | name      | local directory                           | global uri     
+-----------------------------------------------------------------------------
+  0 | new_ist   | /Users/bob/Sites/new_ist_data/ist_data    | http://ist.ksc.k
+ *1 | dmz0      | /Users/bob/Sites/nishitani0/Internal/data | http://nishitani
+  2 | ist       | /Users/bob/Sites/hiki-data/data           | http://ist.ksc.k
+  3 | new_maple | /Users/bob/Sites/new_ist_data/maple_hiki_d| http://ist.ksc.k
 >>>
 とすると，それらの一覧と，いまtargetにしているnick_nameディレクリが表示されます．
 
@@ -67,17 +71,17 @@ editor_command:open -a mi
 ||rsync           ||rsync|| rsync files
 ||update FILE     ||touch|| update file
 ||show            ||pwd||  show nick_names
-||target VAL      ||cd||  targetを変える，change directoryとのメタファ
+||target VAL      ||cd||  targetを変える，cdとのメタファ
 || || ||
 ||move [FILE]     ||mv||  move file
 ||remove [FILE]   ||rm||  remove files
 ||add             || ||  add sources info
 ||checkdb         || ||  check database file
-||datebase FILE   || ||  read datebase file
-||display FILE    ||||  display converted hikifile
+||datebase FILE   ||db||  read datebase file
+||display FILE    ||show||  display converted hikifile
 ||euc FILE        || ||  translate file to euc
-||help [COMMAND]  || ||  Describe available commands or one specific command
-||version         || ||  show program version
+||help [COMMAND]  ||-h||  Describe available commands
+||version         ||-v||  show program version
 
 それぞれの意図を動作の解説として記述しています．
 

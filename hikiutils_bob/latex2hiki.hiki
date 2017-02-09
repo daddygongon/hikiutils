@@ -1,3 +1,0 @@
-!hikiへのlatexからの変換
-!!rake mk_toc
-latexが作成するtableofcontentsの実態であるtocファイルからhiki用のtoc.hikiを作成する．

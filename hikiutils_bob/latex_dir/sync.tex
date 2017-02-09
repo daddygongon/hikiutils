@@ -7,7 +7,7 @@
 本資料では，卒論の編集作業を効率化する図に示すようなシステムの使い方を紹介します．
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_bob.002.jpeg}
+\includegraphics[width=10cm,bb=]{../figs/./hikiutils_bob.002.jpeg}
 \caption{卒論編集システムの基本概念．}
 \label{default}\end{center}\end{figure}
 例えば，卒業生をyamaneとしましょう．yamaneの個人のMacの自分のdirectory(hikiutils\_yamane)に幾つかのファイルを作成して卒論を書いているとします．これを指導教官(bob)が編集するとします．この同期には，Githubにより提供される共同作業環境を使います．これだけでは編集中の文書の体裁がわかりにくいでしょう．そこで，hikiシステムにより容易にwebブラウザ上に完成形を表示しつつ執筆することが求められます．このような環境を提供するのが，本システムです．
@@ -28,7 +28,7 @@ hiki -v
 図にhikiutils\_bobのディレクトリー構成を示す．
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_bob.003.jpeg}
+\includegraphics[width=10cm,bb=]{../figs/./hikiutils_bob.003.jpeg}
 \caption{hikiutils\_bobのディレクトリー構成．}
 \label{default}\end{center}\end{figure}
 コマンド
@@ -36,7 +36,7 @@ hiki -v
 hiki -i
 \end{verbatim}\end{quote}
 によって以下のようなファイルが作成される．
-\begin{lstlisting}[style=]
+\begin{lstlisting}[style=customCsh,basicstyle={\scriptsize\ttfamily}]
 bob% ls -lat
 total 1072
 -rw-r--r--   1 bob  501      99  1 20 12:44 .hikirc
@@ -56,7 +56,7 @@ keynoteで図を作成して，hikiutils\_bob.hikiに文章を記述していく
 図に論文作成システムの概要を示している．gemのなかに作られた例えば，hikiutils\_bobなどのdirectory内にRakefileなどを次節のコマンドを使って入れる．このdirectoryでhikiutils\_bob.hikiなどのhikiフォーマットのdocumentを作っていく．rake syncによってwebを提供するhikiのtext, attach, parserなどと同期する．一方，最終の卒業論文形態であるpdfにするためにlatex\_dir内に*.texを生成する．これは次章で解説する．
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_bob.004.jpeg}
+\includegraphics[width=10cm,bb=]{../figs/./hikiutils_bob.004.jpeg}
 \caption{システムの概要．}
 \label{default}\end{center}\end{figure}
 \subsection{一般的な執筆手順}
@@ -86,7 +86,7 @@ keynoteで図を作成して，hikiutils\_bob.hikiに文章を記述していく
 \end{enumerate}
 \subsection{rakeが用意しているタスク}
 rakeの用意しているコマンドは次のとおり．
-\begin{lstlisting}[style=]
+\begin{lstlisting}[style=customCsh,basicstyle={\scriptsize\ttfamily}]
 rake sync             # hikiの同期
 rake force_sync       # hikiの強制同期
 rake chenv            # For hiki Errno::ENOENT, Errno::EACCES
@@ -95,9 +95,10 @@ rake convert          # convert fig size SCALE TARGET_DIR
 rake increment        # increment fig NUBERS in FILE
 rake number           # numbering figs from the NUBER in FILE
 
-rake touch            # hikiシステムを最新状態に更新
-rake github           # Githubのdirをsafariでopen
-rake reset_hiki       # hikiシステムにあるゴミファイルを掃除する
+rake touch            # FILE.hikiあるいはhikiファイルすべてを最新状態に更新(new)
+rake open             # FILE.hikiあるいはhikiファイルをedtiorで開く(new)
+rake github           # Githubのdirをsafariでopen(new)
+rake reset_hiki       # hikiシステムにあるゴミファイルを掃除する(new)
 \end{lstlisting}
 \subsubsection{rake sync}
 hikiutils\_bobにある必要な書類をhikiシステムにコピーする．その際，名前の書き換えを行う．
@@ -134,7 +135,7 @@ rake convert 80 hikiutils_bob
 
 \subsubsection{rake increment}
 keynoteでページを追加するとhikiでの参照(attach\_view)にずれが生じる．いまのところこれを解消する方法はなく手で修正を加える必要がある．ずれが単純な場合には，
-\begin{lstlisting}[style=]
+\begin{lstlisting}[style=,basicstyle={\scriptsize\ttfamily}]
 cp hikiutils_bob.hiki tmp.hiki
 rake increment 2 tmp.hiki > tmp2.hiki
 \end{lstlisting}
@@ -142,12 +143,12 @@ rake increment 2 tmp.hiki > tmp2.hiki
 
 \subsubsection{rake number}
 rake incrementと同じくfigs内の通し番号が変わった時にattach\_viewの通し番号を調整するコマンド．
-\begin{lstlisting}[style=]
+\begin{lstlisting}[style=customCsh,basicstyle={\scriptsize\ttfamily}]
 rake number 3 hikiutils_bob.hiki > tmp.hiki
 cp tmp.hiki hikiutils_bob.hiki
 \end{lstlisting}
 とすると
-\begin{quote}\begin{verbatim}
+\begin{lstlisting}[style=customCsh,basicstyle={\scriptsize\ttfamily}]
 8c8
 {{attach_view(hikiutils_bob.002.jpeg)}}
 ---
@@ -156,18 +157,21 @@ cp tmp.hiki hikiutils_bob.hiki
 {{attach_view(hikiutils_bob.003.jpeg)}}
 ---
 {{attach_view(hikiutils_bob.004.jpeg)}}
-\end{verbatim}\end{quote}
+\end{lstlisting}
 などと番号を3から順に振り替えてくれる．
 
-\subsubsection{rake touch}
-hiki touchをおこなって最新版に更新します．
+\subsubsection{rake open [FILE] (new)}
+FILE.hikiあるいはhikiファイルをedtiorで開く.
 
-\subsubsection{rake github}
-git remoteにあるoriginのgithubをsafariでopenします．
+\subsubsection{rake touch [FILE](new)}
+FILE.hikiあるいはhikiファイルすべてを最新状態に更新．
 
-\subsubsection{rake reset\_hiki}
+\subsubsection{rake github(new)}
+git remote -vにあるoriginをsafariでopenします．
+
+\subsubsection{rake reset\_hiki(new)}
 hikiシステムにあるゴミファイルを掃除します．
-\begin{quote}\begin{verbatim}
+\begin{lstlisting}[style=customCsh,basicstyle={\scriptsize\ttfamily}]
 bob% rake reset_hiki
 hikiutils: provide utilities for helping hiki editing.
 "open -a mi"
@@ -176,17 +180,20 @@ target_dir : /Users/bob/Sites/nishitani0/Internal/data/text
 -rw-rw-rw-  1 bob  staff   7220  2  5 12:03 hikiutils_bob_latex_all
 -rw-rw-rw-  1 bob  staff  10104  2  5 12:03 hikiutils_bob_sync
 -rw-r--r--  1 bob  staff    944  2  5 12:03 hikiutils_bob_toc
-remove hikiutils_bob_toc[ynql]?
-\end{verbatim}\end{quote}
-となります．yes, no, quit, listのなかから選んでください．
+remove hikiutils_bob_toc[ynqlA]?
+\end{lstlisting}
+となります．yes, no, quit, list, Allのなかから選んでください．
 
 \subsection{githubによる同期}
+これらの作業の流れを示すシーケンス図は次の通りである．
+
+\begin{figure}[htbp]\begin{center}
+\includegraphics[width=10cm,bb=]{../figs/./hikiutils_bob.005.jpeg}
+\caption{卒論編集時のgithubによる同期のシーケンス図．}
+\label{default}\end{center}\end{figure}
+git init, forkが済んでいると仮定して同期の手順を以下に示す．
+
 \begin{enumerate}
-\item git init, forkが済んでいると仮定
-\item upstream, originの確認
-\begin{enumerate}
-\item bob% git remote -v
-\end{enumerate}
 \item git push作業
 \begin{enumerate}
 \item git add -A
@@ -200,16 +207,16 @@ remove hikiutils_bob_toc[ynql]?
 \item git pull upstream master
 \end{enumerate}
 \end{enumerate}
-これがうまくいかん時は聞いてください．
+以下には関連するコマンドと動作を記した．
+\begin{description}
+\item[git remote -v]  githubのremoteアドレスを表示
 
-\begin{figure}[htbp]\begin{center}
-\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_bob.005.jpeg}
-\caption{卒論編集時のgithubによる同期のシーケンス図．}
-\label{default}\end{center}\end{figure}
+\item[git remote add upstream git@...] githubのアドレスをupstreamとして登録．
+
+\end{description}
 \subsection{hikiutil関連のヘルプ}
 \subsubsection{hikiで卒論を書くときの初期化と掟}
 \begin{itemize}
-\item 開発メモ:figs,dataも作成
 \item 目的：西谷が後で迷わないように決まったファイル構造を堅持すべし
 \item 文書：hikiで書く.のちには，latexに変換するプログラムを提供します
 \item 図表：すべての図表をkeynoteにまとめる，タイトルを分かりやすく書く
@@ -223,25 +230,33 @@ remove hikiutils_bob_toc[ynql]?
 \item hikiでのurlはテキスト前とディレクトリーから自動生成される
 \item 例えば，hiki2latex\_saki/introduciton.hikiとするとhiki2latex\_saki\_introducitonと変換される
 \end{itemize}
-\subsubsection{error対応}
+\subsubsection{図表に関する制約}
 \begin{itemize}
-\item Permission denied - ./data/text/boundary\_narita (Errno::EACCES)->テキストにhikiが書き込めない，chmod a+w FILE
-\end{itemize}
-\subsubsection{図表：すべての図表をkeynoteにまとめる，タイトルを分かりやすく書く}
-\begin{itemize}
+\item すべての図表をkeynoteにまとめる
 \item keynoteに書いたスライドはイメージに書き出して，rake convert 80 TARGET\_DIRでfigsに変換
 \item rake syncでfigsにあるfilesはhiki/target\_dirにcpされる
 \item \verb|convert #{source} -resize 20% #{target}によって，target=figs/TAERGET.pngに20%に縮小して保存される|
 \item convert -density 300 view.svg view.pngで300dpiで変換
-\item attach\_anchorでは
-\end{itemize}
-'\verb|{{attach_anchor(test.png, hiki2latex_saki)}}|'
-と，directory指定しなければならない.
-
-\begin{itemize}
+\item attach\_anchorでは'\verb|{{attach_anchor(test.png, hiki2latex_saki)}}|'と，directory指定しなければならない.
 \item keynoteであとで図を挿入して番号が変わった時の原稿の一括変換
 \item rake increment 2 boundary\_bob.hiki boundary\_bob > tmp.hiki
 \item rake convert 60 boundary\_bob
 \item rake sync
 \item hiki -u boundary\_bob\_tmp
+\end{itemize}
+\subsubsection{同期に関する制約}
+\begin{itemize}
+\item hikiはフラットなdirectory構造を取っている
+\item hikiの文書はスネーク表記(例えば，latex2hiki\_saki)で階層構造に似せている
+\item hikiのurlの接頭語となる名前をbasenameのdirectory名とする．
+\item directory名が'hikis'である場合はその親directory名となる．
+\item ~/.hikircのtarget directoryを同期先のdirectoryとする．
+\item ~/.hikircがない場合は同期先のdirectoryを聞く．
+\item それらは./.hikircに保存される
+\end{itemize}
+\subsubsection{テキストに関する制約}
+\begin{itemize}
+\item テキストの拡張子は'.hiki'としている
+\item hikiでのurlはテキスト前とディレクトリーから自動生成される
+\item 例えば，hiki2latex\_saki/introduciton.hikiとするとhiki2latex\_saki\_introducitonと変換される
 \end{itemize}

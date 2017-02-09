@@ -4,10 +4,14 @@
 optparseの特徴は，「コマンドの登録，実行method」に分けて記述することが期待されている．
 また，CLIの起動の仕方が特徴的である．この二つを取り出して，動作とコードを説明する．
 
-\subsubsection{コマンドの登録と実行メソッド}
+\subsubsection{コマンドの登録と実行メソッド}\begin{quote}\begin{verbatim}
+!!!caption:コマンドの登録と実行メソッドの対応
+=======
+!!!caption:(fig:005)コマンドの登録と実行メソッドの対応．
+\end{verbatim}\end{quote}
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_yamane.005.jpg}
-\caption{コマンドの登録と実行メソッドの対応}
+\includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.005.jpg}
+\caption{}
 \label{default}\end{center}\end{figure}
 optparseでは以下の通り，コマンドの登録と実行が行われる．
 
@@ -53,10 +57,14 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
     以下略
 
 \end{lstlisting}
-\subsubsection{CLIの実行プロセス}
+\subsubsection{CLIの実行プロセス}\begin{quote}\begin{verbatim}
+!!!caption:CLIの実行プロセス．
+=======
+!!!caption:(fig:007)CLIの実行プロセス．
+\end{verbatim}\end{quote}
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=6cm,bb=0 0 442 432]{../figs/./hikiutils_yamane.007.jpg}
-\caption{CLIの実行プロセス．}
+\includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.007.jpg}
+\caption{}
 \label{default}\end{center}\end{figure}
 optparseを用いた場合のCLIの実行プロセスは次の通りとなる．
 
@@ -67,15 +75,16 @@ optparseを用いた場合のCLIの実行プロセスは次の通りとなる．
 optparseではHikiutils::Command.run(ARGV)を実行される．requireで呼び出されたhikiutils.rbでrunメソッドが実行される．そこでコマンドを登録しているexecuteメソッドへ移動し入力したコマンドと対応させる．そして，対応したコマンドの処理が行われるメソッドに移動することで実行される．このようにoptparseでは実行を行うためのメソッドが必要であるが，
 
 \subsubsection{コード}
-\begin{itemize}
-\item optparse
-\end{itemize}\begin{lstlisting}[style=customRuby]
+optparseの呼び出し側のexe/hikiのコードは次の通りである．
+\begin{lstlisting}[style=customRuby]
 #!/usr/bin/env ruby                                                             
 
 require "hikiutils"
 
 HikiUtils::Command.run(ARGV)
-\end{lstlisting}\begin{lstlisting}[style=customRuby]
+\end{lstlisting}
+また呼び出される側のlib/hikiutils.rbのrunおよびexecute部のコードは次の通りとなる．
+\begin{lstlisting}[style=customRuby]
     def self.run(argv=[])
       print "hikiutils: provide utilities for helping hiki editing.\n"
       new(argv).execute
