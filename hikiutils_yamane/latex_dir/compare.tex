@@ -19,7 +19,7 @@ optparseの基本的な流れとしては
 OptionParserはコマンドラインのオプション取り扱うためのクラスであるためオブジェクトoptを生成されopt.onにコマンドを登録することができる．しかし，OptionParser\#onにはコマンドが登録されているだけであるため，OptionParser\#parseが呼ばれた時，コマンドラインにオプションが指定されていれば実行される．optparseにはデフォルトとして--helpと--versionオプションを認識する[3].
 
 以下に示したコードがoptparseで記述されたfizzbuzzである．
-\begin{lstlisting}[style=customRuby]
+\begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
 module Fizzbuzz
   class Command
 
@@ -68,14 +68,14 @@ end
 \paragraph{initializeメソッド}
 初期化を行うメソッドである．
 \begin{quote}\begin{verbatim}
- @argv = argv
+@argv = argv
 \end{verbatim}\end{quote}
 こうすることでargvをクラス内で利用できるようにする．
 
 \paragraph{executeメソッド}
 上記でoptparseではopt.onにコマンドを登録する必要があると説明したが，opt.onで登録できるものはハイフンがついたコマンドだけであり，ハイフンなしのコマンドの登録はこのようになる．
 
-Options.parse!(@argv)をoptionsに代入して解析を行いsub\_commandに代入する．sub\_commandがfizzbuzzであればfizzbuzz(options[:id])メソッドを実行，versionであればversionメソッドを実行する．
+argv配列の解析を行うOptions.parse!(@argv)をoptionsに代入して解析を行いsub\_commandに代入する．sub\_commandがfizzbuzzであればfizzbuzz(options[:id])メソッドを実行，versionであればversionメソッドを実行する．
 
 \paragraph{fizzbuzzメソッド}
 引数としてlimit\_numberを受け取り，0〜limit\_numberまでの数字を繰り返す．numが15であればFizzbuzzを表示，5であればBuzzを表示，3であればFizzを表示，それ以外は数字を表示し，その後に空白を表示する．
@@ -97,7 +97,7 @@ Thorの基本的な流れとしては
 startに渡す引数が空の場合，Thorはクラスのヘルプリストを出力する．また，Thorはサブコマンドやサブサブコマンドも容易に作ることができる．
 
 以下に示したコードがThorで記述されたfizzbuzzである．
-\begin{lstlisting}[style=customRuby]
+\begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
 module Fizzbuzz                                                   
   class CLI < Thor
 

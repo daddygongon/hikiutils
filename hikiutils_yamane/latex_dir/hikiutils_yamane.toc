@@ -1,10 +1,15 @@
-<<<<<<< HEAD
 \contentsline {section}{\numberline {1}概要}{4}
 \contentsline {section}{\numberline {2}序論}{5}
 \contentsline {section}{\numberline {3}方法}{7}
 \contentsline {subsection}{\numberline {3.1}optparseとthorの比較}{8}
 \contentsline {subsubsection}{\numberline {3.1.1}optparse}{8}
+\contentsline {paragraph}{runメソッド}{9}
+\contentsline {paragraph}{initializeメソッド}{9}
+\contentsline {paragraph}{executeメソッド}{9}
+\contentsline {paragraph}{fizzbuzzメソッド}{10}
+\contentsline {paragraph}{versionメソッド}{10}
 \contentsline {subsubsection}{\numberline {3.1.2}Thor}{10}
+\contentsline {paragraph}{fizzbuzzメソッド，versionメソッド}{10}
 \contentsline {subsection}{\numberline {3.2}既存のhikiutilsのコマンド解説}{11}
 \contentsline {subsubsection}{\numberline {3.2.1}コマンドの登録と実行メソッド}{11}
 \contentsline {subsubsection}{\numberline {3.2.2}CLIの実行プロセス}{12}
@@ -12,11 +17,11 @@
 \contentsline {section}{\numberline {4}結果}{15}
 \contentsline {subsection}{\numberline {4.1}コマンドの命名原則}{16}
 \contentsline {subsubsection}{\numberline {4.1.1}hikiutilsの想定利用形態}{16}
-\contentsline {subsubsection}{\numberline {4.1.2}コメンド名と振る舞いの詳細}{18}
-\contentsline {paragraph}{open FILE}{18}
-\contentsline {paragraph}{ls [FILE]}{19}
-\contentsline {paragraph}{rsync}{19}
-\contentsline {paragraph}{touch FILE}{19}
+\contentsline {subsubsection}{\numberline {4.1.2}コメンド名と振る舞いの詳細}{17}
+\contentsline {paragraph}{open FILE}{17}
+\contentsline {paragraph}{ls [FILE]}{18}
+\contentsline {paragraph}{rsync}{18}
+\contentsline {paragraph}{touch FILE}{18}
 \contentsline {paragraph}{pwd}{19}
 \contentsline {paragraph}{cd VAL}{19}
 \contentsline {subsection}{\numberline {4.2}Thorによる実装}{20}
@@ -24,31 +29,3 @@
 \contentsline {subsubsection}{\numberline {4.2.2}コマンド定義}{21}
 \contentsline {subsubsection}{\numberline {4.2.3}CLIの実行プロセス}{22}
 \contentsline {subsubsection}{\numberline {4.2.4}optparseとの全体的な比較}{24}
-\contentsline {section}{\numberline {5}参考文献}{25}
-=======
-\contentsline {section}{\numberline {1}概要}{3}
-\contentsline {section}{\numberline {2}序論}{4}
-\contentsline {section}{\numberline {3}方法}{6}
-\contentsline {subsection}{\numberline {3.1}optparseとthorの比較}{7}
-\contentsline {subsubsection}{\numberline {3.1.1}optparse}{7}
-\contentsline {subsubsection}{\numberline {3.1.2}Thor}{8}
-\contentsline {subsection}{\numberline {3.2}既存のhikiutilsのコマンド解説}{10}
-\contentsline {subsubsection}{\numberline {3.2.1}コマンドの登録と実行メソッド}{10}
-\contentsline {subsubsection}{\numberline {3.2.2}CLIの実行プロセス}{11}
-\contentsline {subsubsection}{\numberline {3.2.3}コード}{12}
-\contentsline {section}{\numberline {4}結果}{14}
-\contentsline {subsection}{\numberline {4.1}コマンドの命名原則}{15}
-\contentsline {subsubsection}{\numberline {4.1.1}hikiutilsの想定利用形態}{15}
-\contentsline {subsubsection}{\numberline {4.1.2}コメンド名と振る舞いの詳細}{16}
-\contentsline {paragraph}{open FILE}{16}
-\contentsline {paragraph}{ls [FILE]}{17}
-\contentsline {paragraph}{rsync}{17}
-\contentsline {paragraph}{touch FILE}{17}
-\contentsline {paragraph}{pwd}{18}
-\contentsline {paragraph}{cd VAL}{18}
-\contentsline {subsection}{\numberline {4.2}Thorによる実装}{19}
-\contentsline {subsubsection}{\numberline {4.2.1}クラス初期化}{19}
-\contentsline {subsubsection}{\numberline {4.2.2}コマンド定義}{20}
-\contentsline {subsubsection}{\numberline {4.2.3}CLIの実行プロセス}{22}
-\contentsline {subsubsection}{\numberline {4.2.4}optparseとの全体的な比較}{23}
->>>>>>> 313783c079d7cc98c76e7b45d4fcefaf3c61b75b

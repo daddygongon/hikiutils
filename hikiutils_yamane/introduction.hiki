@@ -1,11 +1,7 @@
 !序論
 hikiは，hiki記法を用いたwiki cloneである．wikiはウォード・カニンガムが作ったwikiwikiwebを源流とするhome page制作を容易にするシステムで，hikiもwikiの基本要求仕様を満足するシステムを提供する．wikiの特徴であるweb上で編集する機能を提供する．これを便宜上hiki web systemと呼ぶ．図にある通り，一般的な表示画面の他に，編集画面が提供されており，ユーザーはこの編集画面からコンテンツを編集することが可能である．リンクやヘッダー，リスト，引用，表，図の表示などの基本テキストフォーマットが用意されている．
 
-<<<<<<< HEAD
-hiki web systemの実際の基本動作は，hiki.cgiプログラムを介して行われている．こちらを便宜上hiki systemと呼ぶ．図に従ってhiki systemの動作概要を説明する．hiki systemは，data/textに置かれた書かれたプレーンテキストをhtmlへ変換する．この変換はhikidoc[1]というhikiフォーマットconverterを使っている．また，添付書類はcache/attachに，一度フォーマットしたhtmlはparserに置かれており，それらを参照してhtmlを表示する画面をhiki.cgiは作っている．さらにhiki systemでは検索機能，自動リンク作成などが提供されている
-=======
 hiki web systemの実際の基本動作は，hiki.cgiプログラムを介して行われている．こちらを便宜上hiki systemと呼ぶ．図{{ref(fig:one)}}に従ってhiki systemの動作概要を説明する．hiki systemは，data/textに置かれた書かれたプレーンテキストをhtmlへ変換する．この変換はhikidoc{{cite(1-1)}}というhikiフォーマットconverterを使っている．また，添付書類はcache/attachに，一度フォーマットしたhtmlはparserに置かれており，それらを参照してhtmlを表示する画面をhiki.cgiは作っている．さらにhiki systemでは検索機能，自動リンク作成などが提供されている
->>>>>>> 313783c079d7cc98c76e7b45d4fcefaf3c61b75b
 
 !!!caption:(fig:one)hiki web systemとhiki systemの対応関係．
 {{attach_view(hikiutils_yamane.001.jpg,hikiutils_yamane)}}
