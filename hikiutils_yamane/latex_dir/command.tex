@@ -31,7 +31,7 @@ hikiutilsは，
 どちらもが何かあった時のバックアップともなって，ミスによる手戻りを防いでいます．
 
 これらの設定は，~/.hikircにyaml形式で記述・保存されています．
-\begin{lstlisting}[style=]
+\begin{lstlisting}[style=,basicstyle={\scriptsize\ttfamily}]
 bob% cat ~/.hikirc
 :srcs:
 - :nick_name: new_ist
@@ -47,7 +47,7 @@ bob% cat ~/.hikirc
 \end{lstlisting}
 また，一般的に一人のユーザがいくつものまとまりとしてのlocal-globalペアを
 保持して管理することが普通です．それぞれにnicke\_nameをつけて管理しています．
-\begin{lstlisting}[style=]
+\begin{lstlisting}[style=,basicstyle={\scriptsize\ttfamily}]
 bob% hiki -s
 hikiutils: provide utilities for helping hiki editing.
 "open -a mi"
