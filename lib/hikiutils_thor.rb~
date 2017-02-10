@@ -16,7 +16,6 @@ module Hikithor
   DATA_FILE=File.join(ENV['HOME'],'.hikirc')
   attr_accessor :src, :target, :editor_command, :browser, :data_name, :l_dir
 
-
   class CLI < Thor
    def initialize(*args)
       super
@@ -51,9 +50,9 @@ HTML_TEMPLATE = <<EOS
 </html>
 EOS
 
-    desc 'show,--show', 'show sources'
-    map "--show" => "show"
-    def show
+    desc 'pwd', 'show nick_names'
+#    map "--show" => "show"
+    def pwd
       printf("target_no:%i\n",@src[:target])
       printf("editor_command:%s\n",@src[:editor_command])
       @i_size,@n_size,@l_size,@g_size=3,5,30,15 #i,g_size are fixed      

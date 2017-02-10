@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'systemu'
 require 'tempfile'
-#require 'colorize'
+require 'colorize'
 # -*- coding: utf-8 -*-
 begin
   $hiki_dir = File.readlines('./.hikirc')[0].chomp

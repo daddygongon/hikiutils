@@ -50,9 +50,9 @@ HTML_TEMPLATE = <<EOS
 </html>
 EOS
 
-    desc 'show,--show', 'show sources'
-    map "--show" => "show"
-    def show
+    desc 'pwd', 'show nick_names'
+#    map "--show" => "show"
+    def pwd
       printf("target_no:%i\n",@src[:target])
       printf("editor_command:%s\n",@src[:editor_command])
       @i_size,@n_size,@l_size,@g_size=3,5,30,15 #i,g_size are fixed      
@@ -78,16 +78,16 @@ EOS
       }
     end
 
-    desc 'version,--version,-v', 'show program version'
-    map "--version" => "version"
+    desc '-v', 'show program version'
+#    map "--version" => "version"
     map "-v" => "version"
     def version
       puts HikiUtils::VERSION
     end
 
-    desc 'add,--add', 'add sources info'
-    map "--add" => "add"
-    option :add
+    desc 'add', 'add sources info'
+#    map "--add" => "add"
+#    option :add
     def add
       cont = {}
       @data_name.each{|name|
@@ -99,16 +99,16 @@ EOS
       show
     end
 
-    desc 'target VAL,--target VAL', 'set target id'
-    map "--target" => "target"
-    def target(val)
+    desc 'cd VAL', 'set target id'
+#    map "--target" => "target"
+    def cd(val)
       @src[:target] = val.to_i
       show
     end
 
-    desc 'edit FILE,--edit FILE', 'open file'
-    map "--edit" => "edit"
-    def edit(file)
+    desc 'open', 'open file'
+#    map "--edit" => "edit"
+    def open(file)
       t_file=File.join(@l_dir,'text',file)
       if !File.exist?(t_file) then
         file=File.open(t_file,'w')
@@ -119,18 +119,18 @@ EOS
       system command
     end
 
-    desc 'list [FILE],--list [FILE]', 'list files'
-    map "--list" => "list"
-    def list(file)
+    desc 'ls [FILE]', 'list files'
+#    map "--list" => "list"
+    def ls(file)
       file ='' if file==nil
       t_file=File.join(@l_dir,'text')
       print "target_dir : "+t_file+"\n"
       print `cd #{t_file} ; ls -lt #{file}*`
     end
 
-    desc 'update FILE,--update FILE', 'update file'
-    map "--update" => "update"
-    def update(file0)
+    desc 'touch', 'update file'
+#    map "--update" => "update"
+    def touch(file0)
       file = (file0==nil) ? 'FrontPage' : file0
       t_file=File.join(@l_dir,'cache/parser',file)
       FileUtils.rm(t_file,:verbose=>true)
@@ -143,9 +143,9 @@ EOS
       p "If you get 整形式になっていません, try login as a valid user."
     end
 
-    desc 'rsync,--rsync', 'rsync files'
-    map "--rsync" => "rsync"
-    option :rsync
+    desc 'rsync', 'rsync files'
+#    map "--rsync" => "rsync"
+#    option :rsync
     def rsync
       p local = @l_dir
       p global = @src[:srcs][@target][:global_dir]
@@ -153,16 +153,16 @@ EOS
       system command
     end
 
-    desc 'datebase FILE,--database FILE', 'read datebase file'
-    map "--database" => "database"
-    def database(file_name)
+    desc 'db FILE', 'read datebase file'
+#    map "--database" => "database"
+    def db(file_name)
       info=InfoDB.new(@l_dir)
       p info.show(file_name)
     end
 
-    desc 'display FILE,--display FILE', 'display converted hikifile'
-    map "--display" => "display"
-    def display(file)
+    desc 'show FILE', 'display converted hikifile'
+#    map "--display" => "display"
+    def show(file)
       body = HikiDoc.to_html(File.read(file))
       source = HTML_TEMPLATE
       title = File.basename(file)
@@ -173,16 +173,16 @@ EOS
       system "open #{t.path}"
     end
 
-    desc 'checkdb,--checkdb', 'check database file'
-    map "--checkdb" => "checkdb"
+    desc 'checkdb', 'check database file'
+#    map "--checkdb" => "checkdb"
     def checkdb
       result= InfoDB.new(@l_dir).show_inconsist
       print (result=='') ? "db agrees with text dir.\n" : result
     end
 
-    desc 'remove [FILE],--remove [FILE]', 'remove files'
-    map "--remove" => "remove"
-    def remove(file_name)
+    desc 'rm [FILE]', 'remove files'
+#    map "--remove" => "remove"
+    def rm(file_name)
       p text_path = File.join(@l_dir,'text',file_name)
       p attach_path = File.join(@l_dir,'cache/attach',file_name)
       begin
@@ -203,9 +203,9 @@ EOS
       info.dump
     end
 
-    desc 'move [FILE],--move [FILE]', 'move file'
-    map "--move" => "move"
-    def move(files)
+    desc 'mv [FILE]', 'move file'
+#    map "--move" => "move"
+    def mv(files)
       begin
         p file1_path = File.join(@l_dir,'text',files[0])
         p file2_path = File.join(@l_dir,'text',files[1])
@@ -266,8 +266,8 @@ EOS
       info.dump
     end
 
-    desc 'euc FILE,--euc FILE', 'translate file to euc'
-    map "--euc" => "euc"
+    desc 'euc FILE', 'translate file to euc'
+#    map "--euc" => "euc"
     def euc(file)
       p file_path = File.join(@l_dir,'text',file)
       cont = File.readlines(file_path)

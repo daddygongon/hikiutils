@@ -6,7 +6,11 @@ optparseの特徴は，「コマンドの登録，実行method」に分けて記
 
 !!コマンドの登録と実行メソッド
 
+<<<<<<< HEAD
+!!!caption:コマンドの登録と実行メソッドの対応
+=======
 !!!caption:(fig:005)コマンドの登録と実行メソッドの対応．
+>>>>>>> 313783c079d7cc98c76e7b45d4fcefaf3c61b75b
 {{attach_view(hikiutils_yamane.005.jpg,hikiutils_yamane)}}
 
 optparseでは以下の通り，コマンドの登録と実行が行われる．
@@ -53,7 +57,11 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
 >>>
 
 !!CLIの実行プロセス
+<<<<<<< HEAD
+!!!caption:CLIの実行プロセス．
+=======
 !!!caption:(fig:007)CLIの実行プロセス．
+>>>>>>> 313783c079d7cc98c76e7b45d4fcefaf3c61b75b
 {{attach_view(hikiutils_yamane.007.jpg,hikiutils_yamane)}}
 
 optparseを用いた場合のCLIの実行プロセスは次の通りとなる．
