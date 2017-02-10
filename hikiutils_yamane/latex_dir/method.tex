@@ -1,4 +1,127 @@
 
+\section{方法}
+\subsection{optparseとthorの比較}
+今回の既存システムであるhikiutilsはoptparseというコマンドライン解析ライブラリが用いられている．
+本研究ではこの代替ライブラリとしてThorの採用を検討した．
+本章の最初では，FizzBuzzという簡単なコードを例にoptparseとThorにより作成するコマンドライン解析コードの比較を行う．
+
+\subsubsection{optparse}
+optparseとは，getoptよりも簡便で，柔軟性に富み，かつ強力なコマンドライン解析ライブラリである．optparseでは，より宣言的なスタイルのコマンドライン解析手法，すなわちOptionParserのインスタンスでコマンドラインを解析するという手法をとっている．これを使うと，GNU/POSIX構文でオプションを指定できるだけでなく，使用法やヘルプメッセージの生成も行える[2]．利用頻度はあまり高くないが古くから開発され，使用例が広く紹介されている．
+
+optparseの基本的な流れとしては
+
+\begin{enumerate}
+\item OptionParserオブジェクトoptを生成する
+\item オプションを取り扱うブロックをopt.onに登録する
+\item opt.parse(ARGV)でコマンドラインを実際にparseする
+\end{enumerate}
+である.
+
+OptionParserはコマンドラインのオプション取り扱うためのクラスであるためオブジェクトoptを生成されopt.onにコマンドを登録することができる．しかし，OptionParser\#onにはコマンドが登録されているだけであるため，OptionParser\#parseが呼ばれた時，コマンドラインにオプションが指定されていれば実行される．optparseにはデフォルトとして--helpと--versionオプションを認識する[3].
+
+以下に示したコードがoptparseで記述されたfizzbuzzである．
+\begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
+module Fizzbuzz
+  class Command
+
+     def self.run(argv)
+       new(argv).execute
+     end
+
+     def initialize(argv)
+       @argv = argv
+     end
+
+     def execute
+       options = Options.parse!(@argv)
+       sub_command = options.delete(:command)
+       case sub_command
+            when 'fizzbuzz'
+              fizzbuzz(options[:id])
+            when 'version'
+              version
+            end
+     end
+
+     def fizzbuzz(limit_number)
+       (0..limit_number).map do |num|
+         if (num % 15).zero? then print 'FizzBuzz'
+         elsif (num % 5).zero? then print 'Buzz'
+         elsif (num % 3).zero? then print 'Fizz'
+         else print num.to_s
+         end
+         print ' '
+       end
+     end
+
+     def version
+       puts Fizzbuzz::VERSION
+       exit
+     end
+  end
+end
+\end{lstlisting}
+このコードはfizzbuzzとversionのコマンドを実行させる．
+
+\paragraph{runメソッド}
+コマンド実行を行うためのメソッドであり，argv配列を代入することでexecuteメソッドを実行する．
+
+\paragraph{initializeメソッド}
+初期化を行うメソッドである．
+\begin{quote}\begin{verbatim}
+@argv = argv
+\end{verbatim}\end{quote}
+こうすることでargvをクラス内で利用できるようにする．
+
+\paragraph{executeメソッド}
+上記でoptparseではopt.onにコマンドを登録する必要があると説明したが，opt.onで登録できるものはハイフンがついたコマンドだけであり，ハイフンなしのコマンドの登録はこのようになる．
+
+argv配列の解析を行うOptions.parse!(@argv)をoptionsに代入して解析を行いsub\_commandに代入する．sub\_commandがfizzbuzzであればfizzbuzz(options[:id])メソッドを実行，versionであればversionメソッドを実行する．
+
+\paragraph{fizzbuzzメソッド}
+引数としてlimit\_numberを受け取り，0〜limit\_numberまでの数字を繰り返す．numが15であればFizzbuzzを表示，5であればBuzzを表示，3であればFizzを表示，それ以外は数字を表示し，その後に空白を表示する．
+
+\paragraph{versionメソッド}
+fizzbuzzのバージョンを表示する．
+
+\subsubsection{Thor}
+Thorとは，コマンドラインツールの作成を支援するライブラリのことである．gitやbundlerのようにサブコマンドを含むコマンドラインツールを簡単に作成することができる[4]．
+
+Thorの基本的な流れとしては
+
+\begin{enumerate}
+\item Thorを継承したクラスのパブリックメソッドがコマンドになる
+\item クラス.start(ARGV)でコマンドラインの処理をスタートする
+\end{enumerate}
+である[4].
+
+startに渡す引数が空の場合，Thorはクラスのヘルプリストを出力する．また，Thorはサブコマンドやサブサブコマンドも容易に作ることができる．
+
+以下に示したコードがThorで記述されたfizzbuzzである．
+\begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
+module Fizzbuzz                                                   
+  class CLI < Thor
+
+    desc 'fizzbuzz', 'Get fizzbuzz result from limit number'
+    def fizzbuzz(limit)
+      print Fizzbuzz.fizzbuzz(limit).join(',')
+      exit
+    end
+
+    desc 'version', 'version'
+    def version
+      puts Fizzbuzz::VERSION
+    end
+  end
+end
+\end{lstlisting}
+このコードもoptparseのfizzbuzzと同様fizzbuzzとversionのコマンドを実行させる．
+
+\paragraph{fizzbuzzメソッド，versionメソッド}
+descでコマンド一覧で表示させるコマンド名と説明を書く．
+
+メソッド内ではそれぞれのコマンドの処理内容が書かれている．
+
 \subsection{既存のhikiutilsのコマンド解説}
 既存のhikiutilsはコマンド解析ライブラリのoptparseを用いて，コマンドの処理を行っている．
 optparseの特徴は，「コマンドの登録，実行method」に分けて記述することが期待されている．
