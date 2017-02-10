@@ -11,11 +11,14 @@ hikiutilsの振る舞いを予測できるシェルコマンドと同じ名前�
 
 \subsubsection{hikiutilsの想定利用形態}
 ここでhikiutilsがあらかじめ想定している利用形態を解説しておきます．
-
+\begin{quote}\begin{verbatim}
+!!!caption:hikiutilsがあらかじめ想定している利用形態．
+=======
+!!!caption:(fig:002)hikiutilsがあらかじめ想定している利用形態．
+\end{verbatim}\end{quote}
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.002.jpg}
-\caption{hikiutilsがあらかじめ想定している利用形態．}
-\label{fig:002}
+\caption{}
 \label{default}\end{center}\end{figure}
 hikiutilsは，
 
@@ -28,7 +31,7 @@ hikiutilsは，
 どちらもが何かあった時のバックアップともなって，ミスによる手戻りを防いでいます．
 
 これらの設定は，~/.hikircにyaml形式で記述・保存されています．
-\begin{lstlisting}[style=,basicstyle={\scriptsize\ttfamily}]
+\begin{lstlisting}[style=]
 bob% cat ~/.hikirc
 :srcs:
 - :nick_name: new_ist
@@ -44,7 +47,7 @@ bob% cat ~/.hikirc
 \end{lstlisting}
 また，一般的に一人のユーザがいくつものまとまりとしてのlocal-globalペアを
 保持して管理することが普通です．それぞれにnicke\_nameをつけて管理しています．
-\begin{lstlisting}[style=,basicstyle={\scriptsize\ttfamily}]
+\begin{lstlisting}[style=]
 bob% hiki -s
 hikiutils: provide utilities for helping hiki editing.
 "open -a mi"
