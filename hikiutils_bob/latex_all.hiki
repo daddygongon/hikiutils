@@ -105,7 +105,7 @@ latex_dir内に幾つかのtex雛形を入れておく必要があります．
 
 !!!!head.tex
 題目，学生番号，氏名を変更する．年月をチェック．
-\\setcounter{tocdepth}はtocをどこまで表示するかのレベルに対応します．
+\\setcounter\{tocdepth\}はtocをどこまで表示するかのレベルに対応します．
 原稿作成時は階層がわかりやすいように深めにしていますが，本番では2程度で十分です．
 <<< tex
 bob% cat head.tex
@@ -182,6 +182,8 @@ wrapfigureでtextの回りこみや位置調整を行う必要があります．
 *rake change_wrap(wrapで変換)
 *rake latex_base(latexに変換するだけの下請け)
 *rake latex_wrap(figure環境だけをwrapfig環境に変える)
+
+Rakefile内の記述は
 <<< ruby
 desc "latex conversion FILE1"
 task :latex => [:latex_base] do
@@ -193,8 +195,11 @@ task :latex_wrap => [:latex_base, :change_wrap] do
   exit
 end
 >>>
+となっています．つまり，:latex_baseをした後に，:change_wrapを呼び出しています．
+
 完成例はこちらです．
 *{{attach_anchor(calphad_bob.pdf,hikiutils_bob)}}
+発表会の予稿ハンドアウトなどではこれが不可欠です．
 
 !!参照のシステム
 
@@ -213,9 +218,13 @@ latexへ文献参照を渡すために，下記のようなフォーマットで
 :listings2:[[http://www.ipc.akita-nct.ac.jp/~yamamoto/comp/latex/make_doc/source/source.html]]
 >>>
 
-ここで，fig:以下にsnake nameは使えません．Camelで書くようにしてください．
+* caption以下の丸括弧内にタグを書きます．
+* fig:以下のタグにsnake nameは使えません．Camelで書くようにしてください．
+* refでそれを参照します．
+* citeの方も同じです．
+* reference:以下の:...:記述がlatexではbibliographyに変わります．
 
-これをsync, all_latexをかけると図{{ref(fig:CiteRefSystems)}}のようになります．latexの文献参照(cite, bibliography)，図表番号の参照(ref, label)が正常に処理されていることが確認できます．また，web表示した場合でもそれほご違和感なく読めるでしょう．
+これをsync, all_latexをかけると図{{ref(fig:CiteRefSystems)}}のようになります．latexの文献参照(cite, bibliography)，図表番号の参照(ref, label)が正常に処理されていることが確認できます．また，web表示した場合でもそれほど違和感なく読めるでしょう．
 
 !!!caption: (fig:CiteRefSystems)参照機能を利用した場合の変換後の表示．
 {{attach_view(hikiutils_bob.007.jpeg,hikiutils_bob)}}

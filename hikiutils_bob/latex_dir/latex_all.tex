@@ -122,7 +122,7 @@ hiki -i
 
 \paragraph{head.tex}
 題目，学生番号，氏名を変更する．年月をチェック．
-\\setcounter{tocdepth}はtocをどこまで表示するかのレベルに対応します．
+\\setcounter\{tocdepth\}はtocをどこまで表示するかのレベルに対応します．
 原稿作成時は階層がわかりやすいように深めにしていますが，本番では2程度で十分です．
 \begin{lstlisting}[style=customTeX,basicstyle={\scriptsize\ttfamily}]
 bob% cat head.tex
@@ -197,7 +197,9 @@ wrapfigureでtextの回りこみや位置調整を行う必要があります．
 \item rake change\_wrap(wrapで変換)
 \item rake latex\_base(latexに変換するだけの下請け)
 \item rake latex\_wrap(figure環境だけをwrapfig環境に変える)
-\end{itemize}\begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
+\end{itemize}
+Rakefile内の記述は
+\begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
 desc "latex conversion FILE1"
 task :latex => [:latex_base] do
   exit
@@ -208,11 +210,15 @@ task :latex_wrap => [:latex_base, :change_wrap] do
   exit
 end
 \end{lstlisting}
+となっています．つまり，:latex\_baseをした後に，:change\_wrapを呼び出しています．
+
 完成例はこちらです．
 
 \begin{itemize}
 \item \verb|{{attach_anchor(calphad_bob.pdf,hikiutils_bob)}}|
 \end{itemize}
+発表会の予稿ハンドアウトなどではこれが不可欠です．
+
 \subsection{参照のシステム}
 latexへ文献参照を渡すために，下記のようなフォーマットでの記述を行ってください．
 \begin{lstlisting}[style=customCsh,basicstyle={\scriptsize\ttfamily}]
@@ -227,9 +233,14 @@ latexへ文献参照を渡すために，下記のようなフォーマットで
 :listings1:[[http://d.hatena.ne.jp/mallowlabs/20061226/1167137637]]
 :listings2:[[http://www.ipc.akita-nct.ac.jp/~yamamoto/comp/latex/make_doc/source/source.html]]
 \end{lstlisting}
-ここで，fig:以下にsnake nameは使えません．Camelで書くようにしてください．
-
-これをsync, all\_latexをかけると図\ref{fig:CiteRefSystems}のようになります．latexの文献参照(cite, bibliography)，図表番号の参照(ref, label)が正常に処理されていることが確認できます．また，web表示した場合でもそれほご違和感なく読めるでしょう．
+\begin{itemize}
+\item caption以下の丸括弧内にタグを書きます．
+\item fig:以下のタグにsnake nameは使えません．Camelで書くようにしてください．
+\item refでそれを参照します．
+\item citeの方も同じです．
+\item reference:以下の:...:記述がlatexではbibliographyに変わります．
+\end{itemize}
+これをsync, all\_latexをかけると図\ref{fig:CiteRefSystems}のようになります．latexの文献参照(cite, bibliography)，図表番号の参照(ref, label)が正常に処理されていることが確認できます．また，web表示した場合でもそれほど違和感なく読めるでしょう．
 
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_bob.007.jpeg}
