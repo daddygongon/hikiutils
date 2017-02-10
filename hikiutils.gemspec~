@@ -40,5 +40,10 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "systemu"
   spec.add_runtime_dependency "hikidoc", "~> 0.1.0"
   spec.add_runtime_dependency 'thor'
+<<<<<<< HEAD
   spec.add_runtime_dependency 'colorize'
+  spec.add_runtime_dependency 'coderay'
+=======
+#  spec.add_runtime_dependency 'colorize'
+>>>>>>> f0cfc612f8bdd01487006e8c070f71085409671f
 end
