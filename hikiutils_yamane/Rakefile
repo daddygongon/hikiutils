@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'systemu'
 require 'tempfile'
-#require 'colorize'
+require 'colorize'
 # -*- coding: utf-8 -*-
 begin
   $hiki_dir = File.readlines('./.hikirc')[0].chomp
@@ -97,8 +97,7 @@ end
 desc "FILE.hikiあるいはhikiファイルすべてを最新状態に更新"
 task :touch do
   if file=ARGV[1] 
-    file_split=file.split(".")
-    p target = $basename==file_split[0] ? $basename : $basename+"_"+file_split[0]
+    p target = $basename+"_"+file.split('.')[0]
     system "hiki -u #{target}"
   else
     p target = File.join($hiki_dir,'cache','attach',$basename)
@@ -106,6 +105,7 @@ task :touch do
     Dir.entries('.').each{|file|
       file_split=file.split(".")
       if file_split[1]=='hiki'
+        next if file_split[0]==$basename
         p target = $basename==file_split[0] ? $basename : $basename+"_"+file_split[0]
         system "hiki -u #{target}"
       end
