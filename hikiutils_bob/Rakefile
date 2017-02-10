@@ -189,6 +189,7 @@ end
 
 desc "すべてのhikiファイルをlatex変換"
 task :latex_all do
+  check_bounding_box
   p entries=Dir.entries('.')
   main_file = latex_loop(entries,opts={:main=>true})
   latex_loop(entries)
