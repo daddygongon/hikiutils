@@ -2,6 +2,8 @@
 require 'systemu'
 require 'tempfile'
 require 'colorize'
+require 'coderay'
+
 # -*- coding: utf-8 -*-
 begin
   $hiki_dir = File.readlines('./.hikirc')[0].chomp
@@ -443,7 +445,12 @@ task :self_copy do
   cp_files.each{|files|
     p source = files[0]
     p target = File.join('/Users/bob/Github/hikiutils/lib/templates/',files[1])
-    FileUtils.cp(source,target,:verbose=>true)
+    status, stdout, stderr=systemu("diff #{source} #{target}")
+    if stdout!=''
+      puts CodeRay.scan(stdout, :Diff).term  
+      print " Are you sure to save #{source}? [Yn]  ".red
+      FileUtils.cp(source,target,:verbose=>true) if STDIN.gets.chomp=='Y'
+    end
   }
 end
 
