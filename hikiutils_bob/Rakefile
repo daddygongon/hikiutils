@@ -36,7 +36,7 @@ task :reset_hiki do
   }
   r_files = files.reverse[0..-4]
   r_files.each{|file|
-    print "remove #{file}[ynqlA]? ".red
+    print "remove #{file}? [ynqlA]  ".red
     input=STDIN.gets.chomp
     case input
     when 'y'
@@ -49,7 +49,7 @@ task :reset_hiki do
     when 'q'
       exit
     when 'A'
-      print "\nAre you sure[Yn]? ".magenta
+      print "\nAre you sure? [Yn]  ".magenta
       input2 = STDIN.gets.chomp
       case input2
         when 'Y'
