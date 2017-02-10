@@ -196,10 +196,25 @@ end
 完成例はこちらです．
 *{{attach_anchor(calphad_bob.pdf,hikiutils_bob)}}
 
-!!開発メモ（2017/2/8)
-* hikiutilsにlatex2hiki, hiki2latexも統合すべきか？
-* {{ref}} {{cite}}を組み込む
-* hikiにではなく，rake syncで変換
-* listingsの調整
-* jlistingは，\\lstsetや\\lstdefinestyleで引っかかってダメ
-* basicstyle={\small\ttfamily}これ効いてんにゃろか？？
+!!参照のシステム
+latexへ文献参照を渡すために，下記のようなフォーマットでの記述を行ってください．
+
+<<< tcsh
+図{{ref(fig:SystemOverview)}}に卒論編集システムの概観を示しています．
+
+!!!caption: (fig:SystemOverview)卒論編集システムの概観．
+{{attach_view(hikiutils_bob.006.jpeg,hikiutils_bob)}}
+
+*基本的な使い方{{cite(listings1)}}
+*独自のカラー化{{cite(listings2)}}
+!reference:
+:listings1:[[http://d.hatena.ne.jp/mallowlabs/20061226/1167137637]]
+:listings2:[[http://www.ipc.akita-nct.ac.jp/~yamamoto/comp/latex/make_doc/source/source.html]]
+>>>
+
+ここで，fig:以下にsnake nameは使えません．Camelで書くようにしてください．
+
+これをsync, all_latexをかけると図{{ref(fig:CiteRefSystems)}}のようになります．latexの文献参照(cite, bibliography)，図表番号の参照(ref, label)が正常に処理されていることが確認できます．また，web表示した場合でもそれほご違和感なく読めるでしょう．
+
+!!!caption: (fig:CiteRefSystems)参照機能を利用した場合の変換後の表示．
+{{attach_view(hikiutils_bob.007.jpeg,hikiutils_bob)}}
