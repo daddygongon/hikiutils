@@ -243,5 +243,5 @@ s)}
     end  
 \end{lstlisting}
 runメソッドでは「hikiutils: provide utilities for helping hiki editing.」を表示させ，executeメソッドを実行させる．
-executeメソッドでは，「@argv << '--help' if @argv.size==0」と記述する．これはもしargv配列の中身が空であればargv配列に'--help'を代入する．「command\_parser = OptionParser.new do |opt|」ではOptionParserオブジェクトがoptを生成しコマンドを登録していき，command\_parserに代入する．「command\_parser.parse!(@argv)」では@argvにある文字列をcommand\_parserでparseするということである．つまり，ここで入力されたコマンドを解析し，登録されたコマンドと一致すればその処理が行われる．もし，一致しなければevalメソッドで表示する．
+executeメソッドでは最初に「@argv << '--help' if @argv.size==0」と記述する．これはもしargv配列の中身が空であればargv配列に'--help'を代入する．「command\_parser = OptionParser.new do |opt|」ではOptionParserオブジェクトがoptを生成しコマンドを登録していき，command\_parserに代入する．そして，「command\_parser.parse!(@argv)」では@argvにある文字列をcommand\_parserでparseする．つまり，ここでは入力されたコマンドを解析し，登録されたコマンドと一致すればその処理が行われる．もし，一致しなければevalメソッドで表示する．
 

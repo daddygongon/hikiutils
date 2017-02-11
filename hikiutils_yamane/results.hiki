@@ -146,11 +146,12 @@ module Hikithor
 >>>
 
 !!!コマンド定義
+thorではoptparseのような登録処理はない．図{{ref(fig:004)}}にある通りにコマンドが記述される．
 
-!!!!caption:thorにおけるコマンド記述のひな形．
+!!!!caption:(fig:004)thorにおけるコマンド記述のひな形．
 {{attach_view(hikiutils_yamane.004.jpg,hikiutils_yamane)}}
 
-thorではoptparseのような登録処理はない．図にある通りにコマンドが記述され，それらは以下のように構成される．
+それらは以下のように構成される．
 #desc以降にコマンド名と，その説明が記述される．これらはコマンドhelpで一覧として表示させる
 #mapによって別のコマンド名でも実行できるように定義される．
 #defで定義されたメソッドの実行コード
@@ -177,9 +178,9 @@ mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれる
 以上より，Thorではコマンドの指定と処理にはdesc,map,処理メソッドだけで済む．optparseではコマンドを登録するためのメソッドと処理メソッドの両方が必要になっていた．一方Thorでは，処理メソッドが直接コマンド名となるため記述が簡潔になる．
 
 !!!CLIの実行プロセス
+CLIの実行プロセスは図{{ref(fig:006)}}の通りである．
 
-
-!!!!caption:CLIの実行プロセス．
+!!!!caption:(fig:006)CLIの実行プロセス．
 {{attach_view(hikiutils_yamane.006.jpg,hikiutils_yamane)}}
 
 Thorにおけるcliの実行プロセスは次の通りである．
@@ -188,6 +189,7 @@ Thorにおけるcliの実行プロセスは次の通りである．
 
 Thorではstart(ARGV)を呼び出すことでCLIを開始する．Hikithor::CLI.start(ARGV)を実行されることによりrequireで呼ばれているhikiutils_thor.rbのCLIコマンドを順に実行する．そして，入力されたコマンドと一致するメソッドを探し，そのコマンドの処理が実行される．
 
+exe/hiki_thorの具体的な記述は次の通りである．
 <<< ruby
 #!/usr/bin/env ruby                                                             
 
@@ -195,7 +197,11 @@ require "hikiutils_thor"
 
 Hikithor::CLI.start(ARGV)
 >>>
+hikiutilsのoptparseバージョンと同様に「require "hikituils_thor"」ではlib/hikiutils_thor.rbを読み出してくることを期待している．
+ここでもgemspecファイルでlibへのロードパスの記述がされているため，hikiutils_thor.rbを参照することができる．
+「Hikithor::CLI.start(ARGV)」ではlib/hikiutils_thor.rbのHikithorモジュールCommandクラスを実行する記述が成されている．
 
+呼び出される側のlib/hikiutils_thor.rbの具体的な記述は次の通りである．
 <<< ruby
 
 module Hikithor
@@ -212,12 +218,12 @@ module Hikithor
       ...以下略...
 >>>
 
-hikiutilsのoptparseバージョンと同様に「require "hikituils_thor"」ではlib/hikiutils_thor.rbを読み出してくることを期待している．
-ここでもgemspecファイルでlibへのロードパスの記述がされているため，hikiutils_thor.rbを参照することができる．
-「Hikithor::CLI.start(ARGV)」ではlib/hikiutils_thor.rbのHikithorモジュールCommandクラスを実行する記述が成されている．
-ここでoptparseと異なるのは実行を行うメソッドがないということである．
+通常のclass呼び出しで生成されるようになっている．
+rubyにおいても通常のclassからの実行では，newした後にexeする．
+しかし，thorにおいてはstartという関数名で初期化・実行される．
+これは，rubyに付属しているRakefileの実行方法とよく似た構文となっている．
 
-!!optparseとThorの変更結果
+!議論:optparseからThorへの移行
 
 Thorとoptparseでのコードの違いは以上のとおりであるが,コードからもThorのほうが短くなっていることが分かる．
 しかし，Thorの問題点はメソッド名がコマンドとなるため，１つしか定義できないことである．

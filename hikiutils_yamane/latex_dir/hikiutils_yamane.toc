@@ -28,4 +28,4 @@
 \contentsline {subsubsection}{\numberline {4.2.1}クラス初期化}{18}
 \contentsline {subsubsection}{\numberline {4.2.2}コマンド定義}{19}
 \contentsline {subsubsection}{\numberline {4.2.3}CLIの実行プロセス}{21}
-\contentsline {subsection}{\numberline {4.3}optparseとThorの変更結果}{22}
+\contentsline {section}{\numberline {5}議論:optparseからThorへの移行}{22}
