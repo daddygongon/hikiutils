@@ -3,15 +3,15 @@
 !!optparseとthorの比較
 今回の研究対象のhikiutilsは，optparseというコマンドライン解析ライブラリで実装されている．
 本研究ではこの代替ライブラリとしてThorの採用を検討した．
-本章の最初では，FizzBuzzという簡単なコードを例にoptparseとThorにより作成するコマンドライン解析コードの比較を行う．FizzBuzzはThorの使い方を解説した記事{{cite(ThorUsage)}}で紹介されている．比較しやすくするためoptparseでFizzBuzzを新たに実装した．
+本章の最初では，FizzBuzzという簡単なコードを例にoptparseとThorにより作成するコマンドライン解析コードの比較を行う．FizzBuzzはThorの使い方を解説した記事{{cite(1-2)}}で紹介されている．比較しやすくするためoptparseでFizzBuzzを新たに実装した．
 
 !!!Thor
-Thorとは，コマンドラインツールの作成を支援するライブラリのことである．gitやbundlerのようにサブコマンドを含むコマンドラインツールを簡単に作成することができる{{cite(ThorUsage)}}．
+Thorとは，コマンドラインツールの作成を支援するライブラリのことである．gitやbundlerのようにサブコマンドを含むコマンドラインツールを簡単に作成することができる{{cite(1-2)}}．
 
 Thorの基本的な流れとしては
-#Thorを継承したクラスのパブリックメソッドがコマンドになる
+#Thorを継承したクラスのメソッドがコマンドになる
 #クラス.start(ARGV)でコマンドラインの処理をスタートする
-である{{cite(ThorUsage)}}.
+である{{cite(1-2)}}.
 
 startに渡す引数が空の場合，Thorはクラスのヘルプリストを出力する．また，Thorはサブコマンドやサブサブコマンドも容易に作ることができる．
 
@@ -40,7 +40,7 @@ end
 descでコマンド一覧で表示させるコマンド名と説明を書く．メソッド内ではそれぞれのコマンドの処理内容が書かれている．
 
 !!!optparse
-optparseとは，getoptよりも簡便で，柔軟性に富み，かつ強力なコマンドライン解析ライブラリである．optparseでは，より宣言的なスタイルのコマンドライン解析手法，すなわちOptionParserのインスタンスでコマンドラインを解析するという手法をとっている．これを使うと，GNU/POSIX構文でオプションを指定できるだけでなく，使用法やヘルプメッセージの生成も行える[2]．利用頻度はあまり高くないが古くから開発され，使用例が広く紹介されている．
+optparseとは，getoptよりも簡便で，柔軟性に富み，かつ強力なコマンドライン解析ライブラリである．optparseでは，より宣言的なスタイルのコマンドライン解析手法，すなわちOptionParserのインスタンスでコマンドラインを解析するという手法をとっている．これを使うと，GNU/POSIX構文でオプションを指定できるだけでなく，使用法やヘルプメッセージの生成も行える{{cite(1-3)}}．利用頻度はあまり高くないが古くから開発され，使用例が広く紹介されている．
 
 optparseの基本的な流れとしては
 #OptionParserオブジェクトoptを生成する
@@ -48,7 +48,7 @@ optparseの基本的な流れとしては
 #opt.parse(ARGV)でコマンドラインを実際にparseする
 である.
 
-OptionParserはコマンドラインのオプション取り扱うためのクラスであるためオブジェクトoptを生成されopt.onにコマンドを登録することができる．しかし，OptionParser\#onにはコマンドが登録されているだけであるため，OptionParser\#parseが呼ばれた時，コマンドラインにオプションが指定されていれば実行される．optparseにはデフォルトとして--helpと--versionオプションを認識する[3].
+OptionParserはコマンドラインのオプション取り扱うためのクラスであるためオブジェクトoptを生成されopt.onにコマンドを登録することができる．しかし，OptionParser\#onにはコマンドが登録されているだけであるため，OptionParser\#parseが呼ばれた時，コマンドラインにオプションが指定されていれば実行される．optparseにはデフォルトとして--helpと--versionオプションを認識する{{cite(1-4)}}.
 
 以下に示したコードがoptparseで記述したfizzbuzzである．
 
@@ -174,7 +174,7 @@ optparseを用いた場合のCLIの実行プロセスは次の通りとなる．
 #HikiのHikiUtils::Command.run(ARGV)でhikiutils.rbのrunメソッドを呼ぶ
 #new(argv).executeでexecuteメソッドが実行される
 
-optparseではHikiutils::Command.run(ARGV)を実行される．requireで呼び出されたhikiutils.rbでrunメソッドが実行される．そこでコマンドを登録しているexecuteメソッドへ移動し入力したコマンドと対応させる．そして，対応したコマンドの処理が行われるメソッドに移動することで実行される．このようにoptparseでは実行を行うためのメソッドが必要であるが，
+optparseではHikiutils::Command.run(ARGV)で実行され，requireで呼び出されたhikiutils.rbのrunメソッドが実行される．そこでコマンドを登録しているexecuteメソッドへ移動し入力したコマンドと対応させる．そして，対応したコマンドの処理が行われるメソッドに移動することで実行される．このようにoptparseでは実行を行うためのメソッドが必要である.
 !!!コード
 
 optparseの呼び出し側のexe/hikiのコードは次の通りである．
@@ -185,6 +185,10 @@ require "hikiutils"
 
 HikiUtils::Command.run(ARGV)
 >>>
+「require "hikituils"」ではlib/hikiutils.rbを読み出してくることを期待している．
+これはgemspecファイルでlibへのロードパスの記述がされているため，hikiutils.rbを参照することができる．
+「Hikiuils::Command.run(ARGV)」ではlib/hikiutils.rbのHikiUtilsモジュールCommandクラスのrunメソッドを実行する記述が成されている．
+
 
 また呼び出される側のlib/hikiutils.rbのrunおよびexecute部のコードは次の通りとなる．
 <<< ruby
@@ -226,3 +230,5 @@ s)}
       exit
     end  
 >>>
+runメソッドでは「hikiutils: provide utilities for helping hiki editing.」を表示させ，executeメソッドを実行させる．
+executeメソッドでは最初に「@argv << '--help' if @argv.size==0」と記述する．これはもしargv配列の中身が空であればargv配列に'--help'を代入する．「command_parser = OptionParser.new do |opt|」ではOptionParserオブジェクトがoptを生成しコマンドを登録していき，command_parserに代入する．そして，「command_parser.parse!(@argv)」では@argvにある文字列をcommand_parserでparseする．つまり，ここでは入力されたコマンドを解析し，登録されたコマンドと一致すればその処理が行われる．もし，一致しなければevalメソッドで表示する．

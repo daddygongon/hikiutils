@@ -61,11 +61,12 @@ editor_command:open -a mi
 とすると，それらの一覧と，いまtargetにしているnick\_nameディレクリが表示されます．
 
 \subsubsection{コメンド名と振る舞いの詳細}
-検討の結果コマンドを以下のように書き換えることとします．
+検討の結果コマンドを以下の表\ref{table:ShellOption}のとおり書き換えることとします．
 上部に記した，特によく使うコマンドに関しては，shellでよく使われるコマンド名と一致するにようにしました．
 
 \begin{table}[htbp]\begin{center}
-\caption{}
+\caption{コマンドオプションとshellコマンドの対応．}
+\label{table:ShellOption}
 \begin{tabular}{llll}
 \hline
 変更前  &変更後  &動作の解説  \\ \hline
@@ -227,14 +228,17 @@ module Hikithor
       DataFiles.prepare(data_path)
       ...以下略...
 \end{lstlisting}
-Thorではクラスのメソッドを順に実行していくためrunメソッドとexecuteメソッドは必要ない．
-また，optparseでの実行手順はメソッドの移動回数が多く複雑であるが，Thorは単純で分かりやすいものとなっている．
+hikiutilsのoptparseバージョンと同様に「require "hikituils\_thor"」ではlib/hikiutils\_thor.rbを読み出してくることを期待している．
+ここでもgemspecファイルでlibへのロードパスの記述がされているため，hikiutils\_thor.rbを参照することができる．
+「Hikithor::CLI.start(ARGV)」ではlib/hikiutils\_thor.rbのHikithorモジュールCommandクラスを実行する記述が成されている．
+ここでoptparseと異なるのは実行を行うメソッドがないということである．
 
-\subsubsection{optparseとの全体的な比較}
-Thorとoptparseでのコードの違いは以上の部分になるが,コードからもThorのほうが短くなっていることが分かる．
+\subsection{optparseとThorの変更結果}
+Thorとoptparseでのコードの違いは以上のとおりであるが,コードからもThorのほうが短くなっていることが分かる．
 しかし，Thorの問題点はメソッド名がコマンドとなるため，１つしか定義できないことである．
 これを解決するためにmapを用い,複数のコマンドを定義できるようにした．
-一方，optparseでは別のコマンドを定義するにはfizzbuzzのoptparseのコードで解説したやり方になる．
-よって，全体的にもThorのほうがコードが短くなり，コマンドの定義も簡単に行うことができる．
+一方，optparseでは別のコマンドを定義するにはfizzbuzzのoptparseのコードのようにコマンドの解析を行う必要がある．
+つまり，optparseでのコマンド定義はThorより複雑で記述が長くなるということである．
+それに対してThorのほうが全体的にもコードが短くなり，コマンドの定義も簡単に行うことができる．
 また，実行手順も分かりやすくコードが読みやすいため書き換えもすぐ行うことができるので，より直感的なコマンドを実装することも可能となった．
 
