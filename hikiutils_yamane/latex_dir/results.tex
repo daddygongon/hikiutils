@@ -124,7 +124,7 @@ targetを変える，change directoryとのメタファ．ただし，いまの�
 対応しておらず，nick\_nameの番号をVAL入力することで変更する．
 
 \subsection{Thorによる実装}
-手法のところで概観した通り，thorを用いることで記述の簡略化が期待できる．ここでは，実際に書き換える前後，すなわちoptparse版とthor版の対応するコードを比較することで，以下の具体的な違い
+手法のところで概観した通り，Thorを用いることで記述の簡略化が期待できる．ここでは，実際に書き換える前後，すなわちoptparse版とThor版の対応するコードを比較することで，以下の具体的な違い
 
 \begin{itemize}
 \item クラス初期化
@@ -165,11 +165,11 @@ module Hikithor
    end
 \end{lstlisting}
 \subsubsection{コマンド定義}
-thorではoptparseのような登録処理はない．図\ref{fig:004}にある通りにコマンドが記述される．
+Thorではoptparseのような登録処理はない．図\ref{fig:004}にある通りにコマンドが記述される．
 
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.004.jpg}
-\caption{thorにおけるコマンド記述のひな形．}
+\caption{Thorにおけるコマンド記述のひな形．}
 \label{fig:004}
 \label{default}\end{center}\end{figure}
 それらは以下のように構成される．
@@ -244,15 +244,6 @@ module Hikithor
 \end{lstlisting}
 通常のclass呼び出しで生成されるようになっている．
 rubyにおいても通常のclassからの実行では，newした後にexeする．
-しかし，thorにおいてはstartという関数名で初期化・実行される．
+しかし，Thorにおいてはstartという関数名で初期化・実行される．
 これは，rubyに付属しているRakefileの実行方法とよく似た構文となっている．
-
-\section{議論:optparseからThorへの移行}
-Thorとoptparseでのコードの違いは以上のとおりであるが,コードからもThorのほうが短くなっていることが分かる．
-しかし，Thorの問題点はメソッド名がコマンドとなるため，１つしか定義できないことである．
-これを解決するためにmapを用い,複数のコマンドを定義できるようにした．
-一方，optparseでは別のコマンドを定義するにはfizzbuzzのoptparseのコードのようにコマンドの解析を行う必要がある．
-つまり，optparseでのコマンド定義はThorより複雑で記述が長くなるということである．
-それに対してThorのほうが全体的にもコードが短くなり，コマンドの定義も簡単に行うことができる．
-また，実行手順も分かりやすくコードが読みやすいため書き換えもすぐ行うことができるので，より直感的なコマンドを実装することも可能となった．
 
