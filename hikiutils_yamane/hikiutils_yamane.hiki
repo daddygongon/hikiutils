@@ -12,7 +12,7 @@
 //自分の仕事，ないものをつくる
 //!![[コマンドの命名原則|hikiutils_yamane_command]]
 //!![[hikiutilsのthorのコード解説|hikiutils_yamane_thor]]
-
+![[議論|hikiutils_yamane_discussion]]
 !reference:
 :1-1: hikidoc, https://rubygems.org/gems/hikidoc/versions/0.1.0, https://github.com/hiki/hikidoc,2017/1/30 アクセス.
 // 「hiki」,hikiwiki.org/ja/about.html ,2017/1/30 アクセス.
