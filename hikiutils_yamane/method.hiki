@@ -1,6 +1,6 @@
 {{toc}}
 !方法
-!!optparseとthorの比較
+!!optparseとThorの比較
 今回の研究対象のhikiutilsは，optparseというコマンドライン解析ライブラリで実装されている．
 本研究ではこの代替ライブラリとしてThorの採用を検討した．
 本章の最初では，FizzBuzzという簡単なコードを例にoptparseとThorにより作成するコマンドライン解析コードの比較を行う．FizzBuzzはThorの使い方を解説した記事{{cite(1-2)}}で紹介されている．比較しやすくするためoptparseでFizzBuzzを新たに実装した．
