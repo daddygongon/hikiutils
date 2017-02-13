@@ -133,11 +133,14 @@ targetを変える，change directoryとのメタファ．ただし，いまの�
 について詳しく検討を行う．
 
 \subsubsection{クラス初期化}
+Thorのinitializeでのコードの呼び出し関係は図\ref{fig:003}の通りである．
+
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.003.jpg}
-\caption{Thorのinitializeでのコード}
+\caption{Thorのinitializeでのコード．}
+\label{fig:003}
 \label{default}\end{center}\end{figure}
-Thorのinitializeでのコードはつぎの通りである．
+この動きを順を追って説明すると
 
 \begin{enumerate}
 \item Hikithor::CLI.start(ARGV)が呼ばれる
@@ -145,7 +148,9 @@ Thorのinitializeでのコードはつぎの通りである．
 \item これではThorのinitializeメソッドが呼ばれない
 \item superを書くことでThorのinitializeメソッドが呼ばれる
 \end{enumerate}
-optparseではrequireでoptparseを呼びoptparseのinitializeを定義する必要はないが，Thorはinitializeを定義する必要がある．Thorの定義方法はrequireでThorを呼びCLIクラスで継承し，initializeメソッドにsuperを書くことでThorのinitializeが呼ばれる．initializeメソッド内ではThorの初期設定がされていないため，スーパークラスのメソッドを読み出してくれるsuperを書き加えることで図のようにinitializeメソッド内でThorのinitilalizeメソッドが呼ばれ定義される．
+となる．
+
+この実装コードは次の通りである．
 \begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
 
 module Hikithor
@@ -163,29 +168,24 @@ module Hikithor
       ...以下略...
    end
 \end{lstlisting}
+optparseではrequireでoptparseを呼びoptparseのinitializeを定義する必要はないが，Thorはinitializeを定義する必要がある．Thorの定義方法はrequireでThorを呼びCLIクラスで継承し，initializeメソッドにsuperを書くことでThorのinitializeが呼ばれる．initializeメソッド内ではThorの初期設定がされていないため，スーパークラスのメソッドを読み出してくれるsuperを書き加えることで図のようにinitializeメソッド内でThorのinitilalizeメソッドが呼ばれ定義される．
+
 \subsubsection{コマンド定義}
-Thorではoptparseのような登録処理はない．図\ref{fig:004}にある通りにコマンドが記述される．
+Thorではoptparseのような登録処理はない．コマンド記述のひな形は図\ref{fig:004}の通りである．
 
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.004.jpg}
 \caption{Thorにおけるコマンド記述のひな形．}
 \label{fig:004}
 \label{default}\end{center}\end{figure}
-それらは以下のように構成される．
+このひな形を順を追って説明する．
 
 \begin{enumerate}
 \item desc以降にコマンド名と，その説明が記述される．これらはコマンドhelpで一覧として表示させる
 \item mapによって別のコマンド名でも実行できるように定義される．
 \item defで定義されたメソッドの実行コード
 \end{enumerate}
-Thorではdescで一覧を表示されるコマンド名，コマンドの説明を登録する．しかし，ここで記述したコマンドは単に一覧で表示させるためのものであり，実際に実行される時に呼び出すコマンド名は，defで定義された名前である．Thorでは処理実行を行うメソッド名がコマンド名となり，コマンド名１つが対応する．
-
-これに別名を与えるために利用されるキーワードがmapである．
-\begin{quote}\begin{verbatim}
-map A => B
-\end{verbatim}\end{quote}
-mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれるものである．
-よって，これを使うことでコマンドの別名を指定することができる．
+この実装コードは次の通りである．
 \begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
     desc 'show,--show', 'show sources'
     map "--show" => "show"
@@ -195,6 +195,15 @@ mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれる
       ,,,以下略...
     end
 \end{lstlisting}
+Thorではdescで一覧を表示されるコマンド名，コマンドの説明を登録する．しかし，ここで記述したコマンドは単に一覧で表示させるためのものであり，実際に実行される時に呼び出すコマンド名は，defで定義された名前である．Thorでは処理実行を行うメソッド名がコマンド名となり，コマンド名１つが対応する．
+
+これに別名を与えるために利用されるキーワードがmapである．
+\begin{quote}\begin{verbatim}
+map A => B
+\end{verbatim}\end{quote}
+mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれるものである．
+よって，これを使うことでコマンドの別名を指定することができる．
+
 以上より，Thorではコマンドの指定と処理にはdesc,map,処理メソッドだけで済む．optparseではコマンドを登録するためのメソッドと処理メソッドの両方が必要になっていた．一方Thorでは，処理メソッドが直接コマンド名となるため記述が簡潔になる．
 
 \subsubsection{CLIの実行プロセス}
@@ -205,7 +214,7 @@ CLIの実行プロセスは図\ref{fig:006}の通りである．
 \caption{CLIの実行プロセス．}
 \label{fig:006}
 \label{default}\end{center}\end{figure}
-Thorにおけるcliの実行プロセスは次の通りである．
+ThorにおけるCLIの実行プロセスは次の通りである．
 
 \begin{enumerate}
 \item hiki\_thorのHikithor::CLI.start(ARGV)でhikiutils\_thor.rbのCLIクラスを呼ぶ

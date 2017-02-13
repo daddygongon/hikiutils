@@ -120,7 +120,8 @@ end
 
 desc "FILE.hikiあるいはhikiファイルをedtiorで開く"
 task :open do
-  if file=ARGV[1] 
+  if file=ARGV[1]
+    file += '.hiki' if file.split(".")[1]==nil
     system "open -a mi #{file}"
   else
     Dir.entries('.').each{|file|

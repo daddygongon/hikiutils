@@ -126,6 +126,8 @@ optparseの特徴は，「コマンドの登録，実行method」に分けて記
 また，CLIの起動の仕方が特徴的である．この二つを取り出して，動作とコードを説明する．
 
 \subsubsection{コマンドの登録と実行メソッド}
+optparseのコマンド登録と実行メソッドの呼び出し関係は図\ref{fig:005}の通りである．
+
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.005.jpg}
 \caption{コマンドの登録と実行メソッドの対応．}
@@ -138,7 +140,7 @@ optparseでは以下の通り，コマンドの登録と実行が行われる．
 \item optにコマンドを登録
 \item 入力されたコマンドの処理のメソッドへ移動
 \end{enumerate}
-optparseではOptionParserオブジェクトoptの生成を行い，コマンドをoptに登録することでコマンドを作成することができる．しかし，これはコマンドを登録しているだけでコマンドの一覧ではこれを表示することができるが，コマンドの実行を行うためには実行を行うためのメソッドを作成する必要がある．optparseでのコマンドの実行はoptで登録されたコマンドが入力されることでそれぞれのコマンドの処理を行うメソッドに移動し処理を行う．しかし，このコマンド登録はハイフンを付けたコマンドしか登録ができず，ハイフンなしのコマンド登録はまた別の手段でやらなくてはいけない．
+この実装コードは次の通りである．
 \begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
     def execute
       @argv << '--help' if @argv.size==0
@@ -175,13 +177,17 @@ optparseではOptionParserオブジェクトoptの生成を行い，コマンド
     以下略
 
 \end{lstlisting}
+optparseではOptionParserオブジェクトoptの生成を行い，コマンドをoptに登録することでコマンドを作成することができる．しかし，これはコマンドを登録しているだけでコマンドの一覧ではこれを表示することができるが，コマンドの実行を行うためには実行を行うためのメソッドを作成する必要がある．optparseでのコマンドの実行はoptで登録されたコマンドが入力されることでそれぞれのコマンドの処理を行うメソッドに移動し処理を行う．しかし，このコマンド登録はハイフンを付けたコマンドしか登録ができず，ハイフンなしのコマンド登録はまた別の手段でやらなくてはいけない．
+
 \subsubsection{CLIの実行プロセス}
+optparseを用いた場合のCLIの実行プロセスは図\ref{fig:007}の通りとなる．
+
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.007.jpg}
 \caption{CLIの実行プロセス．}
 \label{fig:007}
 \label{default}\end{center}\end{figure}
-optparseを用いた場合のCLIの実行プロセスは次の通りとなる．
+CLIの実行プロセスは次の通りとなる．
 
 \begin{enumerate}
 \item HikiのHikiUtils::Command.run(ARGV)でhikiutils.rbのrunメソッドを呼ぶ
