@@ -2,18 +2,17 @@
 !結果
 !!コマンドの命名原則
 
-機能ごとの動作はコマンドのオプションによって指定されます．
+機能ごとの動作はコマンドのオプションによって指定される．
 このオプションにどのような名前をつけるかは，どれだけコマンドを覚えやすいかという
-意味で重要です．コマンドの振る舞いを的確に表す名称をつける必要があります．
+意味で重要である．コマンドの振る舞いを的確に表す名称をつける必要がある．
 
-この振る舞いとしてもっとも受け入れやすいのがshellで用意されているコマンドです．
-pwd, ls, rm, touch, openなどはもっとも直感的に動作がわかるコマンドです．
-hikiutilsの振る舞いを予測できるシェルコマンドと同じ名前でオプションを提供する
-ようにします．
+この振る舞いとしてもっとも受け入れやすいのがshellで用意されているコマンドである．
+pwd, ls, rm, touch, openなどはもっとも直感的に動作がわかるコマンドである．
+hikiutilsの振る舞いを予測できるシェルコマンドと同じ名前でオプションを提供する．
 
 
 !!!hikiutilsの想定利用形態
-ここでhikiutilsがあらかじめ想定している利用形態を解説しておきます．
+ここでhikiutilsがあらかじめ想定している利用形態を解説する．
 
 !!!caption:(fig:002)hikiutilsがあらかじめ想定している利用形態．
 {{attach_view(hikiutils_yamane.002.jpg,hikiutils_yamane)}}
@@ -21,11 +20,11 @@ hikiutilsの振る舞いを予測できるシェルコマンドと同じ名前�
 hikiutilsは，
 *local PCとglobal serverとが用意されており，
 *それらのデータをrsyncで同期する
-ことで動作することを想定しています．これは，ネットに繋がっていないオフラインの状況でも
-テキストなどの編集が可能で，さらに不用意な書き換えを防ぐための機構です．さらに，
-どちらもが何かあった時のバックアップともなって，ミスによる手戻りを防いでいます．
+ことで動作することを想定される．これは，ネットに繋がっていないオフラインの状況でも
+テキストなどの編集が可能で，さらに不用意な書き換えを防ぐための機構である．さらに，
+どちらもが何かあった時のバックアップともなって，ミスによる手戻りを防いでいる．
 
-これらの設定は，~/.hikircにyaml形式で記述・保存されています．
+これらの設定は，~/.hikircにyaml形式で記述・保存されている．
 <<< yaml
 bob% cat ~/.hikirc
 :srcs:
@@ -41,7 +40,7 @@ bob% cat ~/.hikirc
   :global_uri: http://nishitani0.kwansei.ac.jp/~bob/nishitani0/Internal
 >>>
 また，一般的に一人のユーザがいくつものまとまりとしてのlocal-globalペアを
-保持して管理することが普通です．それぞれにnicke_nameをつけて管理しています．
+保持して管理することが普通である．それぞれにnicke_nameをつけて管理している．
 <<< bash
 bob% hiki -s
 hikiutils: provide utilities for helping hiki editing.
@@ -55,12 +54,12 @@ editor_command:open -a mi
   2 | ist       | /Users/bob/Sites/hiki-data/data           | http://ist.ksc.k
   3 | new_maple | /Users/bob/Sites/new_ist_data/maple_hiki_d| http://ist.ksc.k
 >>>
-とすると，それらの一覧と，いまtargetにしているnick_nameディレクリが表示されます．
+とすると，それらの一覧と，いまtargetにしているnick_nameディレクリが表示される．
 
 !!!コメンド名と振る舞いの詳細
 
-検討の結果コマンドを以下の表{{ref(table:ShellOption)}}のとおり書き換えることとします．
-上部に記した，特によく使うコマンドに関しては，shellでよく使われるコマンド名と一致するにようにしました．
+検討の結果コマンドを以下の表{{ref(table:ShellOption)}}のとおり書き換えることとする．
+上部に記した，特によく使うコマンドに関しては，shellでよく使われるコマンド名と一致するにようにした．
 
 !!!caption:(table:ShellOption)コマンドオプションとshellコマンドの対応．
 ||変更前||変更後||動作の解説
@@ -81,7 +80,7 @@ editor_command:open -a mi
 ||help [COMMAND]  ||-h||  Describe available commands
 ||version         ||-v||  show program version
 
-それぞれの意図を動作の解説として記述しています．
+それぞれの意図を動作の解説として記述する．
 
 !!!! open FILE
 ファイルを編集のためにeditorでopen．Editorは~/.hikircに
@@ -117,16 +116,19 @@ targetを変える，change directoryとのメタファ．ただし，いまの�
 について詳しく検討を行う．
 
 !!!クラス初期化
-!!!!caption:Thorのinitializeでのコード
+Thorのinitializeでのコードの呼び出し関係は図{{ref(fig:003)}}の通りである．
+
+!!!!caption:(fig:003)Thorのinitializeでのコード．
 {{attach_view(hikiutils_yamane.003.jpg,hikiutils_yamane)}}
 
-Thorのinitializeでのコードはつぎの通りである．
+この動きを順を追って説明すると
 #Hikithor::CLI.start(ARGV)が呼ばれる
 #initializeメソッドが呼ばれる
 #これではThorのinitializeメソッドが呼ばれない
 #superを書くことでThorのinitializeメソッドが呼ばれる
-optparseではrequireでoptparseを呼びoptparseのinitializeを定義する必要はないが，Thorはinitializeを定義する必要がある．Thorの定義方法はrequireでThorを呼びCLIクラスで継承し，initializeメソッドにsuperを書くことでThorのinitializeが呼ばれる．initializeメソッド内ではThorの初期設定がされていないため，スーパークラスのメソッドを読み出してくれるsuperを書き加えることで図のようにinitializeメソッド内でThorのinitilalizeメソッドが呼ばれ定義される．
+となる．
 
+この実装コードは次の通りである．
 <<< ruby
 
 module Hikithor
@@ -144,27 +146,20 @@ module Hikithor
       ...以下略...
    end
 >>>
+optparseではrequireでoptparseを呼びoptparseのinitializeを定義する必要はないが，Thorはinitializeを定義する必要がある．Thorの定義方法はrequireでThorを呼びCLIクラスで継承し，initializeメソッドにsuperを書くことでThorのinitializeが呼ばれる．initializeメソッド内ではThorの初期設定がされていないため，スーパークラスのメソッドを読み出してくれるsuperを書き加えることで図のようにinitializeメソッド内でThorのinitilalizeメソッドが呼ばれ定義される．
 
 !!!コマンド定義
-Thorではoptparseのような登録処理はない．図{{ref(fig:004)}}にある通りにコマンドが記述される．
+Thorではoptparseのような登録処理はない．コマンド記述のひな形は図{{ref(fig:004)}}の通りである．
 
 !!!!caption:(fig:004)Thorにおけるコマンド記述のひな形．
 {{attach_view(hikiutils_yamane.004.jpg,hikiutils_yamane)}}
 
-それらは以下のように構成される．
+このひな形を順を追って説明する．
 #desc以降にコマンド名と，その説明が記述される．これらはコマンドhelpで一覧として表示させる
 #mapによって別のコマンド名でも実行できるように定義される．
 #defで定義されたメソッドの実行コード
 
-Thorではdescで一覧を表示されるコマンド名，コマンドの説明を登録する．しかし，ここで記述したコマンドは単に一覧で表示させるためのものであり，実際に実行される時に呼び出すコマンド名は，defで定義された名前である．Thorでは処理実行を行うメソッド名がコマンド名となり，コマンド名１つが対応する．
-
-これに別名を与えるために利用されるキーワードがmapである．
-<<<
-map A => B
->>>
-mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれるものである．
-よって，これを使うことでコマンドの別名を指定することができる．
-
+この実装コードは次の通りである．
 <<< ruby
     desc 'show,--show', 'show sources'
     map "--show" => "show"
@@ -174,6 +169,14 @@ mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれる
       ,,,以下略...
     end
 >>>
+Thorではdescで一覧を表示されるコマンド名，コマンドの説明を登録する．しかし，ここで記述したコマンドは単に一覧で表示させるためのものであり，実際に実行される時に呼び出すコマンド名は，defで定義された名前である．Thorでは処理実行を行うメソッド名がコマンド名となり，コマンド名１つが対応する．
+
+これに別名を与えるために利用されるキーワードがmapである．
+<<<
+map A => B
+>>>
+mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれるものである．
+よって，これを使うことでコマンドの別名を指定することができる．
 
 以上より，Thorではコマンドの指定と処理にはdesc,map,処理メソッドだけで済む．optparseではコマンドを登録するためのメソッドと処理メソッドの両方が必要になっていた．一方Thorでは，処理メソッドが直接コマンド名となるため記述が簡潔になる．
 
@@ -183,7 +186,7 @@ CLIの実行プロセスは図{{ref(fig:006)}}の通りである．
 !!!!caption:(fig:006)CLIの実行プロセス．
 {{attach_view(hikiutils_yamane.006.jpg,hikiutils_yamane)}}
 
-Thorにおけるcliの実行プロセスは次の通りである．
+ThorにおけるCLIの実行プロセスは次の通りである．
 #hiki_thorのHikithor::CLI.start(ARGV)でhikiutils_thor.rbのCLIクラスを呼ぶ
 #hikiutils_thor.rbのCLIクラスのメソッドを順に実行していく
 
