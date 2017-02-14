@@ -1,20 +1,19 @@
 
 \section{結果}
 \subsection{コマンドの命名原則}
-機能ごとの動作はコマンドのオプションによって指定されます．
+機能ごとの動作はコマンドのオプションによって指定される．
 このオプションにどのような名前をつけるかは，どれだけコマンドを覚えやすいかという
-意味で重要です．コマンドの振る舞いを的確に表す名称をつける必要があります．
+意味で重要である．コマンドの振る舞いを的確に表す名称をつける必要がある．
 
-この振る舞いとしてもっとも受け入れやすいのがshellで用意されているコマンドです．
-pwd, ls, rm, touch, openなどはもっとも直感的に動作がわかるコマンドです．
-hikiutilsの振る舞いを予測できるシェルコマンドと同じ名前でオプションを提供する
-ようにします．
+この振る舞いとしてもっとも受け入れやすいのがshellで用意されているコマンドである．
+pwd, ls, rm, touch, openなどはもっとも直感的に動作がわかるコマンドである．
+hikiutilsの振る舞いを予測できるシェルコマンドと同じ名前でオプションを提供する．
 
 \subsubsection{hikiutilsの想定利用形態}
-ここでhikiutilsがあらかじめ想定している利用形態を解説しておきます．
+ここでhikiutilsがあらかじめ想定している利用形態を解説する．
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.002.jpg}
+\includegraphics[width=12cm,bb= 0 0 937 753]{../figs/./hikiutils_yamane.002.jpg}
 \caption{hikiutilsがあらかじめ想定している利用形態．}
 \label{fig:002}
 \label{default}\end{center}\end{figure}
@@ -24,11 +23,11 @@ hikiutilsは，
 \item local PCとglobal serverとが用意されており，
 \item それらのデータをrsyncで同期する
 \end{itemize}
-ことで動作することを想定しています．これは，ネットに繋がっていないオフラインの状況でも
-テキストなどの編集が可能で，さらに不用意な書き換えを防ぐための機構です．さらに，
-どちらもが何かあった時のバックアップともなって，ミスによる手戻りを防いでいます．
+ことで動作することを想定される．これは，ネットに繋がっていないオフラインの状況でも
+テキストなどの編集が可能で，さらに不用意な書き換えを防ぐための機構である．さらに，
+どちらもが何かあった時のバックアップともなって，ミスによる手戻りを防いでいる．
 
-これらの設定は，~/.hikircにyaml形式で記述・保存されています．
+これらの設定は，~/.hikircにyaml形式で記述・保存されている．
 \begin{lstlisting}[style=,basicstyle={\scriptsize\ttfamily}]
 bob% cat ~/.hikirc
 :srcs:
@@ -44,7 +43,7 @@ bob% cat ~/.hikirc
   :global_uri: http://nishitani0.kwansei.ac.jp/~bob/nishitani0/Internal
 \end{lstlisting}
 また，一般的に一人のユーザがいくつものまとまりとしてのlocal-globalペアを
-保持して管理することが普通です．それぞれにnicke\_nameをつけて管理しています．
+保持して管理することが普通である．それぞれにnicke\_nameをつけて管理している．
 \begin{lstlisting}[style=,basicstyle={\scriptsize\ttfamily}]
 bob% hiki -s
 hikiutils: provide utilities for helping hiki editing.
@@ -58,11 +57,11 @@ editor_command:open -a mi
   2 | ist       | /Users/bob/Sites/hiki-data/data           | http://ist.ksc.k
   3 | new_maple | /Users/bob/Sites/new_ist_data/maple_hiki_d| http://ist.ksc.k
 \end{lstlisting}
-とすると，それらの一覧と，いまtargetにしているnick\_nameディレクリが表示されます．
+とすると，それらの一覧と，いまtargetにしているnick\_nameディレクリが表示される．
 
 \subsubsection{コメンド名と振る舞いの詳細}
-検討の結果コマンドを以下の表\ref{table:ShellOption}のとおり書き換えることとします．
-上部に記した，特によく使うコマンドに関しては，shellでよく使われるコマンド名と一致するにようにしました．
+検討の結果コマンドを以下の表\ref{table:ShellOption}のとおり書き換えることとする．
+上部に記した，特によく使うコマンドに関しては，shellでよく使われるコマンド名と一致するにようにした．
 
 \begin{table}[htbp]\begin{center}
 \caption{コマンドオプションとshellコマンドの対応．}
@@ -92,7 +91,7 @@ version           &-v  &show program version  \\
 \end{center}\end{table}
 %for inserting separate lines, use \hline, \cline{2-3} etc.
 
-それぞれの意図を動作の解説として記述しています．
+それぞれの意図を動作の解説として記述する．
 
 \paragraph{open FILE}
 ファイルを編集のためにeditorでopen．Editorは~/.hikircに
@@ -134,11 +133,14 @@ targetを変える，change directoryとのメタファ．ただし，いまの�
 について詳しく検討を行う．
 
 \subsubsection{クラス初期化}
+Thorのinitializeでのコードの呼び出し関係は図\ref{fig:003}の通りである．
+
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.003.jpg}
-\caption{Thorのinitializeでのコード}
+\includegraphics[width=12cm,bb= 0 0 937 753]{../figs/./hikiutils_yamane.003.jpg}
+\caption{Thorのinitializeでのコード．}
+\label{fig:003}
 \label{default}\end{center}\end{figure}
-Thorのinitializeでのコードはつぎの通りである．
+この動きを順を追って説明すると
 
 \begin{enumerate}
 \item Hikithor::CLI.start(ARGV)が呼ばれる
@@ -146,7 +148,9 @@ Thorのinitializeでのコードはつぎの通りである．
 \item これではThorのinitializeメソッドが呼ばれない
 \item superを書くことでThorのinitializeメソッドが呼ばれる
 \end{enumerate}
-optparseではrequireでoptparseを呼びoptparseのinitializeを定義する必要はないが，Thorはinitializeを定義する必要がある．Thorの定義方法はrequireでThorを呼びCLIクラスで継承し，initializeメソッドにsuperを書くことでThorのinitializeが呼ばれる．initializeメソッド内ではThorの初期設定がされていないため，スーパークラスのメソッドを読み出してくれるsuperを書き加えることで図のようにinitializeメソッド内でThorのinitilalizeメソッドが呼ばれ定義される．
+となる．
+
+この実装コードは次の通りである．
 \begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
 
 module Hikithor
@@ -164,29 +168,24 @@ module Hikithor
       ...以下略...
    end
 \end{lstlisting}
+optparseではrequireでoptparseを呼びoptparseのinitializeを定義する必要はないが，Thorはinitializeを定義する必要がある．Thorの定義方法はrequireでThorを呼びCLIクラスで継承し，initializeメソッドにsuperを書くことでThorのinitializeが呼ばれる．initializeメソッド内ではThorの初期設定がされていないため，スーパークラスのメソッドを読み出してくれるsuperを書き加えることで図のようにinitializeメソッド内でThorのinitilalizeメソッドが呼ばれ定義される．
+
 \subsubsection{コマンド定義}
-Thorではoptparseのような登録処理はない．図\ref{fig:004}にある通りにコマンドが記述される．
+Thorではoptparseのような登録処理はない．コマンド記述のひな形は図\ref{fig:004}の通りである．
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.004.jpg}
+\includegraphics[width=12cm,bb= 0 0 937 753]{../figs/./hikiutils_yamane.004.jpg}
 \caption{Thorにおけるコマンド記述のひな形．}
 \label{fig:004}
 \label{default}\end{center}\end{figure}
-それらは以下のように構成される．
+このひな形を順を追って説明する．
 
 \begin{enumerate}
 \item desc以降にコマンド名と，その説明が記述される．これらはコマンドhelpで一覧として表示させる
 \item mapによって別のコマンド名でも実行できるように定義される．
 \item defで定義されたメソッドの実行コード
 \end{enumerate}
-Thorではdescで一覧を表示されるコマンド名，コマンドの説明を登録する．しかし，ここで記述したコマンドは単に一覧で表示させるためのものであり，実際に実行される時に呼び出すコマンド名は，defで定義された名前である．Thorでは処理実行を行うメソッド名がコマンド名となり，コマンド名１つが対応する．
-
-これに別名を与えるために利用されるキーワードがmapである．
-\begin{quote}\begin{verbatim}
-map A => B
-\end{verbatim}\end{quote}
-mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれるものである．
-よって，これを使うことでコマンドの別名を指定することができる．
+この実装コードは次の通りである．
 \begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
     desc 'show,--show', 'show sources'
     map "--show" => "show"
@@ -196,17 +195,26 @@ mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれる
       ,,,以下略...
     end
 \end{lstlisting}
+Thorではdescで一覧を表示されるコマンド名，コマンドの説明を登録する．しかし，ここで記述したコマンドは単に一覧で表示させるためのものであり，実際に実行される時に呼び出すコマンド名は，defで定義された名前である．Thorでは処理実行を行うメソッド名がコマンド名となり，コマンド名１つが対応する．
+
+これに別名を与えるために利用されるキーワードがmapである．
+\begin{quote}\begin{verbatim}
+map A => B
+\end{verbatim}\end{quote}
+mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれるものである．
+よって，これを使うことでコマンドの別名を指定することができる．
+
 以上より，Thorではコマンドの指定と処理にはdesc,map,処理メソッドだけで済む．optparseではコマンドを登録するためのメソッドと処理メソッドの両方が必要になっていた．一方Thorでは，処理メソッドが直接コマンド名となるため記述が簡潔になる．
 
 \subsubsection{CLIの実行プロセス}
 CLIの実行プロセスは図\ref{fig:006}の通りである．
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=10cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.006.jpg}
+\includegraphics[width=12cm,bb= 0 0 937 753]{../figs/./hikiutils_yamane.006.jpg}
 \caption{CLIの実行プロセス．}
 \label{fig:006}
 \label{default}\end{center}\end{figure}
-Thorにおけるcliの実行プロセスは次の通りである．
+ThorにおけるCLIの実行プロセスは次の通りである．
 
 \begin{enumerate}
 \item hiki\_thorのHikithor::CLI.start(ARGV)でhikiutils\_thor.rbのCLIクラスを呼ぶ
