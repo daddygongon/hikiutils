@@ -1,0 +1,75 @@
+\documentclass[a4j,twocolumn]{jsarticle}
+\usepackage{subfigure}
+
+\def\Vec#1{\mbox{\boldmath $#1$}}
+\usepackage[dvipdfmx]{graphicx}
+
+\setlength{\textheight}{275mm}
+\headheight 5mm
+\topmargin -30mm
+\textwidth 185mm
+\oddsidemargin -15mm
+\evensidemargin -15mm
+\pagestyle{empty}
+\begin{document}
+\title{コマンドラインツール作成ライブラリThorによるhikiutilsの書き換え}
+\author{情報科学科 西谷研究室 3554 山根 亮太}
+\date{}
+\maketitle
+\section{序論}
+hikiは，hiki記法を用いたwiki cloneである．wikiの特徴であるweb上で編集する機能を提供する．これを便宜上hiki web systemと呼ぶ．研究室内の内部文書，あるいは外部への宣伝資料などに西谷研ではこのhiki systemを利用している．初心者にも覚えやすい直感的な操作である．しかし，慣れてくるとテキスト編集や画面更新にいちいちweb画面へ移行せねばならず，編集の思考が停止する．そこで，テキスト編集に優れたeditorとの連携や，terminal上のshell commandと連携しやすいようにhikiutilsというCLI(Command Line Interface)を作成して運用している．しかし，そのユーザインタフェースにはコマンドが直感的でないという問題点がある．そこで，optparseというコマンドライン解析ライブラリを使用しているhikiutilsを，新たなライブラリThorを使用してコマンドを書き換え，より直感的なコマンドに変更する．
+
+\section{方法}
+既存のhikiutilsはコマンド解析ライブラリのoptparseを用いて，コマンドの処理を行っている．
+optparseの特徴は，「コマンドの登録，実行method」に分けて記述することが期待されている．
+また，CLIの起動の仕方が特徴的である．
+optparseでは以下の通り，コマンドの登録と実行が行われる．
+\begin{itemize}
+\item OptionParserオブジェクトoptを生成
+\item optにコマンドを登録
+\item 入力されたコマンドの処理のメソッドへ移動
+\end{itemize}
+optparseではOptionParserオブジェクトoptの生成を行い，コマンドをoptに登録することでコマンドを作成することができる．optparseでのコマンドの実行はoptで登録されたコマンドが入力されることでそれぞれのコマンドの処理を行うメソッドに移動し処理を行う．しかし，このコマンド登録はハイフンを付けたコマンドしか登録ができず，ハイフンなしのコマンド登録はまた別の手段となる．
+\section{結果}
+\subsection{コメンド名}
+検討の結果コマンドを以下のように書き換えることとする．
+特によく使うコマンドに関しては，shellでよく使われるコマンド名と一致するにようにした．
+
+\begin{verbatim}
+edit FILE       open   open file
+list [FILE]     ls     list files
+rsync           rsync  rsync files
+update FILE     touch  update file
+show            pwd    show nick_names
+target VAL      cd     
+move [FILE]     mv     move file
+remove [FILE]   rm     remove files
+add                    add sources info
+checkdb                check database file
+datebase FILE   db     read datebase file
+display FILE    show   display converted hikifile
+euc FILE               translate file to euc
+help [COMMAND]  -h     Describe available commands
+version         -v     show program version
+\end{verbatim}
+
+\subsection{Thorによる実装}
+\begin{verbatim}
+desc 'show,--show', 'show sources'
+map "--show" => "show"
+def show
+  ...以下略...
+end
+\end{verbatim}
+Thorではdescで一覧を表示されるコマンド名，コマンドの説明を登録する．しかし，ここで記述したコマンドは単に一覧で表示させるためのものであり，実際に実行される時に呼び出すコマンド名は，defで定義された名前である．Thorでは処理実行を行うメソッド名がコマンド名となり，コマンド名１つが対応する．
+
+これに別名を与えるために利用されるキーワードがmapである．
+\begin{verbatim}
+map A => B
+\end{verbatim}
+mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれるものである．
+よって，これを使うことでコマンドの別名を指定することができる．
+
+\section{optparseとの全体的な比較}
+コードからもThorのほうが短くなっていることが分かる．よって，Thorとoptparseでのコードの違いは以上の部分になるが全体的にもThorのほうがコードが短くなり，コマンドの定義も簡単に行うことができる．また，実行手順も分かりやすくコードが読みやすいため書き換えもすぐ行うことができるので，より直感的なコマンドを実装することも可能となった．
+\end{document}
