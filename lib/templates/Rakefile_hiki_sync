@@ -278,7 +278,7 @@ def convert_to_latex(file_name, options={})
       line = "\\end{thebibliography}\n"
     end
     if m=line.match(/\\item\[(.+)\](.+)/) and in_bib==true
-      tmp=m[2].gsub!(/\\verb\|(.*?)\|/){ "\\url{#{$1}}" } || m[2]
+      tmp = m[2].gsub!(/\\verb\|(.*?)\|/){ "\\url{#{$1}}" } || m[2]
       line ="\\bibitem{#{m[1]}} #{tmp}"
       puts line.blue
     end
