@@ -29,31 +29,29 @@ optparseでは以下の通り，コマンドの登録と実行が行われる．
 \item optにコマンドを登録
 \item 入力されたコマンドの処理のメソッドへ移動
 \end{itemize}
-optparseではOptionParserオブジェクトoptの生成を行い，コマンドをoptに登録することでコマンドを作成することができる．optparseでのコマンドの実行はoptで登録されたコマンドが入力されることでそれぞれのコマンドの処理を行うメソッドに移動し処理を行う．しかし，このコマンド登録はハイフンを付けたコマンドしか登録ができず，ハイフンなしのコマンド登録はまた別の手段となる．
-\section{結果}
-\subsection{コメンド名}
-検討の結果コマンドを以下のように書き換えることとする．
-特によく使うコマンドに関しては，shellでよく使われるコマンド名と一致するにようにした．
-
 \begin{verbatim}
-edit FILE       open   open file
-list [FILE]     ls     list files
-rsync           rsync  rsync files
-update FILE     touch  update file
-show            pwd    show nick_names
-target VAL      cd     
-move [FILE]     mv     move file
-remove [FILE]   rm     remove files
-add                    add sources info
-checkdb                check database file
-datebase FILE   db     read datebase file
-display FILE    show   display converted hikifile
-euc FILE               translate file to euc
-help [COMMAND]  -h     Describe available commands
-version         -v     show program version
+def execute
+ @argv << '--help' if @argv.size==0
+ command_parser = OptionParser.new do |opt|
+  opt.on('-v','--version','show program Version.') 
+  { |v|
+    opt.version = HikiUtils::VERSION
+    puts opt.ver
+  }
+  opt.on('-s','--show','show sources')
+  {show_sources}                
+  ...省略...
+ end
+ ...省略...
+end     
+  
+def show_sources()
+  ...省略...
+end
+以下略
 \end{verbatim}
-
-\subsection{Thorによる実装}
+optparseではOptionParserオブジェクトoptの生成を行い，コマンドをoptに登録することでコマンドを作成することができる．optparseでのコマンドの実行はoptで登録されたコマンドが入力されることでそれぞれのコマンドの処理を行うメソッドに移動し処理を行う．しかし，このコマンド登録はハイフンを付けたコマンドしか登録ができず，ハイフンなしのコマンド登録はまた別の手段となる．
+\section{Thorによる実装}
 \begin{verbatim}
 desc 'show,--show', 'show sources'
 map "--show" => "show"
@@ -71,5 +69,5 @@ mapとはBと呼ばれるメソッドをAでも呼べるようにしてくれる
 よって，これを使うことでコマンドの別名を指定することができる．
 
 \section{optparseとの全体的な比較}
-コードからもThorのほうが短くなっていることが分かる．よって，Thorとoptparseでのコードの違いは以上の部分になるが全体的にもThorのほうがコードが短くなり，コマンドの定義も簡単に行うことができる．また，実行手順も分かりやすくコードが読みやすいため書き換えもすぐ行うことができるので，より直感的なコマンドを実装することも可能となった．
+コードからもThorのほうが短くなっていることが分かる．よって，Thorとoptparseでのコードの違いの一部分になるが全体的にもThorのほうがコードが短くなり，コマンドの定義も簡単に行うことができる．また，実行手順も分かりやすくコードが読みやすいため書き換えもすぐ行うことができるので，より直感的なコマンドを実装することも可能となった．
 \end{document}
