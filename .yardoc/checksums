@@ -1,0 +1,5 @@
+lib/hikiutils.rb 2893b9546bde804a2adf13836c30af77dac700fb
+lib/hikiutils_thor.rb e810f7079c409da449758c06ac5b91d936dec6fd
+lib/hikiutils/infodb.rb 992cdcd617507b75e11a29a4cae66b80dccdab3b
+lib/hikiutils/version.rb fed835efcccfc4a36bbab458769a0ae8d3599f18
+lib/hikiutils/tmarshal.rb 22ca242891eb6f037e10ad3d0b2e72aa9fa9c400
