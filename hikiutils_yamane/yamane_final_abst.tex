@@ -42,11 +42,9 @@
 \date{}
 \maketitle
 \section{目的}
-\vspace{-0.5em}
 hikiは，hiki記法を用いたwiki cloneである．wikiの特徴であるweb上で編集する機能を提供する．研究室内の内部文書，あるいは外部への宣伝資料などに西谷研ではこのhiki systemを利用している．初心者にも覚えやすい直感的な操作である．しかし，慣れてくるとテキスト編集や画面更新にいちいちweb画面へ移行せねばならず，編集の思考が停止する．そこで，テキスト編集に優れたeditorとの連携や，terminal上のshell commandと連携しやすいようにhikiutilsというCLI(Command Line Interface)を作成して運用している\cite{hikiutils}．しかし，そのユーザインタフェースにはコマンドが直感的でないという問題点がある．そこで，optparse\cite{optparse}というコマンドライン解析ライブラリを使用しているhikiutilsを，新たなライブラリThor\cite{thor}を使用してコマンドを書き換え，より直感的なコマンドに変更することが本研究の目的である．
 
 \section{optparseによるhikiutilsの実装}
-\vspace{-0.5em}
 既存のhikiutilsはコマンド解析ライブラリのoptparseを用いて，コマンドの処理を行っている．optparseは，「コマンドの登録，実行method」に分けて記述することが期待されている．また，CLIの起動の仕方が独特であり，コマンドの登録と実行が次のように行われる．
 \begin{itemize}
 \item OptionParserオブジェクトoptを生成
@@ -80,7 +78,6 @@ end
 optparseではOptionParserオブジェクトoptの生成を行い，コマンドをoptに登録することでコマンドを作成することができる．optparseでのコマンドの実行はoptで登録されたコマンドが入力されることでそれぞれのコマンドの処理を行うメソッドに移動し処理を行う．しかし，このコマンド登録はoptparseのデフォルトではハイフンを付けたコマンドしか登録ができず，ハイフンなしのコマンド登録はまた別の手段となり，煩雑なコードが必要となる．
 
 \section{Thorによる実装}
-\vspace{-0.5em}
 新しく適用を考えているコマンド解析ライブラリのThor(ソーアと発音)は，optparseと同じ機能を提供するが記述の仕方は大きく異なる．Thorでの記述例は以下の通りである．
 \begin{lstlisting}[style=customRuby,basicstyle={\scriptsize\ttfamily}]
 desc 'show,--show', 'show sources'
@@ -93,14 +90,10 @@ end
 Thorではdescで一覧を表示されるコマンド名，コマンドの説明を登録する．しかし，ここで記述したコマンドは単に一覧で表示させるためのものであり，実際に実行される時に呼び出すコマンド名は，defで定義された名前(ここではshow)である．Thorでは処理実行を行うメソッド名がコマンド名となり，デフォルトではコマンド名１つだけが対応する．
 
 これに別名を与えるために利用されるキーワードがmapである．
-\begin{verbatim}
-map A => B
-\end{verbatim}
 mapを用いると，Bと呼ばれるメソッドをAでも呼べるようにしてくれ，これを使うことでコマンドの別名を指定することができる．
 これによって，短縮表示(\verb|-s|)などを指定するという手段が一般的である．
 
 \section{optparseとの全体的な比較}
-\vspace{-0.5em}
 Thorとoptparseでのコードで最もわかりやすい違いは，Thorのほうがコードが短くなることである．さらに，コマンドの定義も簡単に行うことができ，実行手順も分かりやすくコードが読みやすいため，書き換えもすぐ行うことができた．より直感的にコマンドを実装することが可能となった．
 
 \begin{thebibliography}{9}
