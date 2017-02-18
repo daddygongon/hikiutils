@@ -10,11 +10,13 @@ hiki+keynoteで卒論の内容ができたら，それを卒論の最終形態�
 
 \begin{enumerate}
 \item 図の配置を調整するwrapの数値調整
-\item 参照文献の記述
-\item リスト，引用の体裁
-\item 章立て階層構造
+\item 図のcaptionとlabel-ref(hikiutilsで対応)
+\item 参照文献referenceとcite-bibitem(hikiutilsで対応)
+\item リスト，引用の体裁(hikiutilsで対応)
+\item 章立て階層構造(hikiutilsで対応)
 \end{enumerate}
-などが問題になるところです．
+などが問題になるところです．ほとんどをhikiutilsで提供していますが，
+いざという時の微調整は必要です．
 
 これはhikiではどうしようもありません．一つの手はもう少し高機能なmark up言語
 例えばasciidocなどに変更することですが，これはどこまでいっても終わりのない
@@ -243,7 +245,20 @@ latexへ文献参照を渡すために，下記のようなフォーマットで
 これをsync, all\_latexをかけると図\ref{fig:CiteRefSystems}のようになります．latexの文献参照(cite, bibliography)，図表番号の参照(ref, label)が正常に処理されていることが確認できます．また，web表示した場合でもそれほど違和感なく読めるでしょう．
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=12cm,bb= 0 0 937 753]{../figs/./hikiutils_bob.007.jpeg}
+\includegraphics[width=12cm,bb= 0 0 737 553]{../figs/./hikiutils_bob.007.jpeg}
 \caption{参照機能を利用した場合の変換後の表示．}
 \label{fig:CiteRefSystems}
 \label{default}\end{center}\end{figure}
+\subsection{latexに関する制約}
+\begin{itemize}
+\item latex\_dirに対応するtexファイルが作られる
+\item head.texにlatexのtitle部を記述
+\item ref:図\ref{fig:SystemOverview}に卒論編集システムの概観を示しています．
+\item !!!caption: (fig:SystemOverview)卒論編集システムの概観．
+\item caption以下の丸括弧内にタグを書く
+\item fig:以下のタグにsnake nameは使えん．Camelで書く
+\item cite:基本的な使い方\cite{listings1}
+\item !reference:
+\item :listings1:\verb|http://d.hatena.ne.jp/mallowlabs/20061226/1167137637|
+\item reference:以下の:...:記述がlatexではbibliographyに変わる
+\end{itemize}

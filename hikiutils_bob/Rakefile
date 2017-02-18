@@ -196,9 +196,9 @@ end
 
 def check_bounding_box
 #  $bounding_box="0 0 442 432"
-#  $bounding_box=" 0 0 737 553"
+  $bounding_box=" 0 0 737 553"
 #  $fig_width="10"
-  $bounding_box=" 0 0 937 753"
+#  $bounding_box=" 0 0 937 753"
   $fig_width="12"
 end
 
