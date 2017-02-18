@@ -8,10 +8,12 @@ hiki+keynoteで卒論の内容ができたら，それを卒論の最終形態�
 
 具体的には，
 # 図の配置を調整するwrapの数値調整
-# 参照文献の記述
-# リスト，引用の体裁
-# 章立て階層構造
-などが問題になるところです．
+# 図のcaptionとlabel-ref(hikiutilsで対応)
+# 参照文献referenceとcite-bibitem(hikiutilsで対応)
+# リスト，引用の体裁(hikiutilsで対応)
+# 章立て階層構造(hikiutilsで対応)
+などが問題になるところです．ほとんどをhikiutilsで提供していますが，
+いざという時の微調整は必要です．
 
 これはhikiではどうしようもありません．一つの手はもう少し高機能なmark up言語
 例えばasciidocなどに変更することですが，これはどこまでいっても終わりのない
@@ -228,3 +230,15 @@ latexへ文献参照を渡すために，下記のようなフォーマットで
 
 !!!caption: (fig:CiteRefSystems)参照機能を利用した場合の変換後の表示．
 {{attach_view(hikiutils_bob.007.jpeg,hikiutils_bob)}}
+
+!!latexに関する制約
+*latex_dirに対応するtexファイルが作られる
+*head.texにlatexのtitle部を記述
+*ref:図{{ref(fig:SystemOverview)}}に卒論編集システムの概観を示しています．
+*!!!caption: (fig:SystemOverview)卒論編集システムの概観．
+*caption以下の丸括弧内にタグを書く
+*fig:以下のタグにsnake nameは使えん．Camelで書く
+*cite:基本的な使い方{{cite(listings1)}}
+*!reference:
+*:listings1:[[http://d.hatena.ne.jp/mallowlabs/20061226/1167137637]]
+*reference:以下の:...:記述がlatexではbibliographyに変わる

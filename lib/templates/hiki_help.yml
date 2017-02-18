@@ -31,23 +31,63 @@
   :cont:
   - Permission denied - ./data/text/boundary_narita (Errno::EACCES)->テキストにhikiが書き込めない，chmod
     a+w FILE
+  - rake chenvを試してみよ
 :figs:
   :opts:
     :short: "-f"
     :long: "--figs"
-    :desc: 図表：すべての図表をkeynoteにまとめる，タイトルを分かりやすく書く
-  :title: 図表：すべての図表をkeynoteにまとめる，タイトルを分かりやすく書く
+    :desc: 図表に関する制約
+  :title: 図表に関する制約
   :cont:
+  - すべての図表をkeynoteにまとめる
   - keynoteに書いたスライドはイメージに書き出して，rake convert 80 TARGET_DIRでfigsに変換
   - rake syncでfigsにあるfilesはhiki/target_dirにcpされる
   - 'convert #{source} -resize 20% #{target}によって，target=figs/TAERGET.pngに20%に縮小して保存される'
-  - convert -density 300 view.svg view.pngで300dpiで変換
-  - |
-    attach_anchorでは
-    '{{attach_anchor(test.png, hiki2latex_saki)}}'
-    と，directory指定しなければならない.
-  - keynoteであとで図を挿入して番号が変わった時の原稿の一括変換 
+  - "convert -density 300 view.svg view.pngで300dpiで変換"
+  - "attach_anchorでは'{{attach_anchor(test.png, hiki2latex_saki)}}'と，directory指定しなければならない."
+  - keynoteであとで図を挿入して番号が変わった時の原稿の一括変換
   - rake increment 2 boundary_bob.hiki boundary_bob > tmp.hiki
   - rake convert 60 boundary_bob
   - rake sync
   - hiki -u boundary_bob_tmp
+:sync:
+  :opts:
+    :short: "-s"
+    :long: "--sync"
+    :desc: hikiとの同期に関する制約
+  :title: hikiとの同期に関する制約
+  :cont:
+  - hikiシステムはフラットなdirectory構造を取っている
+  - hikiの文書はスネーク表記(例えば，latex2hiki_saki)で階層構造に似せている
+  - hikiのurlの接頭語となる名前をbasenameのdirectory名とする．
+  - directory名が'hikis'である場合はその親directory名となる．
+  - ~/.hikircのtarget directoryを同期先のdirectoryとする．
+  - ~/.hikircがない場合は同期先のdirectoryを聞く．
+  - それらは./.hikircに保存される
+:text:
+  :opts:
+    :short: "-t"
+    :long: "--text"
+    :desc: テキストに関する制約
+  :title: テキストに関する制約
+  :cont:
+  - "テキストの拡張子は'.hiki'としている"
+  - hikiでのurlはテキスト前とディレクトリーから自動生成される
+  - "例えば，hiki2latex_saki/introduciton.hikiとするとhiki2latex_saki_introducitonと変換される"
+:latex:
+  :opts:
+    :short: "-l"
+    :long: "--latex"
+    :desc: latexに関する制約
+  :title: latexに関する制約
+  :cont:
+  - latex_dirに対応するtexファイルが作られる
+  - head.texにlatexのtitle部を記述
+  - "ref:図{{ref(fig:SystemOverview)}}に卒論編集システムの概観を示しています．"
+  - "!!!caption: (fig:SystemOverview)卒論編集システムの概観．"
+  - "caption以下の丸括弧内にタグを書く"
+  - "fig:以下のタグにsnake nameは使えん．Camelで書く"
+  - "cite:基本的な使い方{{cite(listings1)}}"
+  - "!reference:"
+  - ":listings1:[[http://d.hatena.ne.jp/mallowlabs/20061226/1167137637]]"
+  - "reference:以下の:...:記述がlatexではbibliographyに変わる"

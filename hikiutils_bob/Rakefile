@@ -14,7 +14,7 @@ dirnames=Dir.pwd.split('/')
 $basename = (dirnames[-1]=='hikis')? dirnames[-2] : dirnames[-1]
 $latex_dir= 'latex_dir'
 $section_layer = {}
-$target_dir = '.'
+$target_dir = ARGV[1] || '.'
 
 task :default do
   system 'rake -T'
@@ -157,9 +157,11 @@ def latex_loop(entries,opts={})
   main_file=""
   entries.each{|file|
     options={:latex_all=>true}
-    next unless file.split('.')[1]=='hiki'
-    next if file=='toc.hiki'
-    next if file.include?('.hikirc')
+    file_basename= File.basename(file)
+    next unless file_basename.split('.')[1]=='hiki'
+    next if file_basename=='toc.hiki'
+    next if file_basename.include?('.hikirc')
+    puts file.red
     f_name =File.basename(file,'.hiki')
     if opts[:main]
       if f_name==$basename
@@ -200,11 +202,16 @@ def check_bounding_box
   $fig_width="12"
 end
 
+def get_target_entries
+  p entries=Dir.entries($target_dir)
+  entries.map!{|file| File.join($target_dir, file)}
+  puts entries.to_s.red
+  return entries
+end
+
 desc "すべてのDIR/hikiファイルをlatex変換"
 task :latex_all do
-  $target_dir = ARGV[1] unless ARGV[1]==nil
-  p entries=Dir.entries($target_dir)
-  p entries.map!{|file| File.join($target_dir, file)}
+  entries = get_target_entries
   main_file = latex_loop(entries,opts={:main=>true})
   latex_loop(entries)
   cont=""
@@ -421,16 +428,19 @@ def hiki_cite_ref(file)
 end
 
 task :sync0 do
-  entries=Dir.entries($target_dir)
-  entries[2..-1].each{|source| #cp *.hiki
-    next unless source.split('.')[1]=='hiki'
-    next if source.include?('.hikirc')
-    p base = source.split('.')[0]
-    name = (base==$basename)? base : $basename+'_'+base
+  entries=get_target_entries
+  entries.each{|file| #cp *.hiki
+    file_basename= File.basename(file)
+    next unless file_basename.split('.')[1]=='hiki'
+    next if file_basename.include?('.hikirc')
+    f_name =File.basename(file,'.hiki')
+    puts f_name.red
+    name = (f_name==$basename)? f_name : $basename+'_'+f_name
     p target = File.join($hiki_dir,'text',name)
-    source = hiki_cite_ref(source)
+    source = hiki_cite_ref(file)
     FileUtils.cp(source,target,:verbose=>true)
   }
+
   p entries=Dir.entries('./figs') #cp files in figs
   p target = File.join($hiki_dir,'cache','attach',$basename)
   FileUtils.mkdir_p(target,:verbose=>true) unless File.exists?(target)

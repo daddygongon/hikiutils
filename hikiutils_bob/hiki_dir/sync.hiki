@@ -177,6 +177,16 @@ git init, forkが済んでいると仮定して同期の手順を以下に示す
 :git remote -v: githubのremoteアドレスを表示
 :git remote add upstream git@...:githubのアドレスをupstreamとして登録．
 
+!!hikiディレクトリー対応
+hikiファイルが多くなってくると，フォルダーをつくってそこへまとめたくなります．
+それに，対応しているのは以下のオプションです．
+<<<
+rake open hiki_dir
+rake touch hiki_dir
+rake sync hiki_dir
+rake latex_all hiki_dir
+>>>
+
 !!hikiutil関連のヘルプ
 !!!hikiで卒論を書くときの初期化と掟
 *目的：西谷が後で迷わないように決まったファイル構造を堅持すべし
@@ -205,7 +215,7 @@ git init, forkが済んでいると仮定して同期の手順を以下に示す
 *rake sync
 *hiki -u boundary_bob_tmp
 
-!!!同期に関する制約
+!!!hikiとの同期に関する制約
 *hikiはフラットなdirectory構造を取っている
 *hikiの文書はスネーク表記(例えば，latex2hiki_saki)で階層構造に似せている
 *hikiのurlの接頭語となる名前をbasenameのdirectory名とする．
