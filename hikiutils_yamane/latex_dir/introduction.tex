@@ -4,7 +4,7 @@ hikiは，hiki記法を用いたwiki cloneである．wikiはウォード・カ�
 hiki web systemの実際の基本動作は，hiki.cgiプログラムを介して行われている．こちらを便宜上hiki systemと呼ぶ．図\ref{fig:one}に従ってhiki systemの動作概要を説明する．hiki systemは，data/textに置かれ書かれたプレーンテキストをhtmlへ変換する．この変換はhikidoc\cite{1-1}というhikiフォーマットconverterを使っている．また，添付書類はcache/attachに，一度フォーマットしたhtmlはparserに置かれており，それらを参照してhtmlを表示する画面をhiki.cgiは作っている．さらにhiki systemでは検索機能，自動リンク作成などが提供されている
 
 \begin{figure}[htbp]\begin{center}
-\includegraphics[width=12cm,bb= 0 0 937 753]{../figs/./hikiutils_yamane.001.jpg}
+\includegraphics[width=12cm,bb= 0 0 737 553]{../figs/./hikiutils_yamane.001.jpg}
 \caption{hiki web systemとhiki systemの対応関係．}
 \label{fig:one}
 \label{default}\end{center}\end{figure}

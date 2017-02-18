@@ -100,12 +100,13 @@ end
 
 desc "FILE.hikiあるいはhikiファイルすべてを最新状態に更新"
 task :touch do
-  name=ARGV[1]
-  if Dir.exist?(name) then
+  name=ARGV[1]||'.'
+  if File.exist?(File.join(name,$basename+'.hiki')) then
     $target_dir = name
   else
     p file = File.basename(name)
   end
+
   if file
     file_split=file.split(".")
     p target = $basename==file_split[0] ? $basename : $basename+"_"+file_split[0]

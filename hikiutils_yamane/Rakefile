@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
-
-# -*- coding: utf-8 -*-
 require 'systemu'
 require 'tempfile'
 require 'colorize'
 require 'coderay'
 
-# -*- coding: utf-8 -*-
 begin
   $hiki_dir = File.readlines('./.hikirc')[0].chomp
 rescue => e
@@ -17,6 +14,7 @@ dirnames=Dir.pwd.split('/')
 $basename = (dirnames[-1]=='hikis')? dirnames[-2] : dirnames[-1]
 $latex_dir= 'latex_dir'
 $section_layer = {}
+$target_dir = ARGV[1] || '.'
 
 task :default do
   system 'rake -T'
@@ -102,18 +100,27 @@ end
 
 desc "FILE.hikiあるいはhikiファイルすべてを最新状態に更新"
 task :touch do
-  if file=ARGV[1] 
+  name=ARGV[1]||'.'
+  if File.exist?(File.join(name,$basename+'.hiki')) then
+    $target_dir = name
+  else
+    p file = File.basename(name)
+  end
+
+  if file
     file_split=file.split(".")
     p target = $basename==file_split[0] ? $basename : $basename+"_"+file_split[0]
     system "hiki -u #{target}"
   else
     p target = File.join($hiki_dir,'cache','attach',$basename)
     system "touch #{target}/*"
-    Dir.entries('.').each{|file|
+    Dir.entries($target_dir).each{|file|
+      puts file.red
       file_split=file.split(".")
       if file_split[1]=='hiki'
         p target = $basename==file_split[0] ? $basename : $basename+"_"+file_split[0]
-        system "hiki -u #{target}"
+        p command= "hiki -u #{target}"
+        system command
       end
     }
   end
@@ -126,7 +133,7 @@ task :open do
     file += '.hiki' if file.split(".")[1]==nil
     system "open -a mi #{file}"
   else
-    Dir.entries('.').each{|file|
+    Dir.entries($target_dir).each{|file|
       file_split=file.split(".")
       if file_split[1]=='hiki'
         p target = file_split[0]
@@ -151,9 +158,11 @@ def latex_loop(entries,opts={})
   main_file=""
   entries.each{|file|
     options={:latex_all=>true}
-    next unless file.split('.')[1]=='hiki'
-    next if file=='toc.hiki'
-    next if file.include?('.hikirc')
+    file_basename= File.basename(file)
+    next unless file_basename.split('.')[1]=='hiki'
+    next if file_basename=='toc.hiki'
+    next if file_basename.include?('.hikirc')
+    puts file.red
     f_name =File.basename(file,'.hiki')
     if opts[:main]
       if f_name==$basename
@@ -188,15 +197,22 @@ end
 
 def check_bounding_box
 #  $bounding_box="0 0 442 432"
-#  $bounding_box=" 0 0 737 553"
+  $bounding_box=" 0 0 737 553"
 #  $fig_width="10"
-  $bounding_box=" 0 0 937 753"
+#  $bounding_box=" 0 0 937 753"
   $fig_width="12"
 end
 
-desc "すべてのhikiファイルをlatex変換"
+def get_target_entries
+  p entries=Dir.entries($target_dir)
+  entries.map!{|file| File.join($target_dir, file)}
+  puts entries.to_s.red
+  return entries
+end
+
+desc "すべてのDIR/hikiファイルをlatex変換"
 task :latex_all do
-  p entries=Dir.entries('.')
+  entries = get_target_entries
   main_file = latex_loop(entries,opts={:main=>true})
   latex_loop(entries)
   cont=""
@@ -413,16 +429,19 @@ def hiki_cite_ref(file)
 end
 
 task :sync0 do
-  entries=Dir.entries('.')
-  entries[2..-1].each{|source| #cp *.hiki
-    next unless source.split('.')[1]=='hiki'
-    next if source.include?('.hikirc')
-    p base = source.split('.')[0]
-    name = (base==$basename)? base : $basename+'_'+base
+  entries=get_target_entries
+  entries.each{|file| #cp *.hiki
+    file_basename= File.basename(file)
+    next unless file_basename.split('.')[1]=='hiki'
+    next if file_basename.include?('.hikirc')
+    f_name =File.basename(file,'.hiki')
+    puts f_name.red
+    name = (f_name==$basename)? f_name : $basename+'_'+f_name
     p target = File.join($hiki_dir,'text',name)
-    source = hiki_cite_ref(source)
+    source = hiki_cite_ref(file)
     FileUtils.cp(source,target,:verbose=>true)
   }
+
   p entries=Dir.entries('./figs') #cp files in figs
   p target = File.join($hiki_dir,'cache','attach',$basename)
   FileUtils.mkdir_p(target,:verbose=>true) unless File.exists?(target)
@@ -451,6 +470,7 @@ end
 desc "self copy to hikiutils template directory"
 task :self_copy do
   p cp_files=[[File.join(Dir.pwd,'Rakefile'),'Rakefile_hiki_sync'],
+              [File.join(Dir.pwd,'Rakefile'),'Rakefile_hiki_sync_new'],
             [File.join(ENV['HOME'],'.my_help','hiki_help.yml'),'hiki_help.yml']]
   cp_files.each{|files|
     p source = files[0]
@@ -459,7 +479,7 @@ task :self_copy do
     status, stdout, stderr=systemu command
     if stdout!=''
       puts command.red
-      puts CodeRay.scan(stdout, :Diff).term  
+      puts CodeRay.scan(stdout, :Diff).term
       print " Are you sure to save #{source}? [Yn]  ".red
       FileUtils.cp(source,target,:verbose=>true) if STDIN.gets.chomp=='Y'
     end
