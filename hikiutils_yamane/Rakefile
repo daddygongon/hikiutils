@@ -133,7 +133,7 @@ task :open do
   if File.exist?(File.join(name,$basename+'.hiki')) then
     $target_dir = name
   else
-    p file = File.basename(name)
+    p file = name
   end
   if file
     file += '.hiki' if file.split(".")[1]==nil
@@ -142,7 +142,7 @@ task :open do
     Dir.entries($target_dir).each{|file|
       file_split=file.split(".")
       if file_split[1]=='hiki'
-        p target = file
+        p target = File.join($target_dir,file)
         system "open -a mi #{target}"
       end
     }
