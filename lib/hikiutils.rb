@@ -96,7 +96,7 @@ EOS
       }
       # cp default files
       cp_files=[['Rakefile_hiki_sync','Rakefile'],
-                ['hiki_help.yml','hiki_help.yml'],
+                ['hiki_help.yml',File.join(ENV['HOME'],'.my_todo','hiki_help.yml')],
                 ['head.tex','latex_dir/head.tex'],
                 ['pre.tex','latex_dir/pre.tex'],
                 ['jlisting.sty','latex_dir/jlisting.sty'],
