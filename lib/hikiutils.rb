@@ -114,10 +114,10 @@ EOS
       begin
         p cont=File.read('./.gitignore')
         unless cont.include?('.hikirc')
-          File.open('./.gitignore','w'){|file| file.print(".hikirc\n")}
+          File.open('./.gitignore','a+'){|file| file.print(".hikirc\n")}
         end
       rescue
-        File.open('./.gitignore','w'){|file| file.print(".hikirc\n")}
+        File.open('./.gitignore','a+'){|file| file.print(".hikirc\n")}
       end
     end
 
