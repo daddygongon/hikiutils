@@ -95,15 +95,15 @@ EOS
         end
       }
       # cp default files
-      cp_files=[['Rakefile_hiki_sync','Rakefile'],
+      cp_files=[['Rakefile_hiki_sync',File.join(Dir.pwd,'Rakefile')],
                 ['hiki_help.yml',File.join(ENV['HOME'],'.my_todo','hiki_help.yml')],
-                ['head.tex','latex_dir/head.tex'],
-                ['pre.tex','latex_dir/pre.tex'],
-                ['jlisting.sty','latex_dir/jlisting.sty'],
+                ['head.tex',File.join(Dir.pwd,'latex_dir/head.tex')],
+                ['pre.tex',File.join(Dir.pwd,'latex_dir/pre.tex')],
+                ['jlisting.sty',File.join(Dir.pwd,'latex_dir/jlisting.sty')],
                ]
       cp_files.each_with_index{|files,i|
         p source = File.join(File.expand_path('..', __FILE__),'templates',files[0])
-        p target = File.join(Dir.pwd,files[1])
+        p target = files[1]
         if i==0 #force cp of new Rakefile
           FileUtils.cp(source,target,:verbose=>true)
         else #avoid latex files overwritten
