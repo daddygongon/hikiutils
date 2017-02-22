@@ -249,16 +249,17 @@ latexへ文献参照を渡すために，下記のようなフォーマットで
 \caption{参照機能を利用した場合の変換後の表示．}
 \label{fig:CiteRefSystems}
 \label{default}\end{center}\end{figure}
-\subsection{latexに関する制約}
+\subsection{hiki\_help --latex}
+\subsubsection{latexに関する制約}
 \begin{itemize}
 \item latex\_dirに対応するtexファイルが作られる
 \item head.texにlatexのtitle部を記述
-\item ref:図\ref{fig:SystemOverview}に卒論編集システムの概観を示しています．
+\item ref:図\{\{ref(fig:SystemOverview)\}\}に卒論編集システムの概観を示しています．
 \item !!!caption: (fig:SystemOverview)卒論編集システムの概観．
 \item caption以下の丸括弧内にタグを書く
 \item fig:以下のタグにsnake nameは使えん．Camelで書く
 \item cite:基本的な使い方\cite{listings1}
 \item !reference:
-\item :listings1:\verb|http://d.hatena.ne.jp/mallowlabs/20061226/1167137637|
+\item ":listings1:\verb|http://d.hatena.ne.jp/mallowlabs/20061226/1167137637|"
 \item reference:以下の:...:記述がlatexではbibliographyに変わる
 \end{itemize}

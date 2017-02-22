@@ -4,11 +4,12 @@
 
 体裁などを考えるとLatexの使用が標準ですが，執筆段階での煩わしさを低減するため，Mark Up記法による文章作成が一般的です\cite{DocGuide}．西谷研ではMark Up記法の一種であるhiki記法を用いて執筆します．hiki記法からhtmlへ変換するソフトhikidocによる容易な変換が可能なため，日記web appliのhiki diaryでも利用されている有名なソフトです．hiki記法をベースにして，wiki wiki webと同等の機能を提供するhikiシステムがgithubに公開されており，個人の手持ちのパソコンにインストールしてwikiを利用することができます．西谷研ではさらにhiki記法を拡張して，コードのカラー表示，数式のlatex記述が可能となるシステムを利用しています．
 
-本資料では，卒論の編集作業を効率化する図に示すようなシステムの使い方を紹介します．
+本資料では，卒論の編集作業を効率化する図\ref{fig:SystemOutline}に示すようなシステムの使い方を紹介します．
 
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=12cm,bb= 0 0 737 553]{../figs/./hikiutils_bob.002.jpeg}
 \caption{卒論編集システムの基本概念．}
+\label{fig:SystemOutline}
 \label{default}\end{center}\end{figure}
 例えば，卒業生をyamaneとしましょう．yamaneの個人のMacの自分のdirectory(hikiutils\_yamane)に幾つかのファイルを作成して卒論を書いているとします．これを指導教官(bob)が編集するとします．この同期には，Githubにより提供される共同作業環境を使います．これだけでは編集中の文書の体裁がわかりにくいでしょう．そこで，hikiシステムにより容易にwebブラウザ上に完成形を表示しつつ執筆することが求められます．このような環境を提供するのが，本システムです．
 
@@ -25,12 +26,6 @@ hiki -v
 で0.2.3.2以上であることを確認．
 
 \subsection{個別ディレクトリーの構成}
-図にhikiutils\_bobのディレクトリー構成を示す．
-
-\begin{figure}[htbp]\begin{center}
-\includegraphics[width=12cm,bb= 0 0 737 553]{../figs/./hikiutils_bob.003.jpeg}
-\caption{hikiutils\_bobのディレクトリー構成．}
-\label{default}\end{center}\end{figure}
 コマンド
 \begin{quote}\begin{verbatim}
 hiki -i
@@ -45,12 +40,17 @@ drwxr-xr-x  12 bob  501     408  1 20 12:34 ./
 -rw-r--r--   1 bob  501       8  1 20 11:01 .gitignore
 -rw-r--r--   1 bob  501    3507  1 20 11:01 Rakefile
 drwxr-xr-x   2 bob  501      68  1 20 11:01 data/
--rw-r--r--   1 bob  501    2595  1 20 11:01 hiki_help.yml
 drwxr-xr-x  26 bob  501     884  1 20 11:00 ../
 \end{lstlisting}
-この.hikircにデータが設定データが自動的に入る．さらにhikiutils\_bob.hikiおよびhikiutils\_bob.keyを作成する．これで執筆ファイルの基本構成が出来上がる．
+この.hikircにデータが設定データが自動的に入る．さらにhikiutils\_bob.hikiおよびhikiutils\_bob.keyを作成する．これで執筆ファイルの基本構成が出来上がる．keynoteで図を作成して，hikiutils\_bob.hikiに文章を記述していく．
 
-keynoteで図を作成して，hikiutils\_bob.hikiに文章を記述していく．
+"hiki -i"で設定されるのはこのほかに，
+
+\begin{itemize}
+\item hiki\_help.ymlが"~/.my\_help"に入る．また，
+\item .gitignoreに.hikircが追記される．
+\end{itemize}
+二つ目の動作は，学生と指導者でhikiシステムの格納位置が違うので，それを吸収するため．なんかうまく動いてないときがある．ディレクトリーのエラーが出たときには，"hiki -i"を再度行うべし．
 
 \subsection{システムの概要}
 図に論文作成システムの概要を示している．gemのなかに作られた例えば，hikiutils\_bobなどのdirectory内にRakefileなどを次節のコマンドを使って入れる．このdirectoryでhikiutils\_bob.hikiなどのhikiフォーマットのdocumentを作っていく．rake syncによってwebを提供するhikiのtext, attach, parserなどと同期する．一方，最終の卒業論文形態であるpdfにするためにlatex\_dir内に*.texを生成する．これは次章で解説する．
@@ -185,11 +185,13 @@ remove hikiutils_bob_toc[ynqlA]?
 となります．yes, no, quit, list, Allのなかから選んでください．
 
 \subsection{githubによる同期}
-これらの作業の流れを示すシーケンス図は次の通りである．
+githubの共同機能を用いて，編集を卒業生と指導者が共同でおこなう環境を用意しています．
+作業の流れを示すシーケンス図は図\ref{fig:CoEditing}の通りです．
 
 \begin{figure}[htbp]\begin{center}
 \includegraphics[width=12cm,bb= 0 0 737 553]{../figs/./hikiutils_bob.005.jpeg}
 \caption{卒論編集時のgithubによる同期のシーケンス図．}
+\label{fig:CoEditing}
 \label{default}\end{center}\end{figure}
 git init, forkが済んでいると仮定して同期の手順を以下に示す．
 
