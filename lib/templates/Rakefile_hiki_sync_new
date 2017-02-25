@@ -448,10 +448,10 @@ task :sync0 do
     FileUtils.cp(source,target,:verbose=>true)
   }
 
-  source_dirs=['./figs','./references']
+  source_dirs=['./figs','./refs']
   source_dirs.each{|source_dir|
+    next unless Dir.exist?(source_dir)
     p entries=Dir.entries(source_dir) #cp files in figs
-    next if entries.size==0
     p name = $basename+'_'+File.basename(source_dir)
     p target = File.join($hiki_dir,'cache','attach',name)
     FileUtils.mkdir_p(target,:verbose=>true) unless File.exists?(target)
