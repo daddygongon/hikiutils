@@ -448,14 +448,20 @@ task :sync0 do
     FileUtils.cp(source,target,:verbose=>true)
   }
 
-  p entries=Dir.entries('./figs') #cp files in figs
-  p target = File.join($hiki_dir,'cache','attach',$basename)
-  FileUtils.mkdir_p(target,:verbose=>true) unless File.exists?(target)
-  entries[2..-1].each{|file|
-    p source = File.join('./figs',file)
-    FileUtils.cp(source,target,:verbose=>true)
+  source_dirs=['./figs','./references']
+  source_dirs.each{|source_dir|
+    p entries=Dir.entries(source_dir) #cp files in figs
+    next if entries.size==0
+    p name = $basename+'_'+File.basename(source_dir)
+    p target = File.join($hiki_dir,'cache','attach',name)
+    FileUtils.mkdir_p(target,:verbose=>true) unless File.exists?(target)
+    entries[2..-1].each{|file|
+      next if FileTest.directory?(File.join(source_dir,file))
+      source = File.join(source_dir,file)
+#      FileUtils.cp(source,target,:verbose=>true)
+      FileUtils.cp(source,target)
+    }
   }
-
   File.open('./.hikirc','w'){|file|
     status, stdout, stderr =systemu "hiki -l #{$basename}*"
     file.print($hiki_dir+"\n")
