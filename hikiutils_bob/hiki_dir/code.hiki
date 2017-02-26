@@ -1,5 +1,10 @@
 !Rakefile開発に関するメモ
-
+!!ファイル名とdirectoryの対応表
+  
+||執筆directory:test_bob||hikiシステム||latex_dir
+||test_bob/test_bob.hiki||test_bob||test_bob/latex_dir/test_bob.tex
+||test_bob/hiki_dir/test_bob.hiki||test_bob||test_bob/latex_dir/test_bob.tex
+||test_bob/figs/test0.png||test_bob_figs/test0.png||
 !!日本語のcode listings
 日本語のjlistingの使用法が判明しました．
 listingsでは日本語表示がちゃんとなされません．そこで，
