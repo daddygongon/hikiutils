@@ -1,4 +1,21 @@
 \section{Rakefile開発に関するメモ}
+\subsection{ファイル名とdirectoryの対応表}\begin{quote}\begin{verbatim}
+
+\end{verbatim}\end{quote}
+\begin{table}[htbp]\begin{center}
+\caption{}
+\begin{tabular}{llll}
+\hline
+執筆directory:test\_bob  &hikiシステム  &latex\_dir  \\ \hline
+test\_bob/test\_bob.hiki  &test\_bob  &test\_bob/latex\_dir/test\_bob.tex  \\
+test\_bob/hiki\_dir/test\_bob.hiki  &test\_bob  &test\_bob/latex\_dir/test\_bob.tex  \\
+test\_bob/figs/test0.png  &test\_bob\_figs/test0.png  \\
+\hline
+\end{tabular}
+\label{default}
+\end{center}\end{table}
+%for inserting separate lines, use \hline, \cline{2-3} etc.
+
 \subsection{日本語のcode listings}
 日本語のjlistingの使用法が判明しました．
 listingsでは日本語表示がちゃんとなされません．そこで，

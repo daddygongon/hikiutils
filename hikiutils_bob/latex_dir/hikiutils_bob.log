@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.euc) (TeX Live 2016) (preloaded format=platex 2017.1.26)  22 FEB 2017 09:58
+This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.euc) (TeX Live 2016) (preloaded format=platex 2017.1.26)  14 MAR 2017 15:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -134,7 +134,11 @@ LaTeX Warning: Label `default' multiply defined.
 
 LaTeX Warning: Label `default' multiply defined.
 
-) (./code.aux) (./references.aux))
+) (./code.aux
+
+LaTeX Warning: Label `default' multiply defined.
+
+) (./references.aux))
 \openout1 = `hikiutils_bob.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
@@ -308,23 +312,26 @@ File: ../figs/./hikiutils_bob.007.jpeg Graphic file (type eps)
 \openout2 = `code.aux'.
 
  (./code.tex
-LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 11.
-LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 11.
-LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 11.
-LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 11.
+Overfull \hbox (35.09276pt too wide) in paragraph at lines 7--16
+ [][][] 
+ []
 
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 28.
+LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 28.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 28.
+LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 28.
 
 LaTeX Warning: Reference `fig:SystemOverview' on page 21 undefined on input lin
-e 11.
+e 28.
 
-) [21
+[21
 
 
-] [22]
+]) [22]
 \openout2 = `references.aux'.
 
  (./references.tex
@@ -348,10 +355,10 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  3772 strings out of 493683
  52282 string characters out of 6149653
- 211348 words of memory out of 5000000
+ 210348 words of memory out of 5000000
  7287 multiletter control sequences out of 15000+600000
  15981 words of font info for 73 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 50i,9n,78p,646b,1859s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 50i,9n,78p,652b,1859s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on hikiutils_bob.dvi (23 pages, 78684 bytes).
+Output written on hikiutils_bob.dvi (23 pages, 80068 bytes).

@@ -14,13 +14,13 @@
 \contentsline {subsubsection}{\numberline {2.5.7}rake open [FILE] (new)}{9}
 \contentsline {subsubsection}{\numberline {2.5.8}rake touch [FILE](new)}{9}
 \contentsline {subsubsection}{\numberline {2.5.9}rake github(new)}{9}
-\contentsline {subsubsection}{\numberline {2.5.10}rake reset\_hiki(new)}{9}
+\contentsline {subsubsection}{\numberline {2.5.10}rake reset\_hiki(new)}{10}
 \contentsline {subsection}{\numberline {2.6}githubによる同期}{10}
 \contentsline {subsection}{\numberline {2.7}hikiディレクトリー対応}{11}
-\contentsline {subsection}{\numberline {2.8}hikiutil関連のヘルプ}{11}
-\contentsline {subsubsection}{\numberline {2.8.1}hikiで卒論を書くときの初期化と掟}{11}
+\contentsline {subsection}{\numberline {2.8}hikiutil関連のヘルプ}{12}
+\contentsline {subsubsection}{\numberline {2.8.1}hikiで卒論を書くときの初期化と掟}{12}
 \contentsline {subsubsection}{\numberline {2.8.2}図表に関する制約}{12}
-\contentsline {subsubsection}{\numberline {2.8.3}hikiとの同期に関する制約}{12}
+\contentsline {subsubsection}{\numberline {2.8.3}hikiとの同期に関する制約}{13}
 \contentsline {subsubsection}{\numberline {2.8.4}テキストに関する制約}{13}
 \contentsline {section}{\numberline {3}実際の最終形態(卒論=pdf)への変換}{14}
 \contentsline {subsection}{\numberline {3.1}install}{14}
@@ -38,7 +38,8 @@
 \contentsline {subsection}{\numberline {3.6}hiki\_help --latex}{19}
 \contentsline {subsubsection}{\numberline {3.6.1}latexに関する制約}{19}
 \contentsline {section}{\numberline {4}Rakefile開発に関するメモ}{21}
-\contentsline {subsection}{\numberline {4.1}日本語のcode listings}{21}
-\contentsline {subsection}{\numberline {4.2}システムの概要}{21}
-\contentsline {subsection}{\numberline {4.3}参照機能の実装}{21}
-\contentsline {subsection}{\numberline {4.4}rake mk\_toc}{22}
+\contentsline {subsection}{\numberline {4.1}ファイル名とdirectoryの対応表}{21}
+\contentsline {subsection}{\numberline {4.2}日本語のcode listings}{21}
+\contentsline {subsection}{\numberline {4.3}システムの概要}{21}
+\contentsline {subsection}{\numberline {4.4}参照機能の実装}{22}
+\contentsline {subsection}{\numberline {4.5}rake mk\_toc}{22}
