@@ -203,10 +203,10 @@ end
 
 def check_bounding_box
 #  $bounding_box="0 0 442 432"
-  $bounding_box=" 0 0 737 553"
-#  $fig_width="10"
-#  $bounding_box=" 0 0 937 753"
-  $fig_width="12"
+#  $bounding_box=" 0 0 737 553" # for 60% converted
+  $fig_width="8" #for wrap figure
+  $bounding_box=" 0 0 937 753" # for original keynote output
+#  $fig_width="12" # for full size width
 end
 
 def get_target_entries
@@ -283,7 +283,7 @@ def convert_to_latex(file_name, options={})
   system "hiki2latex #{pre_command} #{options[:latex]} #{tf1} > #{tf2}"
   lines = File.readlines(tf2)
   system "rm #{tf1} #{tf2}"
-  in_bib,cont=false,""
+  in_bib,in_abst,cont=false,false,""
   lines.each{|line|
     line=latex_cite_ref(line)
     if m=line.match(/\\caption{\s*\((.+?)\)(.+)}/)
@@ -299,10 +299,20 @@ def convert_to_latex(file_name, options={})
       in_bib=false
       line = "\\end{thebibliography}\n"
     end
-    if m=line.match(/\\item\[(.+)\](.+)/) and in_bib==true
+    if m=line.match(/\\item\[(.+?)\](.+)/) and in_bib==true
       tmp = m[2].gsub!(/\\verb\|(.*?)\|/){ "\\url{#{$1}}" } || m[2]
+      tmp = m[2].gsub!(/\\verb\|(.*?)\|/){ "" } || m[2]
       line ="\\bibitem{#{m[1]}} #{tmp}"
       puts line.blue
+    end
+    if m=line.match(/\\section{abstract:}/) and in_abst==false
+      in_abst=true
+      line = "\\begin{abstract}\n"
+      puts line.blue
+    end
+    if m=line.match(/\\section/) and in_abst==true
+      in_abst=false
+      line = "\\end{abstract}\n\n#{line}\n"
     end
     if m=line.match(/\\includegraphics\[width=6cm\]\{(.+)\}/)
       p line="\\includegraphics\[width=#{$fig_width}cm,bb=#{$bounding_box}\]\{../figs/#{m[1]}\}\n"
