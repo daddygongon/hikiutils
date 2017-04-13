@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+# this is supplied by hiki -i 
+# hikiutils are synchronizing system between local dir and hiki
+# and also supplied hiki_dir with latex_dir
+#    cc by Shigeto R. Nishitani, 2017
 require 'systemu'
 require 'tempfile'
 require 'colorize'
@@ -204,7 +208,7 @@ end
 def check_bounding_box
 #  $bounding_box="0 0 442 432"
 #  $bounding_box=" 0 0 737 553" # for 60% converted
-  $fig_width="8" #for wrap figure
+  $fig_width="12" #for wrap figure
   $bounding_box=" 0 0 937 753" # for original keynote output
 #  $fig_width="12" # for full size width
 end
@@ -267,6 +271,8 @@ def convert_to_latex(file_name, options={})
   p $save_name = ARGV[2] || File.join($latex_dir,tex_name)
   pre_name = File.join($latex_dir,'pre.tex')
   p pre_command = File.exist?(pre_name) ? '--pre '+pre_name : nil
+  p pre_command = ''
+
   lines = File.readlines(file_name)
   check_section_layers(lines) if options[:main]
   cont = ""
@@ -280,6 +286,7 @@ def convert_to_latex(file_name, options={})
   }
   tf1,tf2='tmp1.txt','tmp2.txt'
   File.open(tf1,'w'){|file| file.print cont}
+  options[:latex]="--head latex_dir/head.tex -p "
   system "hiki2latex #{pre_command} #{options[:latex]} #{tf1} > #{tf2}"
   lines = File.readlines(tf2)
   system "rm #{tf1} #{tf2}"
