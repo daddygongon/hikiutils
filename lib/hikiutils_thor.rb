@@ -55,7 +55,7 @@ EOS
     def pwd
       printf("target_no:%i\n",@src[:target])
       printf("editor_command:%s\n",@src[:editor_command])
-      @i_size,@n_size,@l_size,@g_size=3,5,30,15 #i,g_size are fixed      
+      @i_size,@n_size,@l_size,@g_size=3,5,30,15 #i,g_size are fixed
       n_l,l_l=0,0
       @src[:srcs].each_with_index{|src,i|
         n_l =(n_l= src[:nick_name].length)>@n_size? n_l:@n_size
@@ -103,7 +103,7 @@ EOS
 #    map "--target" => "target"
     def cd(val)
       @src[:target] = val.to_i
-      show
+      pwd
     end
 
     desc 'open', 'open file'
