@@ -17,23 +17,7 @@ module Hikithor
   attr_accessor :src, :target, :editor_command, :browser, :data_name, :l_dir
 
   class CLI < Thor
-   def initialize(*args)
-      super
-      @data_name=['nick_name','local_dir','local_uri','global_dir','global_uri']
-      data_path = File.join(ENV['HOME'], '.hikirc')
-      DataFiles.prepare(data_path)
-
-      file = File.open(DATA_FILE,'r')
-      @src = YAML.load(file.read) 
-      file.close
-      @target = @src[:target]
-      @l_dir=@src[:srcs][@target][:local_dir]
-      browser = @src[:browser]
-      @browser = (browser==nil) ? 'firefox' : browser
-      p editor_command = @src[:editor_command]
-      @editor_command = (editor_command==nil) ? 'open -a mi' : editor_command
-   end
-HTML_TEMPLATE = <<EOS
+    HTML_TEMPLATE = <<EOS
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -50,11 +34,27 @@ HTML_TEMPLATE = <<EOS
 </html>
 EOS
 
-    desc 'pwd', 'show nick_names'
-#    map "--show" => "show"
+    def initialize(*args)
+      super
+      @data_name=['nick_name','local_dir','local_uri','global_dir','global_uri']
+      data_path = File.join(ENV['HOME'], '.hikirc')
+      DataFiles.prepare(data_path)
+
+      File.open(DATA_FILE,'r'){|file| @src = YAML.load(file.read)}
+
+      @target = @src[:target]
+      @l_dir=@src[:srcs][@target][:local_dir]
+      browser = @src[:browser]
+      @browser = (browser==nil) ? 'firefox' : browser
+      editor_command = @src[:editor_command]
+      @editor_command = (editor_command==nil) ? 'open -a mi' : editor_command
+      printf("target_no:%i\n",@target)
+      printf("editor_command:%s\n",@editor_command)
+    end
+
+    desc 'pwd', 'list nick_names and print working dir'
+    #    map "--show" => "show"
     def pwd
-      printf("target_no:%i\n",@src[:target])
-      printf("editor_command:%s\n",@src[:editor_command])
       @i_size,@n_size,@l_size,@g_size=3,5,30,15 #i,g_size are fixed
       n_l,l_l=0,0
       @src[:srcs].each_with_index{|src,i|
@@ -62,8 +62,7 @@ EOS
         l_l =(l_l= src[:local_dir].length)>@l_size? l_l:@l_size
       }
       @n_size,@l_size=n_l,l_l
-      command = Command.new
-      header = command.display_format('id','name','local directory','global uri',@i_size,@n_size,@l_size,@g_size)
+      header = display_format('id','name','local directory','global uri',@i_size,@n_size,@l_size,@g_size)
 
       puts header
       puts '-' * header.size
@@ -74,20 +73,20 @@ EOS
         name=src[:nick_name]
         local=src[:local_dir]
         global=src[:global_uri]
-        puts command.display_format(id,name,local,global,@i_size,@n_size,@l_size,@g_size)
+        puts display_format(id,name,local,global,@i_size,@n_size,@l_size,@g_size)
       }
     end
 
     desc '-v', 'show program version'
-#    map "--version" => "version"
+    #    map "--version" => "version"
     map "-v" => "version"
     def version
       puts HikiUtils::VERSION
     end
 
     desc 'add', 'add sources info'
-#    map "--add" => "add"
-#    option :add
+    #    map "--add" => "add"
+    #    option :add
     def add
       cont = {}
       @data_name.each{|name|
@@ -100,17 +99,18 @@ EOS
     end
 
     desc 'cd VAL', 'set target id'
-#    map "--target" => "target"
+    #    map "--target" => "target"
     def cd(val)
       @src[:target] = val.to_i
       pwd
+      dump_sources
     end
 
-    desc 'open', 'open file'
-#    map "--edit" => "edit"
+    desc 'open FILE', 'open file for editing'
+    #    map "--edit" => "edit"
     def open(file)
       t_file=File.join(@l_dir,'text',file)
-      if !File.exist?(t_file) then
+      unless File.exist?(t_file)
         file=File.open(t_file,'w')
         file.close
         File.chmod(0777,t_file)
@@ -120,7 +120,7 @@ EOS
     end
 
     desc 'ls [FILE]', 'list files'
-#    map "--list" => "list"
+    #    map "--list" => "list"
     def ls(file)
       file ='' if file==nil
       t_file=File.join(@l_dir,'text')
@@ -128,14 +128,19 @@ EOS
       print `cd #{t_file} ; ls -lt #{file}*`
     end
 
-    desc 'touch', 'update file'
-#    map "--update" => "update"
+    desc 'touch FILE', 'update FILE'
+    #    map "--update" => "update"
     def touch(file0)
       file = (file0==nil) ? 'FrontPage' : file0
       t_file=File.join(@l_dir,'cache/parser',file)
-      FileUtils.rm(t_file,:verbose=>true)
-      info=InfoDB.new(@l_dir)
-      info.update(file0)
+      begin
+        FileUtils.rm(t_file,:verbose=>true)
+        info=InfoDB.new(@l_dir)
+        info.update(file0)
+      rescue
+        print "some errors on touch, but dont mind...\n"
+      end
+
       l_path = @src[:srcs][@target][:local_uri]
       p command="open -a #{@browser} \'#{l_path}/?#{file}\'"
       system command
@@ -144,8 +149,8 @@ EOS
     end
 
     desc 'rsync', 'rsync files'
-#    map "--rsync" => "rsync"
-#    option :rsync
+    #    map "--rsync" => "rsync"
+    #    option :rsync
     def rsync
       p local = @l_dir
       p global = @src[:srcs][@target][:global_dir]
@@ -154,14 +159,14 @@ EOS
     end
 
     desc 'db FILE', 'read datebase file'
-#    map "--database" => "database"
+    #    map "--database" => "database"
     def db(file_name)
       info=InfoDB.new(@l_dir)
       p info.show(file_name)
     end
 
     desc 'show FILE', 'display converted hikifile'
-#    map "--display" => "display"
+    #    map "--display" => "display"
     def show(file)
       body = HikiDoc.to_html(File.read(file))
       source = HTML_TEMPLATE
@@ -174,14 +179,14 @@ EOS
     end
 
     desc 'checkdb', 'check database file'
-#    map "--checkdb" => "checkdb"
+    #    map "--checkdb" => "checkdb"
     def checkdb
       result= InfoDB.new(@l_dir).show_inconsist
       print (result=='') ? "db agrees with text dir.\n" : result
     end
 
     desc 'rm [FILE]', 'remove files'
-#    map "--remove" => "remove"
+    #    map "--remove" => "remove"
     def rm(file_name)
       p text_path = File.join(@l_dir,'text',file_name)
       p attach_path = File.join(@l_dir,'cache/attach',file_name)
@@ -204,7 +209,7 @@ EOS
     end
 
     desc 'mv [FILE]', 'move file'
-#    map "--move" => "move"
+    #    map "--move" => "move"
     def mv(files)
       begin
         p file1_path = File.join(@l_dir,'text',files[0])
@@ -267,29 +272,36 @@ EOS
     end
 
     desc 'euc FILE', 'translate file to euc'
-#    map "--euc" => "euc"
+    #    map "--euc" => "euc"
     def euc(file)
       p file_path = File.join(@l_dir,'text',file)
       cont = File.readlines(file_path)
       cont.each{|line| puts line.toeuc }
     end
-  end
-  
-  class Command
-    def display_format(id, name, local, global, i_size, n_size, l_size, g_size)
-      name_length  = n_size-full_width_count(name)
-      local_length = l_size-full_width_count(local)
-      global_string= global.size < g_size ? global : global[0..g_size]
-      [id.to_s.rjust(i_size), name.ljust(name_length),
-               local.ljust(local_length),
-                          global_string.ljust(g_size)].join(' | ')
-    end
-    
-    def full_width_count(string)
-          string.each_char.select{|char| !(/[ -~｡-ﾟ]/.match(char))}.count
+
+    no_commands do
+      def display_format(id, name, local, global, i_size, n_size, l_size, g_size)
+        name_length  = n_size-full_width_count(name)
+        local_length = l_size-full_width_count(local)
+        global_string= global.size < g_size ? global : global[0..g_size]
+        [id.to_s.rjust(i_size), name.ljust(name_length),
+         local.ljust(local_length),
+         global_string.ljust(g_size)].join(' | ')
+      end
+
+      def full_width_count(string)
+        string.each_char.select{|char| !(/[ -~｡-ﾟ]/.match(char))}.count
+      end
+
+      def dump_sources
+        file = File.open(DATA_FILE,'w')
+        YAML.dump(@src, file)
+        file.close
+      end
     end
 
   end
+
 end
 
 module DataFiles
