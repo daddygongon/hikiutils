@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# this is supplied by hiki -i 
+# this is supplied by hiki_optparse --initialize
 # hikiutils are synchronizing system between local dir and hiki
 # and also supplied hiki_dir with latex_dir
 #    cc by Shigeto R. Nishitani, 2017
@@ -14,11 +14,11 @@ rescue => e
   puts e
   exit
 end
-dirnames=Dir.pwd.split('/')
-$basename = (dirnames[-1]=='hikis')? dirnames[-2] : dirnames[-1]
+p dirnames=Dir.pwd.split('/')
+p $basename = (dirnames[-1]=='hikis')? dirnames[-2] : dirnames[-1]
 $latex_dir= 'latex_dir'
 $section_layer = {}
-$target_dir = ARGV[1] || '.'
+p $target_dir = ARGV[1] || '.'
 
 task :default do
   system 'rake -T'
@@ -34,7 +34,7 @@ end
 
 desc "hikiシステムにあるゴミファイルを掃除する"
 task :reset_hiki do
-  status, stdout, stderr = systemu "hiki -l #{$basename}"
+  status, stdout, stderr = systemu "hiki ls #{$basename}"
   print stdout
   files=[]
   stdout.split("\n").each{|line|
@@ -46,11 +46,11 @@ task :reset_hiki do
     input=STDIN.gets.chomp
     case input
     when 'y'
-      p command="hiki --remove #{file}"
+      p command="hiki rm #{file}"
       system command
     when 'n'
     when 'l'
-      p command="hiki -l #{$basename}"
+      p command="hiki ls #{$basename}"
       system command
     when 'q'
       exit
@@ -59,7 +59,7 @@ task :reset_hiki do
       input2 = STDIN.gets.chomp
       case input2
         when 'Y'
-        r_files.each{|file| system "hiki --remove #{file}"}
+        r_files.each{|file| system "hiki rm #{file}"}
         p target = File.join($hiki_dir,'cache','attach',$basename)
         exit
         when 'n'
@@ -114,7 +114,7 @@ task :touch do
   if file
     file_split=file.split(".")
     p target = $basename==file_split[0] ? $basename : $basename+"_"+file_split[0]
-    system "hiki -u #{target}"
+    system "hiki touch #{target}"
   else
     p target = File.join($hiki_dir,'cache','attach',$basename)
     system "touch #{target}/*"
@@ -123,7 +123,7 @@ task :touch do
       file_split=file.split(".")
       if file_split[1]=='hiki'
         p target = $basename==file_split[0] ? $basename : $basename+"_"+file_split[0]
-        p command= "hiki -u #{target}"
+        p command= "hiki touch #{target}"
         system command
       end
     }
@@ -480,7 +480,7 @@ task :sync0 do
     }
   }
   File.open('./.hikirc','w'){|file|
-    status, stdout, stderr =systemu "hiki -l #{$basename}*"
+    status, stdout, stderr =systemu "hiki ls #{$basename}*"
     file.print($hiki_dir+"\n")
     stdout.split("\n")[3..-1].each{|line|
       file.print line+"\n"
@@ -518,7 +518,9 @@ end
 task :check_previous do
   current={}
   print "current hiki dir\n"
-  status, stdout, stderr = systemu("hiki -l #{$basename}*")
+  
+  status, stdout, stderr = systemu("hiki ls #{$basename}")
+  p stdout
   stdout.split("\n")[3..-1].each{|line|
     p line
     file=   line.split(/\s+/)[-1]
