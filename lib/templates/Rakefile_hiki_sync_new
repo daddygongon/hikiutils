@@ -431,7 +431,7 @@ task :sync => [:check_previous,:sync0]
 desc "hikiの強制同期"
 task :force_sync => [:sync0]
 
-def hiki_cite_ref(file)
+def hiki_cite_ref(file) #hiki cittations
   tf1 = 'tmp1.txt'
   lines = File.readlines(file)
   inside_pre_form,cont = false,""
@@ -480,7 +480,7 @@ task :sync0 do
     }
   }
   File.open('./.hikirc','w'){|file|
-    status, stdout, stderr =systemu "hiki ls #{$basename}*"
+    status, stdout, stderr =systemu "hiki ls #{$basename}"
     file.print($hiki_dir+"\n")
     stdout.split("\n")[3..-1].each{|line|
       file.print line+"\n"
