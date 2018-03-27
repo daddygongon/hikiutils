@@ -69,17 +69,6 @@ task :reset_hiki do
   }
 end
 
-desc "latex_dirのゴミを掃除"
-task :reset_latex_dir do
-  system "mv latex_dir/head.tex ."
-  system "mv latex_dir/jlisting.sty ."
-  system "rm -rf latex_dir"
-  system "mkdir latex_dir"
-  system "mv head.tex latex_dir/"
-  system "mv jlisting.sty latex_dir/"
-  system "rake latex_all"
-end
-
 desc "toc.hikiの作成"
 task :mk_toc do
   p target = $basename+'.toc'
