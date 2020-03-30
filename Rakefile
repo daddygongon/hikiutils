@@ -2,9 +2,7 @@
 require "bundler/gem_tasks"
 require 'yard'
 #require "rake/testtask"
-require "rspec/core/rake_task"
 require 'fileutils'
-require 'cucumber/rake/task'
 
 p base_path = File.expand_path('..', __FILE__)
 p basename = File.basename(base_path)
