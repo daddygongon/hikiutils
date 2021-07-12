@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-
-require "hikiutils_thor"
-
-Hikithor::CLI.start(ARGV)
