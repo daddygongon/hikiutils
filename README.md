@@ -30,7 +30,7 @@ Usage: hiki [options]
 Installed by
 
 ```
-$ gem install hikimode
+$ gem install hikiutils
 ```
 
 At the first time of hiki operation, hikirc file is created at home dir.
@@ -40,7 +40,7 @@ bob% cat ~/.hikirc
 ---
 :target: 1
 :editor_command: open -a mi
-:browser: firefox
+:browser: Google\ Chrome
 :srcs:
 - :nick_name: hoge
   :local_dir: hogehoge
@@ -49,6 +49,8 @@ bob% cat ~/.hikirc
   :global_uri: http://hoge
 ```
 
+For example, the browser to see a hiki page is set 'Google Chrome' in this case;
+other examples are 'safari', 'firefox', and so on.
 The directly editing of hikirc file is much easier than using -a option.
 Each hiki utility option runs, assuming the editing files lacating locally.
 
