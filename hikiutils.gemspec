@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "hiki2yard"
   spec.add_development_dependency "hiki2latex", "~>0.9.17"
   spec.add_runtime_dependency "systemu"
+  spec.add_runtime_dependency "nkf"
   spec.add_runtime_dependency "hikidoc"
   spec.add_runtime_dependency 'thor'
   spec.add_runtime_dependency 'colorize'

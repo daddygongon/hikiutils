@@ -309,7 +309,7 @@ module DataFiles
   end
 
   def self.create_file_if_not_exists(data_path)
-    return if File::exists?(data_path)
+    return if File::exist?(data_path)
     create_data_file(data_path)
   end
 
